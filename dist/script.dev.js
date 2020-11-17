@@ -174,9 +174,9 @@ $(document).ready(function (e) {
 
       case "fact":
         if (Math.random() < 0.2) {
-          printLine(facts[0], null, "Fact", "blue");
+          printLine(facts[0], null, "Fun Fact", "white");
         } else {
-          printLine(facts[Math.floor(Math.random() * facts.length)], null, "Fact", "blue");
+          printLine(facts[Math.floor(Math.random() * facts.length)], null, "Fun Fact", "white");
         }
 
         break;

@@ -155,18 +155,18 @@ body .line .name {
   text-align: right;
   padding-right: 6px;
 }
-body .editline {
+body .inputline {
   background-color: #262626;
   padding: 2px 4px 2px 4px;
   width: auto;
   margin: 0;
   margin-bottom: 8px;
 }
-body .editline .edit {
+body .inputline .inputbox {
   min-width: calc(100% - 200px);
   outline: none;
 }
-body .editline .time {
+body .inputline .time {
   user-select: none;
   cursor: default;
 }

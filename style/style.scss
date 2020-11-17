@@ -211,12 +211,12 @@ body {
          padding-right:6px;
       }
    }
-   .editline {
+   .inputline {
       background-color:$black;
       padding: 2px 4px 2px 4px;
       width: auto;
       //flex-grow: 1;
-      .edit {
+      .inputbox {
          min-width:calc(100% - 200px);
          outline:none;
       }

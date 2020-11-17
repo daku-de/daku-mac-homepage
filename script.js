@@ -1,13 +1,8 @@
 
 $(document).ready(function(e) {
 
-   var stream =$( ".stream")
-
-   var faviconnumber = 1;
-	function favicon() {
-		favicon = favicon == 1 ? 2 : 1;
-		$('.favicon').attr('href','favicon' + favicon + ".png");
-   }
+   var stream =$(".stream")
+   var inputbox = $(".inputline .inputbox");
    
    console.clear();
    var commandlist = [
@@ -66,11 +61,10 @@ $(document).ready(function(e) {
       printLine('A!   \\ \\_______\\   \\ \\__\\ \\__\\   \\ \\__\\\\ \\__\\   \\ \\_______\\', "logo");
       printLine("A!    \\|_______|    \\|__|\\|__|    \\|__| \\|__|    \\|_______|", "logo");
       printLine();
-      printLine('Welcome to [^http://daku.im](<b>daku.im</b>)!');
+      printLine('Welcome to [^https://daku.im](<b>daku.im</b>)!');
       printLine();
-      printLine("You can use this interface just like a normal terminal!", "important", "*Info*", "red");
+      printLine("You can use this interface just like a normal terminal!", "important", "<b>Info</b>", "red");
       printLine("For help type 'help'", "important", "<b>Info</b>", "red");
-	  setInterval(favicon,500);
    }
 
    var timestring = "";
@@ -102,19 +96,19 @@ $(document).ready(function(e) {
 	  if (temptimestring != timestring) {
         timestring = temptimestring;
         datestring = tempdatestring;
-         $(".editline .time").text(timestring);
-         $(" .date").text(datestring);
+         $(".inputline .time").text(timestring);
+         $(".date").text(datestring);
      }
    }
 
-   $(".editline .edit").keydown(function(e) {
-      var text = $(".editline .edit").text();
+   inputbox.keydown(function(e) {
+      var text = inputbox.text();
       console.log(e.which);
       if (e.which == 13) {
          var command = text.split(' ')[0];
          var output = "";
          
-         $(".editline .edit").text("");
+         inputbox.text("");
          printLine(text, null, "User");
          if (text !== "") {
             previouscommands[currentcommand] = text;
@@ -123,25 +117,25 @@ $(document).ready(function(e) {
          }
          //Remove newline
          setTimeout(() => {
-            $(".editline .edit").text("");
+            inputbox.text("");
          }, 1);
 
       }
-      if (e.which == 38) { //up
+      if (e.which == 38) { //previous command
          if (currentcommand > 0) {
             currentcommand--;
-            $(".editline .edit").text(previouscommands[currentcommand]);
+            inputbox.text(previouscommands[currentcommand]);
          }
       }
-      if (e.which == 40) { //down
+      if (e.which == 40) { //next command
 
          if (currentcommand < previouscommands.length) {
             currentcommand++;
-            $(".editline .edit").text(previouscommands[currentcommand]);
+            inputbox.text(previouscommands[currentcommand]);
          }
 
          if (currentcommand == previouscommands.length) {
-            $(".editline .edit").text("");
+            inputbox.text("");
          }
       }
    });
@@ -196,8 +190,8 @@ $(document).ready(function(e) {
             var sad_mac = "https://i.imgur.com/2uex9Hc.png";
             if (file.localeCompare("-rf /")) {
                console.log("Closing the page");
-               $( " .wrapper").addClass('macwrapper')
-               $( " .wrapper").append('<div class="macerror"></div>');
+               $(".wrapper").addClass('macwrapper')
+               $(".wrapper").append('<div class="macerror"></div>');
                setTimeout(func => {window.location.replace("https://www.google.com/");}, 4500);
                var audio = new Audio('files/sadmac.mp3');
                audio.play();
@@ -205,6 +199,10 @@ $(document).ready(function(e) {
             } else {
                printLine("Couldn't delete " + file);
             }
+            break;
+
+         case "socials":
+            printSocials();
             break;
 
          default:
@@ -245,8 +243,20 @@ $(document).ready(function(e) {
 
    }
 
+   function printSocials() {
+      printLine("A!   ____  ____   _____   ____   ___    __    ____", "blue");
+      printLine("A!  / __/ / __ \\ / ___/  /  _/  / _ |  / /   / __/", "blue");
+      printLine("A! _\\ \\  / /_/ // /__   _/ /   / __ | / /__ _\\ \\  ", "blue");
+      printLine("A!/___/  \\____/ \\___/  /___/  /_/ |_|/____//___/  ", "blue");
+      printLine();
+      printLine("A! - Twitter: [^https://twitter.com/daku_lol](DakuuLoL)");
+      printLine("A! - YouTube: [^https://www.youtube.com/channel/UCLcRQAp7hgOwfuPFFQBr8lw](Daku)");
+      printLine("A! - Twitch:  [^https://twitter.com/daku_lol](FatG_Daku)");
+      printLine();
+
+   }
+
    function parseURL(content) {
-      if (content == null) return;
       while (content.indexOf("](") >= 0) {
 
          var NAMEregExp = /\(([^)]+)\)/;
@@ -270,81 +280,35 @@ $(document).ready(function(e) {
       return content;
    }
 
-   function parseBold(content) {
-      if (content == null) return;
-      var tobold = true;
-      var boldnumber = 0;
-      for (var i = 0; i < content.length; i++) {
-         if (content[i] == "*" && content[i - 1] != "*" && content[i + 1] != "*") {
-            boldnumber++;
-         }
-      }
-      while (content.indexOf("*") >= 0) { //Bold parser
-         var pos = content.indexOf("*");
-         content = content.replace("*", "");
-         if (tobold) {
-            content = content.splice(pos, 0, '<b>');
-         } else {
-            content = content.splice(pos, 0, '</b>');
-         }
-         tobold = !tobold;
-         if (tobold && boldnumber <= 1) {
-            break;
-         }
-         //content = '<a href="' + url + '">' + uname + '</a>'; //working
-      }
-      var tounderline = true;
-      var underlinenumber = 0;
-      for (var i = 0; i < content.length; i++) {
-         if (content[i] == "*" && content[i - 1] != "*" && content[i + 1] != "*") {
-            underlinenumber++;
-         }
-      }
-      while (content.indexOf("**") >= 0) { //Bold parser
-         var pos = content.indexOf("**");
-         content = content.replace("**", "");
-         if (tounderline) {
-            content = content.splice(pos, 0, '<u>');
-         } else {
-            content = content.splice(pos, 0, '</u>');
-         }
-         tounderline = !tounderline;
-         if (tounderline && underlinenumber <= 1) {
-            break;
-         }
-      }
-      return content;
-   }
-
    function playVideo(yt_id, windowtitle) {
       var videoElement = '<div class="video-popup-model">' + '<div class="video-layer">' + '<div class="video-model-close-layer">' + '</div>' + '<div class="model-wrapper">' + '<div id="draggable">' + '<div class="handle">' + '<div class="buttons popupbuttons"><div class="first"></div><div class="second"></div><div class="third"></div></div><span class="title">' + windowtitle +'</span>' + '</div>' + '<div class="videomodel">' + '<div class="videoscreen">';
       videoElement += '<iframe width="100%" height="auto" class="videlement"' + 'src="https://www.youtube.com/embed/' + yt_id + '?rel=0&amp;controls=1&amp;showinfo=0&amp;autoplay=1' + '" frameborder="0"' + 'allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"' + 'allowfullscreen></iframe>' + '</div>';
       videoElement += '</div>' + '</div>' + '</div>' + '</div>' + '</div>';
-      $(" .video").append(videoElement);
+      $(".video").append(videoElement);
       var videoWidth = $('.video-popup-model .videlement').width();
       var videHeight = (9 / 16) * videoWidth;
-      $('.video-popup-model .videlement').height(videHeight);
-      $(" .video").find('.video-popup-model').addClass('smooth_show');
+      $(".video-popup-model .videlement").height(videHeight);
+      $(".video").find('.video-popup-model').addClass('smooth_show');
 
       function closeVideo() {
-         $(" .video").on('click', '.video-model-close-layer', function(event) {
+         $(".video").on('click', '.video-model-close-layer', function(event) {
             var model = $(this).parents('.video-popup-model')
             model.removeClass('smooth_show');
             setTimeout(function() {
                model.remove();
             }, 500);
-            $(" .video").removeClass('no-reload');
+            $(".video").removeClass('no-reload');
          });
       }
 
       function buttonCloseVideo() {
-         $(" .video").on('click', ' .popupbuttons', function(event) {
-            $( " .video-model-close-layer").click();
+         $(".video").on('click', ' .popupbuttons', function(event) {
+            $( ".video-model-close-layer").click();
          })
       }
 
-      $( function() {
-      $( "#draggable" ).draggable({
+      $(function() {
+      $("#draggable" ).draggable({
          iframeFix: true
       });
       } );
@@ -354,52 +318,39 @@ $(document).ready(function(e) {
    }
 
    function printLine(content, style, service, servicestyle) {
-      content = parseURL(content);
-      content = parseBold(content);
-      if (service == null) {
-         if (content == null) {
-            stream.append('<div class="line">' +
-               '<p class="information">' + '<br/>' + '</p>' +
-               '</div>');
-            return;
-         }
-         if (style == null) {
-            if (content[0] == "A" && content[1] == "!") {
-               content = content.substr(2);
-               content = content.replace(/ /g, '\u00A0');
-            }
-            stream.append('<div class="line">' +
-               '<p class="information">' + content + '</p>' +
-               '</div>');
-         } else {
-            if (content[0] == "A" && content[1] == "!") {
-               content = content.substr(2);
-               content = content.replace(/ /g, '\u00A0');
-            }
-            style = style.toLowerCase();
-            var col = " " + style + "t";
-            if (style == "important") {
-               col = " " + style;
-            }
-            stream.append('<div class="line">' +
-               '<p class="information' + col + '">' + content + '</p>' +
-               '</div>');
-         }
-      } else {
-
-      var d = new Date();
-      var hours = ((d.getHours() < 10) ? "0" : "") + d.getHours();
-      var minutes = ((d.getMinutes() < 10) ? "0" : "") + d.getMinutes();
-      var seconds = ((d.getSeconds() < 10) ? "0" : "") + d.getSeconds();
-      var postcolour = "";
-
+      if (content == null) {
+         stream.append('<div class="line">' +
+            '<p class="information">' + '<br/>' + '</p>' +
+            '</div>');
+         return;
+      }
+      
+      var col = "";
       if (style != null) {
          style = style.toLowerCase();
          var col = " " + style + "t";
          if (style == "important") {
             col = " " + style;
          }
-   }
+      }
+
+      if (content[0] == "A" && content[1] == "!") {
+         content = content.substr(2);
+         content = content.replace(/ /g, '\u00A0');
+      }
+
+      content = parseURL(content);
+      if (service == null) {
+         stream.append('<div class="line">' +
+            '<p class="information' + col + '">' + content + '</p>' +
+            '</div>');
+         return;
+      }
+
+      var d = new Date();
+      var hours = ((d.getHours() < 10) ? "0" : "") + d.getHours();
+      var minutes = ((d.getMinutes() < 10) ? "0" : "") + d.getMinutes();
+      var seconds = ((d.getSeconds() < 10) ? "0" : "") + d.getSeconds();
 
       if (servicestyle == null) {
          switch (service) {
@@ -420,27 +371,18 @@ $(document).ready(function(e) {
          }
       } else {
          servicestyle = servicestyle.toLowerCase();
-         var col = " " + servicestyle + "t";
+         var tempcol = " " + servicestyle + "t";
          if (servicestyle == "important") {
-            col = " " + servicestyle;
+            tempcol = " " + servicestyle;
          }
-         servicestyle = col;
-      }
-      if (content[0] == "A" && content[1] == "!") {
-         content = content.substr(2);
-         content = content.replace(/ /g, '\u00A0');
-      }
-      if (content[0] == "E" && content[1] == "!") {
-         content = content.substr(2);
-         postcolour = " important";
+         servicestyle = tempcol;
       }
       stream.append('<div class="line">' +
          '<p class="time">[' + hours + ":" + minutes + ":" + seconds + ']</p>' +
          '<p class="name' + servicestyle + '">' + service + '</p>' +
          '<p class="content' + col + '">' + content + '</p>' +
          '</div>');
-      $(document).scrollTop($(document).height() - $(window).height());
-      }
+      //$(document).scrollTop($(document).height() - $(window).height());
    }
 
    String.prototype.splice = function(idx, rem, str) {

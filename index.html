@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Terminal Landing Page</title>
+      <link rel="stylesheet" href="style/style.css">
+      <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+      <script src="https://kit.fontawesome.com/b4b7a26c21.js" crossorigin="anonymous"></script>
+      <script type="text/javascript" src="script.js"></script>
+   </head>
+   <body>
+      <div class="wrapper">
+      </div>
+      <header>
+         <ul class="left">
+				<li class="apple">
+                  <i class="fa fa-apple"></i>
+            </li>
+            <li><b>Finder</b></li>
+            <li>File</li>
+            <li>Edit</li>
+            <li>View</li>
+            <li>Go</li>
+            <li>Window</li>
+            <li>Help</li>
+         </ul>
+
+         <ul class="right">
+            <li>
+               <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+            </li>
+            <li>
+               <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </li>
+            <li>
+               <i class="fas fa-battery-full"></i>
+            </li>
+            <li  class="date"></li>
+            <li>
+               <i class="fas fa-search"></i>
+            </li>
+
+         </ul>
+      </header>
+      <div class="window">
+         <div class="handle" id="header">
+						<div class="buttons">
+                     <div class="first"></div>
+                     <div class="second"></div>
+                     <div class="third"></div>
+						</div>
+						<span class="title">TERMINAL</span>
+            </div>
+         <div class="terminal">
+            <div class="stream"></div>
+            <div class="line editline">
+               <p class="time"></p>
+               <p class="name">&gt;</p>
+               <p contenteditable="true" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="information edit" autofocus="autofocus"></p>
+            </div>
+            
+         </div>
+      </div>
+      <div class="video">
+            
+      </div>
+      </div>
+   </body>
+</html>

@@ -281,7 +281,7 @@ $(document).ready(function(e) {
    }
 
    function playVideo(yt_id, windowtitle) {
-      var videoElement = '<div class="video-popup-model">' + '<div class="video-layer">' + '<div class="video-model-close-layer">' + '</div>' + '<div class="model-wrapper">' + '<div id="draggable">' + '<div class="handle">' + '<div class="buttons popupbuttons"><div class="first"></div><div class="second"></div><div class="third"></div></div><span class="title">' + windowtitle +'</span>' + '</div>' + '<div class="videomodel">' + '<div class="videoscreen">';
+      var videoElement = '<div class="video-popup-model">' + '<div class="video-layer">' + '<div class="video-model-close-layer">' + '</div>' + '<div class="model-wrapper">' + '<div class="draggable">' + '<div class="handle">' + '<div class="buttons popupbuttons"><div class="first"></div><div class="second"></div><div class="third"></div></div><span class="title">' + windowtitle +'</span>' + '</div>' + '<div class="videomodel">' + '<div class="videoscreen">';
       videoElement += '<iframe width="100%" height="auto" class="videlement"' + 'src="https://www.youtube.com/embed/' + yt_id + '?rel=0&amp;controls=1&amp;showinfo=0&amp;autoplay=1' + '" frameborder="0"' + 'allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"' + 'allowfullscreen></iframe>' + '</div>';
       videoElement += '</div>' + '</div>' + '</div>' + '</div>' + '</div>';
       $(".video").append(videoElement);
@@ -308,7 +308,7 @@ $(document).ready(function(e) {
       }
 
       $(function() {
-      $("#draggable" ).draggable({
+      $(".draggable" ).draggable({
          iframeFix: true
       });
       } );

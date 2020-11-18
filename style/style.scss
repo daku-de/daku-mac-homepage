@@ -26,6 +26,12 @@ $white: #ffffff;
 $applegradient:linear-gradient(to bottom, rgba(230, 230, 230, 1) 0%, rgba(163, 163, 163, 1) 100%);
 $windowradius: 5px;
 
+:root {
+   --terminal-background: #3A3A3A;
+   --terminal-text: #EFEFAE;
+   --terminal-inputline: #262626;
+}
+
 html {
    background-image: url(https://i.imgur.com/ZMGL5nP.jpg);
    background-size: cover;
@@ -86,7 +92,7 @@ header {
 }
 
 body {
-   color:$text;
+   color: var(--terminal-text);
    font-family: 'Fira Mono', Monospace;
    margin:0;
    overflow-x:hidden;
@@ -116,7 +122,7 @@ body {
 
    .window {
       margin: 30px;
-      background-color:$darkgrey;
+      background-color: var(--terminal-background);
 
       .terminal {
          display: flex;
@@ -213,7 +219,7 @@ body {
       }
    }
    .inputline {
-      background-color:$black;
+      background-color: var(--terminal-inputline);
       padding: 2px 4px 2px 4px;
       width: auto;
       //flex-grow: 1;
@@ -261,10 +267,10 @@ body {
    color:$highlighttext;
    background:$highlight;
 }
-::-webkit-scrollbar{background-color:$darkgrey;width:10px;height:10px;}
+::-webkit-scrollbar{background-color:var(--terminal-background);width:10px;height:10px;}
 ::-webkit-scrollbar-thumb{background-color:$grey;}
-::-webkit-scrollbar-corner{background-color:$darkgrey;}
-::-webkit-resizer{background-color:$darkgrey;}
+::-webkit-scrollbar-corner{background-color:var(--terminal-background);}
+::-webkit-resizer{background-color:var(--terminal-background);}
 
 .video-popup-model {
    width: 100%;

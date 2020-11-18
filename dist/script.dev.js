@@ -3,10 +3,17 @@
 $(document).ready(function (e) {
   var stream = $(".stream");
   var inputbox = $(".inputline .inputbox");
+  var root = document.documentElement;
   console.clear();
-  var commandlist = [["help", "Show commands"], ["commands", "Show commands"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["refresh", "Reload the whole console"]];
+  var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"]];
   var previouscommands = [];
   var currentcommand = 0;
+  var terminalstyles = {
+    //Custom Terminal Styles ([TerminalBackground, TerminalText, InputlineBackground])
+    "default": ["#3A3A3A", "#EFEFAE", "#262626"],
+    hacker: ["#000000", "#0ed400", "#000000"],
+    white: ["#ffffff", "#000000", "#ffffff"]
+  };
   var pageindex = ["index", "about", "connect"];
   var currentpage = "landing";
   var facts = ["'rm -rf /' will close this website", "About 92% of the world’s currency exists only on hard drives", "The new Texas Instrument calculators have ABC keyboards as the standardised tool for tests", "Sister Mary K. Keller was the first woman in the US to be awarded a PhD in Computer Science"];
@@ -160,10 +167,11 @@ $(document).ready(function (e) {
         stream.text("");
         break;
 
-      case "refresh":
+      case "reset":
         stream.text("");
         previouscommands = [];
         init();
+        setStyle("default");
         break;
 
       case "video":
@@ -205,10 +213,35 @@ $(document).ready(function (e) {
         printSocials();
         break;
 
+      case "style":
+        if (line.split(' ').length == 2) {
+          setStyle(line.split(' ')[1].toLowerCase());
+        } else {
+          printLine("Usage: style [style]");
+          printLine("Available styles:");
+          Object.keys(terminalstyles).forEach(function (style) {
+            return printLine(style);
+          });
+        }
+
+        break;
+
       default:
         output = "Unrecognised command '" + command + "'.";
         printLine(output, null, "Client");
     }
+  }
+
+  function setStyle(style) {
+    if (Object.keys(terminalstyles).indexOf(style) <= -1) {
+      printLine("Style '" + style + "' not known");
+      return;
+    }
+
+    root.style.setProperty('--terminal-background', terminalstyles[style][0]);
+    root.style.setProperty('--terminal-text', terminalstyles[style][1]);
+    root.style.setProperty('--terminal-inputline', terminalstyles[style][2]);
+    printLine("Successfully changed style to: " + "'" + style + "'");
   }
 
   var random_date;

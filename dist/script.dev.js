@@ -4,16 +4,19 @@ $(document).ready(function (e) {
   var stream = $(".stream");
   var inputbox = $(".inputline .inputbox");
   var root = document.documentElement;
+  $('.terminal').click(function () {
+    inputbox.focus();
+  });
   console.clear();
   var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"]];
   var previouscommands = [];
   var currentcommand = 0;
   var terminalstyles = {
-    //Custom Terminal Styles ([TerminalBackground, TerminalText, InputlineBackground])
-    "default": ["#3A3A3A", "#EFEFAE", "#262626"],
-    hacker: ["#000000", "#0ed400", "#000000"],
-    white: ["#ffffff", "#000000", "#ffffff"],
-    pink: ["#ffcbe4", "#df0069", "#ffa4cf"]
+    //Custom Terminal Styles ([TerminalBackground, TerminalText, InputlineBackground, Logo, Important])
+    "default": ["#3A3A3A", "#EFEFAE", "#262626", "#ffe419", "#E3A786"],
+    hacker: ["#000000", "#0ed400", "#000000", "#ff0fff", "#E3A786"],
+    white: ["#ffffff", "#000000", "#ffffff", "#ff8205", "#c40000"],
+    pink: ["#ffcbe4", "#df0069", "#ffa4cf", "#6a0067", "#3f3fff"]
   };
   var pageindex = ["index", "about", "connect"];
   var currentpage = "landing";
@@ -56,8 +59,8 @@ $(document).ready(function (e) {
     printLine();
     printLine('Welcome to [^https://daku.im](<b>daku.im</b>)!');
     printLine();
-    printLine("You can use this interface just like a normal terminal!", "important", "<b>Info</b>", "red");
-    printLine("For help type 'help'", "important", "<b>Info</b>", "red");
+    printLine("You can use this interface just like a normal terminal!", "important", "Info");
+    printLine("For help type 'help'", "important", "Info");
   }
 
   var timestring = "";
@@ -219,10 +222,10 @@ $(document).ready(function (e) {
           var style = line.split(' ')[1].toLowerCase();
 
           if (setStyle(style)) {
-            printLine("Successfully changed style to: " + "'" + style + "'");
+            printLine("Successfully changed style to: " + "'<b>" + style + "</b>'");
           }
         } else {
-          printLine("Usage: style [style]");
+          printLine("Usage: style &lt;style&gt;");
           printLine("Available styles:");
           Object.keys(terminalstyles).forEach(function (style) {
             return printLine(style);
@@ -246,6 +249,8 @@ $(document).ready(function (e) {
     root.style.setProperty('--terminal-background', terminalstyles[style][0]);
     root.style.setProperty('--terminal-text', terminalstyles[style][1]);
     root.style.setProperty('--terminal-inputline', terminalstyles[style][2]);
+    root.style.setProperty('--color-logo', terminalstyles[style][3]);
+    root.style.setProperty('--color-important', terminalstyles[style][4]);
     return true;
   }
 
@@ -314,9 +319,9 @@ $(document).ready(function (e) {
       var end = content.indexOf(")");
 
       if (newpage) {
-        content = content.replace(content.substring(start, end + 1), "").splice(start, 0, '<a href="' + url + '" target="_blank">' + uname + '</a>');
+        content = content.replace(content.substring(start, end + 1), "").splice(start, 0, '<a href="' + url + '" target="_blank"><b>' + uname + '</b></a>');
       } else {
-        content = content.replace(content.substring(start, end + 1), "").splice(start, 0, '<a href="' + url + '">' + uname + '</a>');
+        content = content.replace(content.substring(start, end + 1), "").splice(start, 0, '<a href="' + url + '"><b>' + uname + '</b></a>');
       }
     }
 
@@ -368,6 +373,7 @@ $(document).ready(function (e) {
     if (content[0] == "A" && content[1] == "!") {
       content = content.substr(2);
       content = content.replace(/ /g, "\xA0");
+      content = "<b>" + content + "</b>";
     }
 
     content = parseURL(content);
@@ -381,6 +387,7 @@ $(document).ready(function (e) {
     var hours = (d.getHours() < 10 ? "0" : "") + d.getHours();
     var minutes = (d.getMinutes() < 10 ? "0" : "") + d.getMinutes();
     var seconds = (d.getSeconds() < 10 ? "0" : "") + d.getSeconds();
+    if (service == "Info") service = "<b>" + service + "</b>";
 
     if (servicestyle == null) {
       switch (service) {
@@ -389,7 +396,7 @@ $(document).ready(function (e) {
           break;
 
         case "Server":
-          servicestyle = "blue";
+          servicestyle = "darkblue";
           break;
 
         case "Client":
@@ -398,6 +405,10 @@ $(document).ready(function (e) {
 
         case "User":
           servicestyle = "green";
+          break;
+
+        case "<b>Info</b>":
+          servicestyle = "red";
           break;
 
         default:

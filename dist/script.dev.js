@@ -12,7 +12,8 @@ $(document).ready(function (e) {
     //Custom Terminal Styles ([TerminalBackground, TerminalText, InputlineBackground])
     "default": ["#3A3A3A", "#EFEFAE", "#262626"],
     hacker: ["#000000", "#0ed400", "#000000"],
-    white: ["#ffffff", "#000000", "#ffffff"]
+    white: ["#ffffff", "#000000", "#ffffff"],
+    pink: ["#ffcbe4", "#df0069", "#ffa4cf"]
   };
   var pageindex = ["index", "about", "connect"];
   var currentpage = "landing";
@@ -105,6 +106,8 @@ $(document).ready(function (e) {
     if (e.which == 13) {
       var command = text.split(' ')[0];
       var output = "";
+      text = text.replace(/</g, "&lt;");
+      text = text.replace(/>/g, "&gt;");
       inputbox.text("");
       printLine(text, null, "User");
 
@@ -143,8 +146,6 @@ $(document).ready(function (e) {
 
   function cmd(command, line) {
     console.log("Input: " + line);
-    line = line.replace(/</g, "&lt;");
-    line = line.replace(/>/g, "&gt;");
     command = command.replace(/\//, '');
     command = command.toLowerCase();
 
@@ -215,7 +216,11 @@ $(document).ready(function (e) {
 
       case "style":
         if (line.split(' ').length == 2) {
-          setStyle(line.split(' ')[1].toLowerCase());
+          var style = line.split(' ')[1].toLowerCase();
+
+          if (setStyle(style)) {
+            printLine("Successfully changed style to: " + "'" + style + "'");
+          }
         } else {
           printLine("Usage: style [style]");
           printLine("Available styles:");
@@ -241,7 +246,7 @@ $(document).ready(function (e) {
     root.style.setProperty('--terminal-background', terminalstyles[style][0]);
     root.style.setProperty('--terminal-text', terminalstyles[style][1]);
     root.style.setProperty('--terminal-inputline', terminalstyles[style][2]);
-    printLine("Successfully changed style to: " + "'" + style + "'");
+    return true;
   }
 
   var random_date;
@@ -360,17 +365,6 @@ $(document).ready(function (e) {
       return;
     }
 
-    var col = "";
-
-    if (style != null) {
-      style = style.toLowerCase();
-      var col = " " + style + "t";
-
-      if (style == "important") {
-        col = " " + style;
-      }
-    }
-
     if (content[0] == "A" && content[1] == "!") {
       content = content.substr(2);
       content = content.replace(/ /g, "\xA0");
@@ -379,7 +373,7 @@ $(document).ready(function (e) {
     content = parseURL(content);
 
     if (service == null) {
-      stream.append('<div class="line">' + '<p class="information' + col + '">' + content + '</p>' + '</div>');
+      stream.append('<div class="line">' + '<p class="information" style="color:var(--color-' + style + ')">' + content + '</p>' + '</div>');
       return;
     }
 
@@ -391,36 +385,27 @@ $(document).ready(function (e) {
     if (servicestyle == null) {
       switch (service) {
         case "Website":
-          servicestyle = " redt";
+          servicestyle = "red";
           break;
 
         case "Server":
-          servicestyle = " bluet";
+          servicestyle = "blue";
           break;
 
         case "Client":
-          servicestyle = " bluet";
+          servicestyle = "blue";
           break;
 
         case "User":
-          servicestyle = " greent";
+          servicestyle = "green";
           break;
 
         default:
           servicestyle = "";
       }
-    } else {
-      servicestyle = servicestyle.toLowerCase();
-      var tempcol = " " + servicestyle + "t";
+    } else {}
 
-      if (servicestyle == "important") {
-        tempcol = " " + servicestyle;
-      }
-
-      servicestyle = tempcol;
-    }
-
-    stream.append('<div class="line">' + '<p class="time">[' + hours + ":" + minutes + ":" + seconds + ']</p>' + '<p class="name' + servicestyle + '">' + service + '</p>' + '<p class="content' + col + '">' + content + '</p>' + '</div>'); //$(document).scrollTop($(document).height() - $(window).height());
+    stream.append('<div class="line">' + '<p class="time">[' + hours + ":" + minutes + ":" + seconds + ']</p>' + '<p class="name" style="color:var(--color-' + servicestyle + ')">' + service + '</p>' + '<p class="content" style="color:var(--color-' + style + ')">' + content + '</p>' + '</div>'); //$(document).scrollTop($(document).height() - $(window).height());
   }
 
   String.prototype.splice = function (idx, rem, str) {

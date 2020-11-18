@@ -2,6 +2,25 @@
   --terminal-background: #3A3A3A;
   --terminal-text: #EFEFAE;
   --terminal-inputline: #262626;
+  --style-highlighttext:0;
+  --stlye-highlightbackground:0;
+  --color-pink: #d787af;
+  --color-cream: #ffd7af;
+  --color-lightblue: #75d1d1;
+  --color-purple: #6441a5;
+  --color-blue: #1DA1F2;
+  --color-darkblue: #005f87;
+  --color-gold: #ffe419;
+  --color-orange: #dd6f48;
+  --color-white: #ffffff;
+  --color-black: #00000000;
+  --color-yellow: #ffd500;
+  --color-pink: #d787af;
+  --color-green: #86d400;
+  --color-cyan: #00ffff;
+  --color-red: #c40000;
+  --color-important: #E3A786;
+  --color-logo: #ffe419;
 }
 
 html {
@@ -82,6 +101,7 @@ body .window-button, body .handle .buttons .third, body .handle .buttons .second
 body .window {
   margin: 30px;
   background-color: var(--terminal-background);
+  border-radius: 5px;
 }
 body .window .terminal {
   display: flex;
@@ -176,35 +196,6 @@ body .inputline .inputbox {
 body .inputline .time {
   user-select: none;
   cursor: default;
-}
-
-.whitet {
-  color: #ffffff;
-}
-
-.redt {
-  color: #d75f5f;
-}
-
-.important {
-  color: #E3A786;
-}
-
-.bluet {
-  color: #5f8787;
-}
-
-.greent {
-  color: #afaf00;
-}
-
-.selft {
-  color: #83A598;
-}
-
-.logot {
-  color: #ffe419;
-  font-weight: bold;
 }
 
 ::selection {

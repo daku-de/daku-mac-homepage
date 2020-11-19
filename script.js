@@ -331,22 +331,26 @@ $(document).ready(function(e) {
       $(".video-popup-model .videlement").height(videHeight);
       $(".video").find('.video-popup-model').addClass('smooth_show');
 
-      function closeVideo() {
-         $(".video").on('click', '.video-model-close-layer', function(event) {
-            var model = $(this).parents('.video-popup-model')
-            model.removeClass('smooth_show');
-            setTimeout(function() {
-               model.remove();
-            }, 500);
-            $(".video").removeClass('no-reload');
-         });
-      }
+      
+      $(".video").on('click', '.video-model-close-layer', function(event) {
+         var model = $(this).parents('.video-popup-model')
+         model.removeClass('smooth_show');
+         setTimeout(function() {
+            model.remove();
+         }, 500);
+         $(".video").removeClass('no-reload');
+         inputbox.focus();
+      });
 
-      function buttonCloseVideo() {
-         $(".video").on('click', ' .popupbuttons', function(event) {
+      $(".video").on('click', ' .popupbuttons', function(event) {
+         $( ".video-model-close-layer").click();
+      });
+
+      $(document).on('keydown', function(event) {
+         if (event.which == 27) {
             $( ".video-model-close-layer").click();
-         })
-      }
+         }
+      });
 
       $(function() {
       $(".draggable" ).draggable({
@@ -354,8 +358,6 @@ $(document).ready(function(e) {
       });
       } );
 
-      closeVideo();
-      buttonCloseVideo();
    }
 
    function printLine(content, style, service, servicestyle) {

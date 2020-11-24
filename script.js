@@ -163,8 +163,17 @@ $(document).ready(function(e) {
       switch (command) {
          case "commands":
          case "help":
+            var maxlen = 0;
             for (var i = 0; i < commandlist.length; i++) {
-               output = commandlist[i][0] + " : " + commandlist[i][1];
+               if (commandlist[i][0].length > maxlen) {
+                  maxlen = commandlist[i][0].length
+               }
+            }
+            for (var i = 0; i < commandlist.length; i++) {
+               output = commandlist[i][0];
+               output += ('\u00A0').repeat(maxlen - commandlist[i][0].length);
+               output += " - " + commandlist[i][1];
+               console.log(output);
                printLine(output, null, "Client");
             }
             break;
@@ -415,7 +424,6 @@ $(document).ready(function(e) {
          '<p class="name" style="color:var(--color-'+ servicestyle +')">' + service + '</p>' +
          '<p class="content" style="color:var(--color-'+ style +')">' + content + '</p>' +
          '</div>');
-      //$(document).scrollTop($(document).height() - $(window).height());
    }
 
    String.prototype.splice = function(idx, rem, str) {

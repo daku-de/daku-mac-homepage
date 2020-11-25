@@ -75,6 +75,8 @@ header a:hover {
 }
 
 body {
+  height: 100%;
+  width: 100%;
   color: var(--terminal-text);
   font-family: "Fira Mono", Monospace;
   margin: 0;

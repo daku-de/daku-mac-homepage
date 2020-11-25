@@ -196,8 +196,8 @@ $(document).ready(function(e) {
             break;
 
          case "video":
-            var ID = "GgoGrwes4cA";
-            var title = "YouTube-Video";
+            var ID = "J35OL8_huoQ";
+            var title = "Active361 - Vielleicht";
             
             playVideo(ID, title);
             break;

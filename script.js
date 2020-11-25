@@ -243,6 +243,10 @@ $(document).ready(function(e) {
             }
             break;
 
+         case "kappa":
+            printLine('<img src="https://img.redbull.com/images/c_fill,g_auto,w_1030,h_1030/q_auto,f_auto/redbullcom/2017/06/19/2a7635e1-c005-4a7a-a707-3238f36ccc00/kappa-twitch.png" width="60" height="60"');
+            break;
+
          default:
             output = "Unrecognised command '" + command + "'.";
             printLine(output, null, "Client");

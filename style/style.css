@@ -120,7 +120,10 @@ body .handle {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   user-select: none;
-  font-family: "Fira Mono", Monospace;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  vertical-align: middle;
 }
 body .handle .buttons {
   position: absolute;
@@ -155,9 +158,21 @@ body .handle .title {
   color: black;
   text-align: center;
   margin: auto;
-  display: block;
   margin-left: auto;
   margin-right: auto;
+  height: 100%;
+  max-width: 100%;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 17px;
+}
+body .handle .title span {
+  vertical-align: middle;
+}
+body .handle .title img {
+  max-height: 75%;
+  margin-right: 5px;
+  vertical-align: middle;
 }
 body .stream {
   margin-top: 8px;

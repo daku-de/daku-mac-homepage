@@ -198,12 +198,7 @@ $(document).ready(function (e) {
         break;
 
       case "fact":
-        if (Math.random() < 0.2) {
-          printLine(facts[0], null, "Fun Fact", "white");
-        } else {
-          printLine(facts[Math.floor(Math.random() * facts.length)], null, "Fun Fact", "white");
-        }
-
+        printFact();
         break;
 
       case "rm":
@@ -259,6 +254,20 @@ $(document).ready(function (e) {
         output = "Unrecognised command '" + command + "'.";
         printLine(output, null, "Client");
     }
+  }
+
+  var readfacts = [];
+
+  function printFact() {
+    if (readfacts.length == facts.length) readfacts = []; //all facts displayed once, reset
+
+    for (var r = Math.floor(Math.random() * facts.length); readfacts.includes(r); r = Math.floor(Math.random() * facts.length)) {
+      ;
+    }
+
+    printLine(facts[r], null, "Fun Fact", "white");
+    readfacts.push(r);
+    console.log("Readfacts: " + readfacts);
   }
 
   function setStyle(style) {
@@ -319,7 +328,7 @@ $(document).ready(function (e) {
     printLine();
     printLine("A! - Twitter: [^https://twitter.com/daku_lol](DakuuLoL)");
     printLine("A! - YouTube: [^https://www.youtube.com/channel/UCLcRQAp7hgOwfuPFFQBr8lw](Daku)");
-    printLine("A! - Twitch:  [^https://twitter.com/daku_lol](FatG_Daku)");
+    printLine("A! - Twitch:  [^https://www.twitch.tv/dakustream](DakuStream)");
     printLine();
   }
 

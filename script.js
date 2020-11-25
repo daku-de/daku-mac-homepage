@@ -35,7 +35,9 @@ $(document).ready(function(e) {
    var pageindex = ["index", "about", "connect"];
    var currentpage = "landing";
 
-   var facts = ["'rm -rf /' will close this website", "About 92% of the world’s currency exists only on hard drives", "The new Texas Instrument calculators have ABC keyboards as the standardised tool for tests", 
+   var facts = ["'rm -rf /' will close this website", 
+      "About 92% of the world’s currency exists only on hard drives", 
+      "The new Texas Instrument calculators have ABC keyboards as the standardised tool for tests", 
       "Sister Mary K. Keller was the first woman in the US to be awarded a PhD in Computer Science"];
    var url = "http://daku.im"
 
@@ -203,11 +205,7 @@ $(document).ready(function(e) {
             break;
          
          case "fact":
-            if (Math.random() < 0.2) {
-               printLine(facts[0], null, "Fun Fact", "white");
-            } else {
-               printLine(facts[Math.floor(Math.random()*facts.length)], null, "Fun Fact", "white");
-            }
+            printFact();
             break;
          
          case "rm":
@@ -250,11 +248,20 @@ $(document).ready(function(e) {
          case "kekw":
             printLine('<img src="https://www.streamscheme.com/wp-content/uploads/2020/07/kekw-emote.jpg" width="60" height="60"');
             break;
-            
+
          default:
             output = "Unrecognised command '" + command + "'.";
             printLine(output, null, "Client");
       }
+   }
+
+   var readfacts = [];
+   function printFact() {
+      if (readfacts.length == facts.length) readfacts = []; //all facts displayed once, reset
+      for (var r = Math.floor(Math.random()*facts.length); readfacts.includes(r); r = Math.floor(Math.random()*facts.length));
+      printLine(facts[r], null, "Fun Fact", "white");
+      readfacts.push(r);
+      console.log("Readfacts: " + readfacts);
    }
 
    function setStyle(style) {
@@ -311,7 +318,7 @@ $(document).ready(function(e) {
       printLine();
       printLine("A! - Twitter: [^https://twitter.com/daku_lol](DakuuLoL)");
       printLine("A! - YouTube: [^https://www.youtube.com/channel/UCLcRQAp7hgOwfuPFFQBr8lw](Daku)");
-      printLine("A! - Twitch:  [^https://twitter.com/daku_lol](FatG_Daku)");
+      printLine("A! - Twitch:  [^https://www.twitch.tv/dakustream](DakuStream)");
       printLine();
 
    }

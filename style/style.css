@@ -357,11 +357,15 @@ body .inputline .time {
   margin-right: 0;
   border: 0;
 }
+.bg-wrapper:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
 .bg-wrapper img {
   width: 80%;
   height: 80%;
   display: block;
   margin: auto;
   margin-bottom: 2px;
-  margin-top: 5px;
+  margin-top: 15px;
+  border-radius: 10px;
 }

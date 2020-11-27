@@ -270,7 +270,7 @@ $(document).ready(function (e) {
 
     for (var i = 0; i < backgrounds.length; i++) {
       $(".backgrounds").append('<div class="bg-wrapper" id="bg-' + i + '"><img src="' + backgrounds[i][0] + '"><span>' + backgrounds[i][1] + '</span></div>');
-      $("#bg-" + i).on('click', '*', i, function (e) {
+      $("#bg-" + i).on('click', i, function (e) {
         var i = e.data;
         var url = "url(" + backgrounds[i][0] + ")";
         root.style.setProperty('--background-image', url);

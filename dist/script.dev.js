@@ -193,8 +193,8 @@ $(document).ready(function (e) {
         break;
 
       case "video":
-        var ID = "J35OL8_huoQ";
-        var title = "Active361 - Vielleicht";
+        var ID = "LXb3EKWsInQ";
+        var title = "Placeholder";
         playVideo(ID, title);
         break;
 

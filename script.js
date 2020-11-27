@@ -26,7 +26,7 @@ $(document).ready(function(e) {
       ["https://i.imgur.com/ZMGL5nP.jpg", "Default"],
       ["https://wallpaperaccess.com/full/366398.jpg", "Mountain"],
       ["https://cdn.hipwallpaper.com/i/61/12/AIS2my.jpg", "Galaxy"],
-      ["https://picsum.photos/1920/1080", "Random"]
+      ["https://picsum.photos/1920/1080?t=0", "Random"]
    ];
    var previouscommands = [];
    var currentcommand = 0;
@@ -270,6 +270,7 @@ $(document).ready(function(e) {
    function showBackgrounds() {
       $(".backgrounds").remove();
       $(".backgroundinfo").remove();
+      backgrounds[backgrounds.length-1][0] += "0";
       stream.append('<div class="line backgroundinfo">' +
             '<p class="information">Click an image to change your background.</p>' +
             '</div>');

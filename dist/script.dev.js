@@ -8,7 +8,8 @@ $(document).ready(function (e) {
     inputbox.focus();
   });
   console.clear();
-  var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"]];
+  var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["background", "Choose a different background image"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"]];
+  var backgrounds = [["https://i.imgur.com/ZMGL5nP.jpg", "Default"], ["https://wallpaperaccess.com/full/366398.jpg", "Mountain"], ["https://cdn.hipwallpaper.com/i/61/12/AIS2my.jpg", "Galaxy"], ["https://picsum.photos/1920/1080", "Random"]];
   var previouscommands = [];
   var currentcommand = 0;
   var terminalstyles = {
@@ -201,6 +202,10 @@ $(document).ready(function (e) {
         printFact();
         break;
 
+      case "background":
+        showBackgrounds();
+        break;
+
       case "rm":
         var file = line.substr([line.split(' ')[0].length]);
         var sad_mac = "https://i.imgur.com/2uex9Hc.png";
@@ -253,6 +258,22 @@ $(document).ready(function (e) {
       default:
         output = "Unrecognised command '" + command + "'.";
         printLine(output, null, "Client");
+    }
+  }
+
+  function showBackgrounds() {
+    $(".backgrounds").remove();
+    $(".backgroundinfo").remove();
+    stream.append('<div class="line backgroundinfo">' + '<p class="information">Click an image to change your background.</p>' + '</div>');
+    stream.append('<div class="backgrounds">');
+
+    for (var i = 0; i < backgrounds.length; i++) {
+      $(".backgrounds").append('<div class="bg-wrapper" id="bg-' + i + '"><img src="' + backgrounds[i][0] + '"><span>' + backgrounds[i][1] + '</span></div>');
+      $("#bg-" + i).on('click', '*', i, function (e) {
+        var i = e.data;
+        var url = "url(" + backgrounds[i][0] + ")";
+        root.style.setProperty('--background-image', url);
+      });
     }
   }
 

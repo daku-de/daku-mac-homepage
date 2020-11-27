@@ -52,10 +52,12 @@ $windowradius: 5px;
    --color-important: #E3A786;
    --color-logo: #ffe419;
 
+   --background-image: url(https://i.imgur.com/ZMGL5nP.jpg);
+
 }
 
 html {
-   background-image: url(https://i.imgur.com/ZMGL5nP.jpg);
+   background-image: var(--background-image);
    background-size: cover;
    background-repeat: no-repeat;
    background-position: center;
@@ -403,5 +405,28 @@ body {
 
     100% {
        opacity: 100%;
+    }
+ }
+
+ .backgrounds {
+    display: flex;
+ }
+
+ .bg-wrapper {
+    width: 25%;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+    font-size: 18px;
+    margin-right: 0;
+    border: 0;
+
+    img {
+       width: 80%;
+       height: 80%;
+       display: block;
+       margin: auto;
+       margin-bottom: 2px;
+       margin-top: 5px;
     }
  }

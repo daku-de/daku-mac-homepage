@@ -4,10 +4,26 @@ $(document).ready(function(e) {
    var stream =$(".stream")
    var inputbox = $(".inputline .inputbox");
    var root = document.documentElement;
-   
-    $('.terminal').click(function() {
-     inputbox.focus();
+   $( function() {
+      $( ".window" ).draggable({
+         containment: "parent",
+         handle: ".handle",
+         cursor: "grabbing",
+         cancel: ".terminal",
+         iframeFix: true
+      });
+   } );
+
+   var mousedown;
+   $('.terminal').mousedown(function(event) {
+     mousedown = event.timeStamp;
    });
+
+   $('.terminal').mouseup(function(event) {
+     if ((event.timeStamp - mousedown) <= 160) inputbox.focus();
+   });
+   
+   
 
    console.clear();
    var commandlist = [
@@ -411,7 +427,9 @@ $(document).ready(function(e) {
 
       $(function() {
       $(".draggable" ).draggable({
-         iframeFix: true
+         iframeFix: true,
+         cursor: "grabbing",
+         handle: ".handle"
       });
       } );
 

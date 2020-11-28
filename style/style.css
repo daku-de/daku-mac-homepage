@@ -102,15 +102,17 @@ body .window-button, body .handle .buttons .third, body .handle .buttons .second
   color: rgba(0, 0, 0, 0.5);
 }
 body .window {
-  margin: 30px;
   background-color: var(--terminal-background);
   border-radius: 5px;
+  top: -10%;
+  width: 80%;
+  height: 70%;
 }
 body .window .terminal {
   display: flex;
   flex-flow: column;
   overflow-y: auto;
-  height: 600px;
+  height: calc(100% - 23px);
   border: 2px solid #a3a3a3;
   border-top: 0px;
   border-bottom-left-radius: 5px;
@@ -368,4 +370,12 @@ body .inputline .time {
   margin-bottom: 2px;
   margin-top: 15px;
   border-radius: 10px;
+}
+
+.terminal-wrapper {
+  height: calc(100% - 1.3em);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

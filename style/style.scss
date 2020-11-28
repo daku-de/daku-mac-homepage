@@ -147,15 +147,17 @@ body {
    }
 
    .window {
-      margin: 30px;
       background-color: var(--terminal-background);
       border-radius: 5px;
+      top: -10%;
+      width: 80%;
+      height: 70%;
 
       .terminal {
          display: flex;
          flex-flow: column;
          overflow-y: auto;
-         height: 600px;
+         height: calc(100% - 23px);
          border: 2px solid rgba(163, 163, 163, 1);
          border-top: 0px;
          border-bottom-left-radius: 5px;
@@ -434,4 +436,12 @@ body {
        margin-top: 15px;
        border-radius: 10px;
     }
+ }
+
+ .terminal-wrapper {
+    height: calc(100% - 1.3em);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
  }

@@ -13,6 +13,18 @@ $(document).ready(function (e) {
       iframeFix: true
     });
   });
+  $(".close-terminal").on('click', function (e) {
+    document.getElementById("terminal").style.setProperty("visibility", "hidden");
+  });
+  $(".open-terminal").on('click', function (e) {
+    var terminalVisibility = document.getElementById("terminal").style.getPropertyValue("visibility");
+
+    if (terminalVisibility == "hidden") {
+      document.getElementById("terminal").style.setProperty("visibility", "visible");
+    } else {
+      document.getElementById("terminal").style.setProperty("visibility", "hidden");
+    }
+  });
   var mousedown;
   $('.terminal').mousedown(function (event) {
     mousedown = event.timeStamp;
@@ -125,6 +137,8 @@ $(document).ready(function (e) {
     if (e.which == 13) {
       var command = text.split(' ')[0];
       var output = "";
+      command = command.replace(/</g, "&lt;");
+      command = command.replace(/>/g, "&gt;");
       text = text.replace(/</g, "&lt;");
       text = text.replace(/>/g, "&gt;");
       inputbox.text("");

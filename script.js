@@ -385,17 +385,16 @@ $(document).ready(function(e) {
       return true;
    }
 
-   function lastlogin() { //generate Last Login message with random date (within last ten years)
+   function lastlogin() {
       var lastlogin_date;
       if (getCookie("lastlogin") != "") {
          lastlogin_date = new Date(getCookie("lastlogin"));
          console.log(lastlogin_date);
       }
-      if (lastlogin_date == null) { //random date
-         var date = new Date();
-         var start = new Date(date.getTime());
-         start.setFullYear(start.getFullYear() - 10);
-         lastlogin_date = new Date(start.getTime() + Math.random() * (date.getTime() - start.getTime()));
+      if (lastlogin_date == null) {
+         printLine("Last Login: never");
+         printLine();
+         return;
       }
       
       var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];

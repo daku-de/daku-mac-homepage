@@ -1,24 +1,30 @@
 "use strict";
 
 $(document).ready(function (e) {
-  $(".window-content").height($("body").height() * 0.7);
-  $('.mail-close-layer').click(function () {
-    document.getElementById("mail").style.setProperty("display", "none");
-  });
-  $('#mail .window').click(function () {
-    return false;
-  });
-  $(".open-mail").click(function () {
-    var mailVisibility = document.getElementById("mail").style.getPropertyValue("display");
+  $(".window-content").height($("body").height() * 0.7); // Mail Window Logic
+  // $('.mail-close-layer').click(() => {
+  //    document.getElementById("mail").style.setProperty("display", "none");
+  // });
+  // $('#mail .window').click(() => {
+  //    return false;
+  // });
+  // $(".open-mail").click(() => {
+  //    var mailVisibility = document.getElementById("mail").style.getPropertyValue("display");
+  //    if (mailVisibility == "block") {
+  //       document.getElementById("mail").style.setProperty("display", "none");
+  //    } else {
+  //       document.getElementById("mail").style.setProperty("display", "block");
+  //    }
+  // });
+  // $(".close-mail").click(() => {
+  //    document.getElementById("mail").style.setProperty("display", "none");
+  // });
 
-    if (mailVisibility == "block") {
-      document.getElementById("mail").style.setProperty("display", "none");
-    } else {
-      document.getElementById("mail").style.setProperty("display", "block");
-    }
-  });
-  $(".close-mail").click(function () {
-    document.getElementById("mail").style.setProperty("display", "none");
+  $(".open-mail").click(function () {
+    var user = "daku";
+    var service = "mail";
+    var tld = "de";
+    window.open("mailto:" + user + "@" + service + "." + tld, "_blank");
   });
   var stream = $(".stream");
   var inputbox = $(".inputline .inputbox");
@@ -95,6 +101,14 @@ $(document).ready(function (e) {
   function init() {
     setInterval(time);
     lastlogin();
+
+    if (getCookie("background") != "") {
+      var i = parseInt(getCookie("background"));
+      console.log("Cookie found: " + "background=" + i + ";");
+      var url = "url(" + backgrounds[i][0] + ")";
+      root.style.setProperty('--background-image', url);
+    }
+
     console.clear();
     console.log(new Date().getTime());
     printLine("A! ________      ________      ___  __        ___  ___     ", "logo");
@@ -321,6 +335,10 @@ $(document).ready(function (e) {
         var i = e.data;
         var url = "url(" + backgrounds[i][0] + ")";
         root.style.setProperty('--background-image', url);
+        var exp_date = new Date();
+        exp_date.setTime(exp_date.getTime() + 30 * 24 * 60 * 1000);
+        document.cookie = "background=" + i + ";expires=" + exp_date.toUTCString() + "; path=/";
+        console.log("Cookie set. " + document.cookie);
       });
     }
   }
@@ -522,4 +540,24 @@ $(document).ready(function (e) {
   };
 
   init();
+
+  function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+
+    return "";
+  }
 });

@@ -101,6 +101,7 @@ $(document).ready(function (e) {
   function init() {
     setInterval(time);
     lastlogin();
+    setCookie("lastlogin", new Date().toUTCString());
 
     if (getCookie("background") != "") {
       var i = parseInt(getCookie("background"));
@@ -335,10 +336,7 @@ $(document).ready(function (e) {
         var i = e.data;
         var url = "url(" + backgrounds[i][0] + ")";
         root.style.setProperty('--background-image', url);
-        var exp_date = new Date();
-        exp_date.setTime(exp_date.getTime() + 30 * 24 * 60 * 1000);
-        document.cookie = "background=" + i + ";expires=" + exp_date.toUTCString();
-        console.log("Cookie set. " + document.cookie);
+        setCookie("background", i);
       });
     }
   }
@@ -371,22 +369,27 @@ $(document).ready(function (e) {
     return true;
   }
 
-  var random_date;
-
   function lastlogin() {
     //generate Last Login message with random date (within last ten years)
-    if (random_date == null) {
+    var lastlogin;
+
+    if (getCookie("lastlogin") != "") {
+      lastlogin = Date.parse(getCookie("lastlogin"));
+    }
+
+    if (lastlogin == null) {
+      //random date
       var date = new Date();
       var start = new Date(date.getTime());
       start.setFullYear(start.getFullYear() - 10);
-      random_date = new Date(start.getTime() + Math.random() * (date.getTime() - start.getTime()));
+      lastlogin = new Date(start.getTime() + Math.random() * (date.getTime() - start.getTime()));
     }
 
     var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
     var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    var sec = random_date.getSeconds();
-    var hour = random_date.getHours();
-    var min = random_date.getMinutes();
+    var sec = lastlogin.getSeconds();
+    var hour = lastlogin.getHours();
+    var min = lastlogin.getMinutes();
 
     if (sec < 10) {
       sec = "0" + sec;
@@ -401,7 +404,7 @@ $(document).ready(function (e) {
     }
 
     var lastlogin = "Last Login: ";
-    lastlogin += weekdays[random_date.getDay()] + " " + months[random_date.getMonth()] + " " + random_date.getDate() + " " + random_date.getFullYear() + " " + hour + ":" + min + ":" + sec;
+    lastlogin += weekdays[lastlogin.getDay()] + " " + months[lastlogin.getMonth()] + " " + lastlogin.getDate() + " " + lastlogin.getFullYear() + " " + hour + ":" + min + ":" + sec;
     lastlogin += " on ttys000";
     printLine(lastlogin);
     printLine();
@@ -559,5 +562,12 @@ $(document).ready(function (e) {
     }
 
     return "";
+  }
+
+  function setCookie(key, value) {
+    var exp_date = new Date();
+    exp_date.setTime(exp_date.getTime() + 10 * 365 * 24 * 60 * 1000);
+    document.cookie = key + "=" + value + ";expires=" + exp_date.toUTCString();
+    console.log("Cookie set. " + key + "=" + value);
   }
 });

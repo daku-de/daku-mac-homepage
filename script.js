@@ -147,6 +147,10 @@ $(document).ready(function(e) {
          root.style.setProperty('--background-image', url);
       }
 
+      if(getCookie("style") != "") {
+         setStyle(getCookie("style"));
+      }
+
       console.clear();
       console.log(new Date().getTime());
       printLine("A! ________      ________      ___  __        ___  ___     ", "logo");
@@ -376,6 +380,7 @@ $(document).ready(function(e) {
          printLine("Style '" + style + "' not known");
          return;
       }
+      setCookie("style", style);
       root.style.setProperty('--terminal-background', terminalstyles[style][0]);
       root.style.setProperty('--terminal-text', terminalstyles[style][1]);
       root.style.setProperty('--terminal-inputline', terminalstyles[style][2]);

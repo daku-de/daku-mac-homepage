@@ -337,7 +337,7 @@ $(document).ready(function (e) {
         root.style.setProperty('--background-image', url);
         var exp_date = new Date();
         exp_date.setTime(exp_date.getTime() + 30 * 24 * 60 * 1000);
-        document.cookie = "background=" + i + ";expires=" + exp_date.toUTCString() + "; path=/";
+        document.cookie = "background=" + i + ";expires=" + exp_date.toUTCString();
         console.log("Cookie set. " + document.cookie);
       });
     }

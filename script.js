@@ -388,7 +388,8 @@ $(document).ready(function(e) {
    function lastlogin() { //generate Last Login message with random date (within last ten years)
       var lastlogin_date;
       if (getCookie("lastlogin") != "") {
-         lastlogin_date = Date.parse(getCookie("lastlogin"));
+         lastlogin_date = new Date(getCookie("lastlogin"));
+         console.log(lastlogin_date);
       }
       if (lastlogin_date == null) { //random date
          var date = new Date();

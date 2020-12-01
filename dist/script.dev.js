@@ -374,7 +374,8 @@ $(document).ready(function (e) {
     var lastlogin_date;
 
     if (getCookie("lastlogin") != "") {
-      lastlogin_date = Date.parse(getCookie("lastlogin"));
+      lastlogin_date = new Date(getCookie("lastlogin"));
+      console.log(lastlogin_date);
     }
 
     if (lastlogin_date == null) {

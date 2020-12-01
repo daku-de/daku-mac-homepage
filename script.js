@@ -28,7 +28,7 @@ $(document).ready(function(e) {
       var user="daku";
       var service="mail";
       var tld="de";
-      window.open("mailto:" + user + "@" + service + "." + tld, "_blank");
+      window.location.href = "mailto:" + user + "@" + service + "." + tld;
    });
 
 

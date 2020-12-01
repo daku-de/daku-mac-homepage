@@ -428,6 +428,9 @@ footer {
   padding-top: 100px;
   overflow: hidden;
 }
+footer a {
+  display: flex;
+}
 footer .footer-wrapper {
   position: absolute;
   width: 100%;
@@ -492,7 +495,7 @@ footer .footer-wrapper ul img {
   height: auto;
   height: auto;
   margin: 0 8px;
-  margin-bottom: 8px;
+  margin-bottom: 20px;
   transform-origin: bottom center;
   transition: 0.2s;
   border-radius: 10px;

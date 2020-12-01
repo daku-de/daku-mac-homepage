@@ -1,5 +1,28 @@
 
 $(document).ready(function(e) {
+   $(".window-content").height($("body").height() * 0.7);
+
+   $('.mail-close-layer').click(() => {
+      document.getElementById("mail").style.setProperty("display", "none");
+   });
+
+   $('#mail .window').click(() => {
+      return false;
+   });
+
+   $(".open-mail").click(() => {
+      var mailVisibility = document.getElementById("mail").style.getPropertyValue("display");
+      if (mailVisibility == "block") {
+         document.getElementById("mail").style.setProperty("display", "none");
+      } else {
+         document.getElementById("mail").style.setProperty("display", "block");
+      }
+   });
+
+   $(".close-mail").click(() => {
+      document.getElementById("mail").style.setProperty("display", "none");
+   });
+
 
    var stream =$(".stream")
    var inputbox = $(".inputline .inputbox");
@@ -22,6 +45,7 @@ $(document).ready(function(e) {
       var terminalVisibility = document.getElementById("terminal").style.getPropertyValue("visibility");
       if (terminalVisibility == "hidden") {
          document.getElementById("terminal").style.setProperty("visibility", "visible");
+         inputbox.focus();
       } else {
          document.getElementById("terminal").style.setProperty("visibility", "hidden");
       }

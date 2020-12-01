@@ -1,6 +1,25 @@
 "use strict";
 
 $(document).ready(function (e) {
+  $(".window-content").height($("body").height() * 0.7);
+  $('.mail-close-layer').click(function () {
+    document.getElementById("mail").style.setProperty("display", "none");
+  });
+  $('#mail .window').click(function () {
+    return false;
+  });
+  $(".open-mail").click(function () {
+    var mailVisibility = document.getElementById("mail").style.getPropertyValue("display");
+
+    if (mailVisibility == "block") {
+      document.getElementById("mail").style.setProperty("display", "none");
+    } else {
+      document.getElementById("mail").style.setProperty("display", "block");
+    }
+  });
+  $(".close-mail").click(function () {
+    document.getElementById("mail").style.setProperty("display", "none");
+  });
   var stream = $(".stream");
   var inputbox = $(".inputline .inputbox");
   var root = document.documentElement;
@@ -21,6 +40,7 @@ $(document).ready(function (e) {
 
     if (terminalVisibility == "hidden") {
       document.getElementById("terminal").style.setProperty("visibility", "visible");
+      inputbox.focus();
     } else {
       document.getElementById("terminal").style.setProperty("visibility", "hidden");
     }

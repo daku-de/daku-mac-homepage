@@ -107,17 +107,19 @@ body .window {
   border-radius: 5px;
   top: -10%;
   width: 80%;
-  height: 70%;
 }
 body .window .terminal {
   display: flex;
   flex-flow: column;
-  overflow-y: auto;
-  height: calc(100% - 23px);
+}
+body .window .window-content {
   border: 2px solid #a3a3a3;
   border-top: 0px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  min-height: 40px;
+  height: 600px;
+  overflow-y: auto;
 }
 body .handle {
   height: 22px;
@@ -314,6 +316,40 @@ body .inputline .time {
   display: block;
 }
 
+#mail {
+  display: none;
+}
+#mail .mail-close-layer {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1;
+  animation: fade;
+  animation-duration: 2s;
+}
+@keyframes fade {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+#mail .mail-form-wrapper {
+  position: absolute;
+  top: calc(1.3em - 2px);
+  display: flex;
+  left: 0;
+  overflow: hidden;
+  height: calc(100% - 1.3em);
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
 .macwrapper {
   height: 100%;
   width: 100%;
@@ -431,8 +467,8 @@ footer .footer-wrapper ul li {
   align-items: center;
 }
 footer .footer-wrapper ul span {
-  visibility: hidden;
   position: absolute;
+  display: none;
   top: -72px;
   font-size: 20px;
   color: #ffffff;
@@ -443,7 +479,7 @@ footer .footer-wrapper ul span {
   transition: 0.2s;
 }
 footer .footer-wrapper ul li:hover span {
-  visibility: visible;
+  display: flex;
   top: -80px;
 }
 footer .footer-wrapper ul li:hover img {

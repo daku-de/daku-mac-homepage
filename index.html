@@ -3,7 +3,7 @@
    <head>
       <meta charset="utf-8">
       <title>daku.cmd</title>
-      <link rel="stylesheet" href="style/style.css?v=1.5">
+      <link rel="stylesheet" href="style/style.css?v=1.6">
       <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -54,7 +54,7 @@
 						</div>
 						<div class="title"><img src="https://i.imgur.com/FI0eNmf.png"><span>Terminal</span></div>
             </div>
-         <div class="terminal">
+         <div class="window-content terminal">
             <div class="stream"></div>
             <div class="line inputline">
                <p class="time"></p>
@@ -65,9 +65,25 @@
          </div>
       </div>
       </div>
-      <div class="video">
-            
-      </div>
+         <div class="video"></div>
+         <div id="mail">
+            <div class="mail-close-layer">
+               <div class="mail-form-wrapper">
+                  <div class="window">
+                     <div class="handle">
+                        <div class="buttons close-mail">
+                           <div class="first"></div>
+                           <div class="second"></div>
+                           <div class="third"></div>
+                        </div>
+                        <div class="title"><span>Mail Form</span></div>
+                     </div>
+
+                     <div class="window-content mail-form"></div>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
    </body>
    <footer>
@@ -78,7 +94,8 @@
             <li><a href="#"><img src="files/twitch-logo.png"></a><span>Twitch</span></li>
             <li><a href="#"><img src="files/youtube-logo.png"></a><span>YouTube</span></li>
             <li><a href="#"><img src="files/linkedin-logo.png"></a><span>LinkedIn</span></li>
-            <li><a href="#"><img src="files/console-logo.png" class="open-terminal"></a><span>Terminal</span></li>
+            <li><a href="#" class="open-mail"><img src="files/mail-logo.png"></a><span>Send Mail</span></li>
+            <li><a href="#" class="open-terminal"><img src="files/console-logo.png"></a><span>Terminal</span></li>
          </ul>
       </div>
    </footer>

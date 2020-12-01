@@ -386,23 +386,23 @@ $(document).ready(function(e) {
    }
 
    function lastlogin() { //generate Last Login message with random date (within last ten years)
-      var lastlogin;
+      var lastlogin_date;
       if (getCookie("lastlogin") != "") {
-         lastlogin = Date.parse(getCookie("lastlogin"));
+         lastlogin_date = Date.parse(getCookie("lastlogin"));
       }
-      if (lastlogin == null) { //random date
+      if (lastlogin_date == null) { //random date
          var date = new Date();
          var start = new Date(date.getTime());
          start.setFullYear(start.getFullYear() - 10);
-         lastlogin = new Date(start.getTime() + Math.random() * (date.getTime() - start.getTime()));
+         lastlogin_date = new Date(start.getTime() + Math.random() * (date.getTime() - start.getTime()));
       }
       
       var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
       var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-      var sec = lastlogin.getSeconds();
-      var hour = lastlogin.getHours();
-      var min = lastlogin.getMinutes();
+      var sec = lastlogin_date.getSeconds();
+      var hour = lastlogin_date.getHours();
+      var min = lastlogin_date.getMinutes();
       if (sec < 10) {
          sec = "0" + sec;
       }
@@ -413,7 +413,7 @@ $(document).ready(function(e) {
          min = "0" + min;
       }
       var lastlogin = "Last Login: ";
-      lastlogin += weekdays[lastlogin.getDay()] + " " + months[lastlogin.getMonth()] + " " + lastlogin.getDate() + " " + lastlogin.getFullYear() +  " " + hour + ":" + min + ":" + sec;
+      lastlogin += weekdays[lastlogin_date.getDay()] + " " + months[lastlogin_date.getMonth()] + " " + lastlogin_date.getDate() + " " + lastlogin_date.getFullYear() +  " " + hour + ":" + min + ":" + sec;
       lastlogin += " on ttys000";
       printLine(lastlogin);
       printLine();

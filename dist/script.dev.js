@@ -60,7 +60,7 @@ $(document).ready(function (e) {
   });
   console.clear();
   var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["background", "Choose a different background image"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"]];
-  var backgrounds = [["https://i.imgur.com/ZMGL5nP.jpg", "Default"], ["https://i.imgur.com/psAgyeh.jpg", "Mountain"], ["https://i.imgur.com/0ylkqeZ.jpg", "Galaxy"], ["https://picsum.photos/1920/1080?t=0", "Random"]];
+  var backgrounds = [["https://i.imgur.com/ZMGL5nP.jpg", "Default"], ["https://i.imgur.com/psAgyeh.jpg", "Mountain"], ["https://i.imgur.com/0ylkqeZ.jpg", "Galaxy"], ["https://i.imgur.com/VCmkUHl.jpg", "Mars"], ["https://picsum.photos/1920/1080?t=0", "Random"]];
   var previouscommands = [];
   var currentcommand = 0;
   var terminalstyles = {

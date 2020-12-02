@@ -88,6 +88,7 @@ $(document).ready(function(e) {
       ["https://i.imgur.com/ZMGL5nP.jpg", "Default"],
       ["https://i.imgur.com/psAgyeh.jpg", "Mountain"],
       ["https://i.imgur.com/0ylkqeZ.jpg", "Galaxy"],
+      ["https://i.imgur.com/VCmkUHl.jpg", "Mars"],
       ["https://picsum.photos/1920/1080?t=0", "Random"]
    ];
    var previouscommands = [];

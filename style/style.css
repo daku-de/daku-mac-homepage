@@ -384,7 +384,8 @@ body .inputline .time {
   }
 }
 .backgrounds {
-  display: flex;
+  display: inline-block;
+  width: 100%;
 }
 
 .bg-wrapper {

@@ -25,10 +25,10 @@ $(document).ready(function(e) {
    // });
 
    $(".open-mail").click(() => {
-      var user="daku";
+      var user="daku.im";
       var service="mail";
       var tld="de";
-      window.location.href = "mailto:" + user + "@" + service + "." + tld;
+      window.location.href = service + "to:" + user + "@" + service + "." + tld;
    });
 
 

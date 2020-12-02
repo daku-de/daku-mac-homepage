@@ -154,12 +154,10 @@ $(document).ready(function (e) {
 
     var temptimestring = "[" + hours + ":" + minutes + ":" + seconds + "]";
     var tempdatestring = "";
-
-    if (hours > 12) {
-      tempdatestring = weekdays[d.getDay()] + " " + (hours - 12) + ":" + minutes + " PM";
-    } else {
-      tempdatestring = weekdays[d.getDay()] + " " + hours + ":" + minutes + " AM";
-    }
+    var ending = hours >= 12 ? 'PM' : 'AM';
+    if (hours >= 12) hours -= 12;
+    if (hours == 0) hours = 12;
+    var tempdatestring = weekdays[d.getDay()] + " " + hours + ":" + minutes + " " + ending;
 
     if (temptimestring != timestring) {
       timestring = temptimestring;

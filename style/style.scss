@@ -151,6 +151,8 @@ body {
    .window {
       background-color: var(--terminal-background);
       border-radius: 5px;
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
       top: -10%;
       width: 80%;
 
@@ -175,8 +177,8 @@ body {
       background: linear-gradient(to bottom, rgba(230, 230, 230, 1) 0%, rgba(163, 163, 163, 1) 100%);
 
       border-top: 1px solid white;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
       user-select: none;
 
       overflow: hidden;
@@ -291,6 +293,10 @@ body {
 
 }
 
+#terminal {
+   z-index: 2;
+}
+
 ::selection {
    color:$highlighttext;
    background:$highlight;
@@ -381,28 +387,30 @@ body {
 #calc {
    display: none;
 
+   .window {
+      width: auto;
+      backdrop-filter: blur(10px);
+      background: none;
+
+      .handle {
+         background: rgb(76, 76, 76, 0.4);
+         border: 0;
+         .title {
+            display: none;
+         }
+      }
+      .window-content {
+         border: 0;
+         background: rgb(76, 76, 76, 0.4);
+      }
+   }
+
    .calculator-close-layer {
       height: 100%;
       width: 100%;
       position: absolute;
       top: 0;
       left: 0;
-      background-color: rgba(0, 0, 0, 0.8);
-      z-index: 1;
-
-      animation: fade;
-      animation-duration: 2s;
-
-      @keyframes fade {
-         from {
-            background-color: rgba(0, 0, 0, 0);
-         }
-
-         to {
-            background-color: rgba(0, 0, 0, 0.8);
-         }
-      }
-
    }
 
    .calculator-wrapper {
@@ -424,16 +432,19 @@ body {
    }
 
    .calculator {
-      width: 20em;
+      width: calc(12em + 8px);
       font-size: 35px;
       
       .display {
          width: 100%;
-         background-color: #dae4dc;
-         color: #000000;
+         color: #ffffff;
          padding: 0.5em;
          box-sizing: border-box;
-         border-radius: 1em;
+
+         ::selection {
+            background: #0000ff8e;
+            color: #ffffff;
+         }
 
          .line {
             overflow: hidden;
@@ -448,24 +459,38 @@ body {
          }
       }
 
+      .calc-input {
+         display: flex;
+         flex-wrap: wrap;
+         background-color: #4c4c4c;
+      }
+
       button {
          border: 0;
-         background: #000000;
-         color: #ffffff;
+         background: #d6d6d6;
+         color: #000000;
          cursor: pointer;
          float: left;
          font: inherit;
-         margin: 0.5em;
+         margin: 1px;
          width: 3em;
          height: 2.5em;
-         border-top-left-radius: 0.6em;
-         border-top-right-radius: 0.6em;
-         border-bottom-left-radius: 1em;
-         border-bottom-right-radius: 1em;
+         outline:none;
+
+         &:active {
+            background: #a09fa0;
+         }
       }
       .important {
-         background-color: #d96938;
-         color: #000000;
+         background-color: #f79231;
+         color: #ffffff;
+         &:active {
+            background: #b76620;
+            color: #4c4c4c;
+         }
+      }
+      .op {
+         @extend .important;
       }
    }
 
@@ -558,6 +583,8 @@ body {
     font-size: 50px;
     padding-top: 100px;
     overflow: hidden;
+    z-index: 3;
+    pointer-events: none;
 
     a {
        display: flex;
@@ -583,6 +610,7 @@ body {
           z-index: -1;
        }
        ul {
+          pointer-events: all;
           display: flex;
           list-style: none;
           position: absolute;

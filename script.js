@@ -76,8 +76,7 @@ $(document).ready(function(e) {
       initCalc();
       initMail();
       setInterval(time);
-      lastlogin();
-
+      printTerminalWelcome();
       setCookie("lastlogin", new Date().toUTCString());
 
       if (getCookie("background") != "") {
@@ -91,8 +90,10 @@ $(document).ready(function(e) {
          setStyle(getCookie("style"));
       }
 
-      console.clear();
-      console.log(new Date().getTime());
+   }
+
+   function printTerminalWelcome() {
+      lastlogin();
       printLine("A! ________      ________      ___  __        ___  ___     ", "logo");
       printLine("A!|\\   ___ \\    |\\   __  \\    |\\  \\|\\  \\     |\\  \\|\\  \\    ", "logo");
       printLine("A!\\ \\  \\_|\\ \\   \\ \\  \\|\\  \\   \\ \\  \\/  /|_   \\ \\  \\\\\\  \\   ", "logo");
@@ -214,8 +215,7 @@ $(document).ready(function(e) {
          case "reset":
             stream.text("");
             previouscommands = [];
-            init();
-            setStyle("default");
+            printTerminalWelcome();
             break;
 
          case "video":

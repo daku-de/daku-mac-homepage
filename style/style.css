@@ -316,10 +316,10 @@ body .inputline .time {
   display: block;
 }
 
-#mail {
+#calc {
   display: none;
 }
-#mail .mail-close-layer {
+#calc .calculator-close-layer {
   height: 100%;
   width: 100%;
   position: absolute;
@@ -338,7 +338,7 @@ body .inputline .time {
     background-color: rgba(0, 0, 0, 0.8);
   }
 }
-#mail .mail-form-wrapper {
+#calc .calculator-wrapper {
   position: absolute;
   top: calc(1.3em - 2px);
   display: flex;
@@ -348,6 +348,52 @@ body .inputline .time {
   width: 100%;
   justify-content: center;
   align-items: center;
+}
+#calc .window-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#calc .calculator {
+  width: 20em;
+  font-size: 35px;
+}
+#calc .calculator .display {
+  width: 100%;
+  background-color: #dae4dc;
+  color: #000000;
+  padding: 0.5em;
+  box-sizing: border-box;
+  border-radius: 1em;
+}
+#calc .calculator .display .line {
+  overflow: hidden;
+}
+#calc .calculator .display .result {
+  font-size: 50px;
+  display: block;
+  text-align: right;
+  justify-content: right;
+  margin-top: 0.25em;
+}
+#calc .calculator button {
+  border: 0;
+  background: #000000;
+  color: #ffffff;
+  cursor: pointer;
+  float: left;
+  font: inherit;
+  margin: 0.5em;
+  width: 3em;
+  height: 2.5em;
+  border-top-left-radius: 0.6em;
+  border-top-right-radius: 0.6em;
+  border-bottom-left-radius: 1em;
+  border-bottom-right-radius: 1em;
+}
+#calc .calculator .important {
+  background-color: #d96938;
+  color: #000000;
 }
 
 .macwrapper {

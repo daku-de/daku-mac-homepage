@@ -1,75 +1,10 @@
 
 $(document).ready(function(e) {
-   $(".window-content").height($("body").height() * 0.7);
-
-   // Mail Window Logic
-   // $('.mail-close-layer').click(() => {
-   //    document.getElementById("mail").style.setProperty("display", "none");
-   // });
-
-   // $('#mail .window').click(() => {
-   //    return false;
-   // });
-
-   // $(".open-mail").click(() => {
-   //    var mailVisibility = document.getElementById("mail").style.getPropertyValue("display");
-   //    if (mailVisibility == "block") {
-   //       document.getElementById("mail").style.setProperty("display", "none");
-   //    } else {
-   //       document.getElementById("mail").style.setProperty("display", "block");
-   //    }
-   // });
-
-   // $(".close-mail").click(() => {
-   //    document.getElementById("mail").style.setProperty("display", "none");
-   // });
-
-   $(".open-mail").click(() => {
-      var user="daku.im";
-      var service="mail";
-      var tld="de";
-      window.location.href = service + "to:" + user + "@" + service + "." + tld;
-   });
-
-
 
    var stream =$(".stream")
    var inputbox = $(".inputline .inputbox");
    var root = document.documentElement;
-   $( function() {
-      $( ".window" ).draggable({
-         containment: "parent",
-         handle: ".handle",
-         cursor: "grabbing",
-         cancel: ".terminal",
-         iframeFix: true
-      });
-   } );
 
-   $(".close-terminal").on('click', function(e) {
-      document.getElementById("terminal").style.setProperty("visibility", "hidden");
-   });
-
-   $(".open-terminal").on('click', function(e) {
-      var terminalVisibility = document.getElementById("terminal").style.getPropertyValue("visibility");
-      if (terminalVisibility == "hidden") {
-         document.getElementById("terminal").style.setProperty("visibility", "visible");
-         inputbox.focus();
-      } else {
-         document.getElementById("terminal").style.setProperty("visibility", "hidden");
-      }
-   });
-
-   var mousedown;
-   $('.terminal').mousedown(function(event) {
-     mousedown = event.timeStamp;
-   });
-
-   $('.terminal').mouseup(function(event) {
-     if ((event.timeStamp - mousedown) <= 160) inputbox.focus();
-   });
-   
-   
 
    console.clear();
    var commandlist = [
@@ -136,8 +71,23 @@ $(document).ready(function(e) {
       */
 
    function init() {
+      initTerminal();
+      initCalc();
+      initMail();
       setInterval(time);
       lastlogin();
+
+      $(".window-content").height($("body").height() * 0.7);
+
+      $( function() {
+         $( ".window" ).draggable({
+            containment: "parent",
+            handle: ".handle",
+            cursor: "grabbing",
+            cancel: ".terminal",
+            iframeFix: true
+         });
+      });
 
       setCookie("lastlogin", new Date().toUTCString());
 
@@ -576,11 +526,129 @@ function getCookie(cname) {
   return "";
 }
 
+var calc_input = "";
+var calc_result = "";
+function calc() {
+   $( '.num' ).click(function() {
+      if (calc_result != "") {
+         resetCalc();
+      }
+      calc_input += $(this).text();
+      $( '.calculator .input' ).text(calc_input);
+   });
+   $( '.op' ).click(function() {
+      if (calc_result != "") {
+         calc_input = calc_result;
+         calc_result = "";
+         $( '.calculator .result' ).html("<br>");
+      }
+      if (calc_input == "") return;
+      calc_input += $(this).text();
+      $( '.calculator .input' ).text(calc_input);
+   });
+   $( '.equals' ).click(function() {
+      try {
+         calc_result = eval(calc_input);
+      } catch(e) {
+         resetCalc();
+         $( '.calculator .result' ).text("Error!");
+         return;
+      }
+      $( '.calculator .result' ).text(calc_result);
+   });
+   $( '#del' ).click(function() {
+      if (calc_result != "") {
+         resetCalc();
+         return;
+      }
+      if (calc_input.length <= 1) {
+         calc_input = "";
+         $( '.calculator .input' ).html("<br>");
+         return;
+      }
+      calc_input = calc_input.substring(0, calc_input.length-1);
+      $( '.calculator .input' ).text(calc_input);
+   });
+   $( '#ac' ).click(function() {
+      resetCalc();
+   });
+
+
+}
+
 function setCookie(key, value) {
    var exp_date = new Date();
    exp_date.setTime(exp_date.getTime() + (10*365*24*60*1000));
    document.cookie = key + "=" + value + ";expires=" + exp_date.toUTCString();
    console.log("Cookie set. " + key + "=" + value);
+}
+
+function resetCalc() {
+   console.log("Resetting calculator");
+   calc_input = "";
+   calc_result = "";
+   $( '.calculator .input' ).html("<br>");
+   $( '.calculator .result' ).html("<br>");
+}
+
+function initCalc() {
+   $('.calculator-close-layer').click(() => {
+      document.getElementById("calc").style.setProperty("display", "none");
+      resetCalc();
+   });
+
+   $('#calc .window').click(() => {
+      return false;
+   });
+
+   $(".open-calculator").click(() => {
+      var calcVisibility = document.getElementById("calc").style.getPropertyValue("display");
+      if (calcVisibility == "block") {
+         $('.calculator-close-layer').click();
+      } else {
+         document.getElementById("calc").style.setProperty("display", "block");
+      }
+   });
+
+   $(".close-calculator").click(() => {
+      $('.calculator-close-layer').click();
+   });
+
+   calc();
+}
+
+function initMail() {
+   $(".open-mail").click(() => {
+      var user="daku.im";
+      var service="mail";
+      var tld="de";
+      window.location.href = service + "to:" + user + "@" + service + "." + tld;
+   });
+}
+
+function initTerminal() {
+   $(".close-terminal").on('click', function(e) {
+      document.getElementById("terminal").style.setProperty("visibility", "hidden");
+   });
+
+   $(".open-terminal").on('click', function(e) {
+      var terminalVisibility = document.getElementById("terminal").style.getPropertyValue("visibility");
+      if (terminalVisibility == "hidden") {
+         document.getElementById("terminal").style.setProperty("visibility", "visible");
+         inputbox.focus();
+      } else {
+         document.getElementById("terminal").style.setProperty("visibility", "hidden");
+      }
+   });
+
+   var mousedown;
+   $('.terminal').mousedown(function(event) {
+     mousedown = event.timeStamp;
+   });
+
+   $('.terminal').mouseup(function(event) {
+     if ((event.timeStamp - mousedown) <= 160) inputbox.focus();
+   });
 }
    
 });

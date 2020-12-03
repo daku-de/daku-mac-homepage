@@ -378,10 +378,10 @@ body {
    }
 }
 
-#mail {
+#calc {
    display: none;
 
-   .mail-close-layer {
+   .calculator-close-layer {
       height: 100%;
       width: 100%;
       position: absolute;
@@ -405,7 +405,7 @@ body {
 
    }
 
-   .mail-form-wrapper {
+   .calculator-wrapper {
       position: absolute;
       top: calc(1.3em - 2px);
       display: flex;
@@ -415,6 +415,58 @@ body {
       width: 100%;
       justify-content: center;
       align-items: center;
+   }
+
+   .window-content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+   }
+
+   .calculator {
+      width: 20em;
+      font-size: 35px;
+      
+      .display {
+         width: 100%;
+         background-color: #dae4dc;
+         color: #000000;
+         padding: 0.5em;
+         box-sizing: border-box;
+         border-radius: 1em;
+
+         .line {
+            overflow: hidden;
+         }
+
+         .result {
+            font-size: 50px;
+            display: block;
+            text-align: right;
+            justify-content: right;
+            margin-top: 0.25em;
+         }
+      }
+
+      button {
+         border: 0;
+         background: #000000;
+         color: #ffffff;
+         cursor: pointer;
+         float: left;
+         font: inherit;
+         margin: 0.5em;
+         width: 3em;
+         height: 2.5em;
+         border-top-left-radius: 0.6em;
+         border-top-right-radius: 0.6em;
+         border-bottom-left-radius: 1em;
+         border-bottom-right-radius: 1em;
+      }
+      .important {
+         background-color: #d96938;
+         color: #000000;
+      }
    }
 
 

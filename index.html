@@ -3,12 +3,12 @@
    <head>
       <meta charset="utf-8">
       <title>daku.cmd</title>
-      <link rel="stylesheet" href="style/style.css?v=1.9">
+      <link rel="stylesheet" href="style/style.css?v=1.10">
       <link rel="icon" type="image/vnd.microsoft.icon" href="favicon.ico">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
       <script src="https://kit.fontawesome.com/b4b7a26c21.js" crossorigin="anonymous"></script>
-      <script type="text/javascript" src="script.js?v=1.16"></script>
+      <script type="text/javascript" src="script.js?v=1.17"></script>
    </head>
    <body>
       <div class="wrapper">
@@ -66,20 +66,46 @@
       </div>
       </div>
          <div class="video"></div>
-         <div id="mail">
-            <div class="mail-close-layer">
-               <div class="mail-form-wrapper">
+         <div id="calc">
+            <div class="calculator-close-layer">
+               <div class="calculator-wrapper">
                   <div class="window">
                      <div class="handle">
-                        <div class="buttons close-mail">
+                        <div class="buttons close-calculator">
                            <div class="first"></div>
                            <div class="second"></div>
                            <div class="third"></div>
                         </div>
-                        <div class="title"><span>Mail Form</span></div>
+                        <div class="title"><span>Calculator</span></div>
                      </div>
-
-                     <div class="window-content mail-form"></div>
+                     <div class="window-content">
+                        <div class="calculator">
+                           <div class="display">
+                              <div class="line input"><br></div>
+                              <div class="line result"><br></div>
+                           </div>
+                           <button class="num">7</button>
+                           <button class="num">8</button>
+                           <button class="num">9</button>
+                           <button class="important" id="del">DEL</button>
+                           <button class="important" id="ac">AC</button>
+                           <button class="num">4</button>
+                           <button class="num">5</button>
+                           <button class="num">6</button>
+                           <button class="op">*</button>
+                           <button class="op">/</button>
+                           <button class="num">1</button>
+                           <button class="num">2</button>
+                           <button class="num">3</button>
+                           <button class="op">+</button>
+                           <button class="op">-</button>
+                           <button class="num">0</button>
+                           <button class="num">.</button>
+                           <button class="num">(</button>
+                           <button class="num">)</button>
+                           <button class="equals">=</button>
+                        </div>
+                     </div>
                   </div>
                </div>
             </div>
@@ -94,6 +120,7 @@
             <li><a href="#"><img src="files/twitch-logo.png"></a><span>Twitch</span></li>
             <li><a href="#"><img src="files/youtube-logo.png"></a><span>YouTube</span></li>
             <li><a href="#"><img src="files/linkedin-logo.png"></a><span>LinkedIn</span></li>
+            <li class="open-calculator"><img src="files/calc-logo.png"><span>Calculator</span></li>
             <li class="open-mail"><img src="files/mail-logo.png"><span>Send Mail</span></li>
             <li class="open-terminal"><img src="files/console-logo.png"><span>Terminal</span></li>
          </ul>

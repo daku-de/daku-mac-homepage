@@ -367,6 +367,7 @@ body .inputline .time {
 #calc .calculator {
   width: calc(12em + 8px);
   font-size: 35px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 #calc .calculator .display {
   width: 100%;

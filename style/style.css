@@ -389,6 +389,9 @@ body .inputline .time {
   justify-content: right;
   margin-top: 0.25em;
 }
+#calc .calculator .display .input {
+  display: block;
+}
 #calc .calculator .calc-input {
   display: flex;
   flex-wrap: wrap;

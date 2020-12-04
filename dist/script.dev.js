@@ -642,7 +642,7 @@ $(document).ready(function (e) {
   }
 
   function initWindows() {
-    $('.window-content').height($("body").height() * 0.7);
+    //$( '.window-content' ).height($("body").height() * 0.7);
     $(function () {
       $('.window').draggable({
         containment: "parent",

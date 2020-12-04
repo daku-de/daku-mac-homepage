@@ -109,6 +109,8 @@ body .window {
   border-top-left-radius: 10px;
   top: -10%;
   width: 80%;
+  display: flex;
+  flex-wrap: wrap;
 }
 body .window .terminal {
   display: flex;
@@ -121,7 +123,9 @@ body .window .window-content {
   border-bottom-right-radius: 5px;
   min-height: 40px;
   height: 600px;
+  height: 70vh;
   overflow-y: auto;
+  width: 100%;
 }
 body .handle {
   height: 22px;
@@ -134,6 +138,7 @@ body .handle {
   display: flex;
   align-items: center;
   vertical-align: middle;
+  width: 100%;
 }
 body .handle .buttons {
   position: absolute;
@@ -327,8 +332,10 @@ body .inputline .time {
 }
 #calc .window {
   width: auto;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   background: none;
+  top: 0;
 }
 #calc .window .handle {
   background: rgba(76, 76, 76, 0.4);
@@ -367,6 +374,7 @@ body .inputline .time {
 #calc .calculator {
   width: calc(12em + 8px);
   font-size: 35px;
+  font-size: 4vh;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 #calc .calculator .display {
@@ -383,7 +391,8 @@ body .inputline .time {
   overflow: hidden;
 }
 #calc .calculator .display .result {
-  font-size: 50px;
+  font-size: 55px;
+  font-size: 6vh;
   display: block;
   text-align: right;
   justify-content: right;

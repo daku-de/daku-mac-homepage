@@ -205,12 +205,17 @@ body .line p {
   display: inline-block;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+  overflow-wrap: break-word;
 }
 body .line .name {
   max-width: 80px;
   min-width: 80px;
   text-align: right;
   padding-right: 6px;
+}
+body .line .time {
+  overflow: visible;
 }
 body .inputline {
   background-color: var(--terminal-inputline);
@@ -222,6 +227,7 @@ body .inputline {
 body .inputline .inputbox {
   min-width: calc(100% - 200px);
   outline: none;
+  overflow-wrap: break-word;
 }
 body .inputline .time {
   user-select: none;

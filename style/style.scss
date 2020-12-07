@@ -56,6 +56,12 @@ $windowradius: 5px;
 
 }
 
+@media screen {
+  #ie {
+     display: table-cell;
+  }
+}
+
 html {
    background-image: var(--background-image);
    background-size: cover;
@@ -63,6 +69,28 @@ html {
    background-position: center;
    height: 100%;
 }
+
+ #ie {
+   height: 100%;
+   width: 100%;
+   font-size: 80px;
+   font-family: 'Helvetica', sans-serif;
+   font-weight: bold;
+   color: white;
+   text-align: center;
+   background-color: black;
+   position: absolute;
+   z-index: 999;
+   display: none;
+   span {
+      display: table-cell;
+      vertical-align: middle;
+   }
+
+   @media screen and (min-width:0\0) and (min-resolution: +72dpi) {
+      display: table;
+   }
+ }
 
 header {
    background: linear-gradient(to bottom, rgba(230, 230, 230, 1) 0%, rgba(163, 163, 163, 1) 100%);

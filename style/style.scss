@@ -183,8 +183,9 @@ body {
       border-top-left-radius: 10px;
       top: -10%;
       width: 80%;
-      display: flex;
+      display: none;
       flex-wrap: wrap;
+      z-index: 0;
 
       .terminal {
          display: flex;
@@ -333,10 +334,6 @@ body {
 
 }
 
-#terminal {
-   z-index: 2;
-}
-
 ::selection {
    color:$highlighttext;
    background:$highlight;
@@ -425,7 +422,6 @@ body {
 }
 
 #calc {
-   display: none;
 
    .window {
       width: auto;
@@ -433,6 +429,7 @@ body {
       backdrop-filter: blur(10px);
       background: none;
       top: 0;
+      display: none;
 
       .handle {
          background: rgb(76, 76, 76, 0.4);
@@ -633,6 +630,7 @@ body {
     overflow: hidden;
     z-index: 3;
     pointer-events: none;
+    user-select: none;
 
     a {
        display: flex;

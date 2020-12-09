@@ -137,8 +137,9 @@ body .window {
   border-top-left-radius: 10px;
   top: -10%;
   width: 80%;
-  display: flex;
+  display: none;
   flex-wrap: wrap;
+  z-index: 0;
 }
 body .window .terminal {
   display: flex;
@@ -262,10 +263,6 @@ body .inputline .time {
   cursor: default;
 }
 
-#terminal {
-  z-index: 2;
-}
-
 ::selection {
   color: #FFFFAE;
   background: #005F5F;
@@ -361,15 +358,13 @@ body .inputline .time {
   display: block;
 }
 
-#calc {
-  display: none;
-}
 #calc .window {
   width: auto;
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   background: none;
   top: 0;
+  display: none;
 }
 #calc .window .handle {
   background: rgba(76, 76, 76, 0.4);
@@ -544,6 +539,7 @@ footer {
   overflow: hidden;
   z-index: 3;
   pointer-events: none;
+  user-select: none;
 }
 footer a {
   display: flex;

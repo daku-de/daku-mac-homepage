@@ -47,6 +47,8 @@ $(document).ready(function(e) {
       "Sister Mary K. Keller was the first woman in the US to be awarded a PhD in Computer Science"];
    var url = "http://daku.im"
 
+   var openedwindows = [];
+
       /*
          Custom Text Styles
             red
@@ -593,20 +595,16 @@ function initCalc() {
    });
 
    $(".open-calculator").click(() => {
-      var calcVisibility = document.getElementById("calc").style.getPropertyValue("display");
       var calcZ = $( '#calc .window' ).css("z-index");
-      if (calcVisibility == "block" && calcZ == "2") {
+      if (calcZ == String(openedwindows.length) && calcZ != "0") {
          $(".close-calculator").click();
       } else {
-         document.getElementById("calc").style.setProperty("display", "block");
-         windowUp($( '#calc .window' ));
+         windowOnTop($( '#calc .window' )[0]);
       }
    });
 
    $(".close-calculator").click(() => {
-      $( '.window' ).css("z-index", 2);
-      $( '#calc .window' ).css("z-index", 1);
-      document.getElementById("calc").style.setProperty("display", "none");
+      closeWindow($( '#calc .window' )[0]);
       resetCalc();
    });
 
@@ -623,19 +621,16 @@ function initMail() {
 }
 
 function initTerminal() {
+   windowOnTop(document.getElementById("terminal"));
    $(".close-terminal").on('click', function(e) {
-      $( '.window' ).css("z-index", 2);
-      $( '#terminal' ).css("z-index", 1);
-      document.getElementById("terminal").style.setProperty("visibility", "hidden");
+      closeWindow(document.getElementById("terminal"));
    });
 
    $(".open-terminal").on('click', function(e) {
-      var terminalVisibility = document.getElementById("terminal").style.getPropertyValue("visibility");
-      var terminalZ = $( '#terminal' ).css("z-index");
-      if (terminalVisibility == "hidden" || terminalZ != "2") {
-         document.getElementById("terminal").style.setProperty("visibility", "visible");
+      var zindex = $( '#terminal' ).css("z-index");
+      if (zindex != String(openedwindows.length) || zindex == "0") {
+         windowOnTop(document.getElementById("terminal"));
          inputbox.focus();
-         windowUp($( '#terminal') );
       } else {
          $(".close-terminal").click();
       }
@@ -663,13 +658,39 @@ function initWindows() {
       });
    });
    $( '.window' ).mousedown(function() {
-      windowUp($(this));
+      windowOnTop($(this)[0]);
    });
 }
 
-function windowUp(window) {
-   $( '.window' ).css("z-index", 1);
-   window.css("z-index", 2);
+function windowOnTop(window) {
+   var index = openedwindows.indexOf(window);
+   if (index > -1) {
+      openedwindows.splice(index, 1);
+   }
+   openedwindows[openedwindows.length] = window;
+   layerWindows();
+}
+
+function closeWindow(window) {
+   window.style.setProperty("display", "none");
+   window.style.setProperty("z-index", 0);
+   var index = openedwindows.indexOf(window);
+   console.log(index);
+   if (index > -1) {
+      openedwindows.splice(index, 1);
+   }
+
+   for (var i = 0; i < openedwindows.length; ++i) {
+      if (openedwindows[i] == window) console.log("True");
+   }
+   layerWindows();
+}
+
+function layerWindows() {
+   for (var i = 0; i < openedwindows.length; ++i) {
+      openedwindows[i].style.setProperty("display", "flex");
+      openedwindows[i].style.setProperty("z-index", (i+1));
+   }
 }
    
 });

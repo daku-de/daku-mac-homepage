@@ -377,13 +377,6 @@ body .inputline .time {
   border: 0;
   background: rgba(76, 76, 76, 0.4);
 }
-#calc .calculator-close-layer {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
 #calc .calculator-wrapper {
   position: absolute;
   top: calc(1.3em - 2px);

@@ -4,8 +4,12 @@ $(document).ready(function (e) {
   var stream = $(".stream");
   var inputbox = $(".inputline .inputbox");
   var root = document.documentElement;
+  var dir = new Folder("home");
+  dir.addElement(new Textfile("file-system-info", "You can work with this filesystem with these commands: <br> \n      pwd <br>\n      ls <br>\n      cd &lt;directory&gt; <br>\n      rm &lt;file|directory&gt; <br>\n      mkdir &lt;directory&gt; <br>\n      create &lt;file&gt; &lt;content&gt; <br>\n      cat &lt;file&gt; <br><br>\n      This filesystem is not persistent!"));
+  dir.addElement(new Folder("literature"));
+  dir.addElement(new Folder("child"));
   console.clear();
-  var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["background", "Choose a different background image"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"]];
+  var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["background", "Choose a different background image"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"], ["pwd", "Print name of current directory"], ["cd", "Change directory"], ["ls", "List directory contents"], ["rm", "Remove files or directories"], ["mkdir", "Create directory"], ["create", "Create file with content"], ["cat", "Print content of file"]];
   var backgrounds = [["https://i.imgur.com/ZMGL5nP.jpg", "Default"], ["https://i.imgur.com/psAgyeh.jpg", "Mountain"], ["https://i.imgur.com/0ylkqeZ.jpg", "Galaxy"], ["https://i.imgur.com/VCmkUHl.jpg", "Mars"], ["https://picsum.photos/1920/1080?t=0", "Random"]];
   var previouscommands = [];
   var currentcommand = 0;
@@ -159,6 +163,8 @@ $(document).ready(function (e) {
 
   function cmd(command, line) {
     console.log("Input: " + line);
+    var args = line.split(' ');
+    args.splice(0, 1);
     command = command.replace(/\//, '');
     command = command.toLowerCase();
 
@@ -212,33 +218,13 @@ $(document).ready(function (e) {
         showBackgrounds();
         break;
 
-      case "rm":
-        var file = line.substr([line.split(' ')[0].length]);
-        var sad_mac = "https://i.imgur.com/2uex9Hc.png";
-
-        if (file.localeCompare("-rf /")) {
-          console.log("Closing the page");
-          $(".wrapper").addClass('macwrapper');
-          $(".wrapper").append('<div class="macerror"></div>');
-          setTimeout(function (func) {
-            window.location.replace("https://www.google.com/");
-          }, 4500);
-          var audio = new Audio('files/sadmac.mp3');
-          audio.play();
-          window.home();
-        } else {
-          printLine("Couldn't delete " + file);
-        }
-
-        break;
-
       case "socials":
         printSocials();
         break;
 
       case "style":
-        if (line.split(' ').length == 2) {
-          var style = line.split(' ')[1].toLowerCase();
+        if (args.length == 1) {
+          var style = args[0].toLowerCase();
 
           if (setStyle(style)) {
             printLine("Successfully changed style to: " + "'<b>" + style + "</b>'");
@@ -249,6 +235,107 @@ $(document).ready(function (e) {
           Object.keys(terminalstyles).forEach(function (style) {
             return printLine(style);
           });
+        }
+
+        break;
+
+      case "pwd":
+        printLine(dir.getDirectory());
+        break;
+
+      case "ls":
+        printLine(dir.getChildren());
+        break;
+
+      case "cd":
+        if (args.length == 1) {
+          var folder = args[0];
+
+          if (folder == "..") {
+            if (dir.getParent() == null) break;
+            dir = dir.getParent();
+            printLine("Changed directory to: " + dir.getDirectory());
+            break;
+          }
+
+          if (folder == ".") break;
+
+          if (dir.getChild(folder) != null && dir.getChild(folder) instanceof Folder) {
+            dir = dir.getChild(folder);
+            printLine("Changed directory to: " + dir.getDirectory());
+          } else {
+            printLine("There is no folder called '" + folder + "'!");
+          }
+        } else {
+          printLine("Usage: cd &lt;directory&gt;");
+        }
+
+        break;
+
+      case "mkdir":
+        if (args.length == 1) {
+          var _folder = args[0];
+
+          if (_folder == "" || _folder == "." || _folder == "..") {
+            printLine("Invalid foldername");
+          } else {
+            dir.addElement(new Folder(_folder));
+          }
+        } else {
+          printLine("Usage: mkdir &lt;directory&gt;");
+        }
+
+        break;
+
+      case "cat":
+        if (args.length == 1) {
+          var file = args[0];
+
+          if (dir.getChild(file) != null && dir.getChild(file) instanceof Textfile) {
+            printLine(dir.getChild(file).getContent());
+          } else {
+            printLine("There is no text file called '" + file + "'!");
+          }
+        } else {
+          printLine("Usage: cat &lt;directory&gt;");
+        }
+
+        break;
+
+      case "create":
+        if (args.length > 1) {
+          var _file = args[0];
+          var content = line.substr(command.length + _file.length + 2, line.length);
+
+          if (_file == "" || _file == "." || _file == "..") {
+            printLine("Invalid filename");
+          } else {
+            dir.addElement(new Textfile(_file, content));
+          }
+        } else {
+          printLine("Usage: create &lt;file&gt; &lt;content&gt;");
+        }
+
+        break;
+
+      case "rm":
+        if (line.substr(command.length + 1, line.length) == "-rf /") {
+          console.log("Closing the page");
+          $(".wrapper").addClass('macwrapper');
+          $(".wrapper").append('<div class="macerror"></div>');
+          setTimeout(function (func) {
+            window.location.replace("https://www.google.com/");
+          }, 4500);
+          var audio = new Audio('files/sadmac.mp3');
+          audio.play();
+          window.home();
+          break;
+        }
+
+        if (args.length == 1) {
+          dir.removeElement(args[0]);
+        } else {
+          printLine("Usage: rm &lt;directory&gt;");
         }
 
         break;

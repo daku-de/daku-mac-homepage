@@ -534,6 +534,12 @@ footer {
   pointer-events: none;
   user-select: none;
 }
+footer li:focus {
+  outline: none;
+}
+footer a:focus {
+  outline: none;
+}
 footer a {
   display: flex;
 }

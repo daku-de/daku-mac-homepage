@@ -103,7 +103,7 @@ $(document).ready(function (e) {
     var ending = hours >= 12 ? 'PM' : 'AM';
     if (hours >= 12) hours -= 12;
     if (hours == 0) hours = 12;
-    if (hours < 10) hours = "0" + hours;
+    if (hours < 10 && hours[0] != '0') hours = "0" + hours;
     var tempdatestring = weekdays[d.getDay()] + " " + hours + ":" + minutes + " " + ending;
 
     if (temptimestring != timestring) {
@@ -119,6 +119,7 @@ $(document).ready(function (e) {
     console.log(e.which);
 
     if (e.which == 13) {
+      //enter
       var command = text.split(' ')[0];
       var output = "";
       command = command.replace(/</g, "&lt;");
@@ -132,7 +133,7 @@ $(document).ready(function (e) {
         previouscommands[currentcommand] = text;
         currentcommand = previouscommands.length;
         cmd(command, text);
-      } //Remove newline
+      } //remove newline
 
 
       setTimeout(function () {

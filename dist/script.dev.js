@@ -5,9 +5,10 @@ $(document).ready(function (e) {
   var inputbox = $(".inputline .inputbox");
   var root = document.documentElement;
   var dir = new Folder("home");
-  dir.addElement(new Textfile("file-system-info", "You can work with this filesystem with these commands: <br> \n      pwd <br>\n      ls <br>\n      cd &lt;directory&gt; <br>\n      rm &lt;file|directory&gt; <br>\n      mkdir &lt;directory&gt; <br>\n      create &lt;file&gt; &lt;content&gt; <br>\n      cat &lt;file&gt; <br><br>\n      This filesystem is not persistent!"));
-  dir.addElement(new Folder("literature"));
-  dir.addElement(new Folder("child"));
+  dir.addElement(new Textfile("info", "You can work with this filesystem with these commands: <br> \n      pwd <br>\n      ls <br>\n      cd &lt;directory&gt; <br>\n      rm &lt;file|directory&gt; <br>\n      mkdir &lt;directory&gt; <br>\n      create &lt;file&gt; &lt;content&gt; <br>\n      cat &lt;file&gt; <br><br>\n      This filesystem is not persistent!"));
+  dir.addElement(new Folder("subfolder2"));
+  dir.addElement(new Folder("subfolder1"));
+  dir.getChild("subfolder1").addElement(new Folder("subsubfolder"));
   console.clear();
   var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["background", "Choose a different background image"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"], ["pwd", "Print name of current directory"], ["cd", "Change directory"], ["ls", "List directory contents"], ["rm", "Remove files or directories"], ["mkdir", "Create directory"], ["create", "Create file with content"], ["cat", "Print content of file"]];
   var backgrounds = [["https://i.imgur.com/ZMGL5nP.jpg", "Default"], ["https://i.imgur.com/psAgyeh.jpg", "Mountain"], ["https://i.imgur.com/0ylkqeZ.jpg", "Galaxy"], ["https://i.imgur.com/VCmkUHl.jpg", "Mars"], ["https://picsum.photos/1920/1080?t=0", "Random"]];
@@ -15,10 +16,10 @@ $(document).ready(function (e) {
   var currentcommand = 0;
   var terminalstyles = {
     //Custom Terminal Styles ([TerminalBackground, TerminalText, InputlineBackground, Logo, Important])
-    "default": ["#3A3A3A", "#EFEFAE", "#262626", "#ffe419", "#E3A786"],
+    "default": ["#313F46", "#ffffff", "#23292C", "#60AA67", "#B9585D"],
+    dark: ["#3A3A3A", "#EFEFAE", "#262626", "#ffe419", "#E3A786"],
     hackerman: ["#000000", "#0ed400", "#000000", "#ff0fff", "#E3A786"],
     white: ["#ffffff", "#000000", "#ffffff", "#ff8205", "#c40000"],
-    dark: ["#313F46", "#ffffff", "#23292C", "#60AA67", "#B9585D"],
     pink: ["#ffcbe4", "#df0069", "#ffa4cf", "#6a0067", "#3f3fff"],
     twitter: ['#162D40', '#FFFFFF', '#15202B', '#1A91DA', '#B9585D']
   };
@@ -120,12 +121,10 @@ $(document).ready(function (e) {
 
     if (e.which == 13) {
       //enter
-      var command = text.split(' ')[0];
-      var output = "";
-      command = command.replace(/</g, "&lt;");
-      command = command.replace(/>/g, "&gt;");
       text = text.replace(/</g, "&lt;");
       text = text.replace(/>/g, "&gt;");
+      var command = text.split(' ')[0];
+      var output = "";
       inputbox.text("");
       printLine(text, null, "User");
 
@@ -164,7 +163,16 @@ $(document).ready(function (e) {
 
   function cmd(command, line) {
     console.log("Input: " + line);
+    command = command.replace(new RegExp(String.fromCharCode(160), "g"), "");
     var args = line.split(' ');
+
+    for (var _i = 0; _i < args.length; ++_i) {
+      args[_i] = args[_i].replace(new RegExp(String.fromCharCode(160), "g"), "");
+    }
+
+    args = args.filter(function (e) {
+      return e != "";
+    });
     args.splice(0, 1);
     command = command.replace(/\//, '');
     command = command.toLowerCase();
@@ -226,15 +234,12 @@ $(document).ready(function (e) {
       case "style":
         if (args.length == 1) {
           var style = args[0].toLowerCase();
-
-          if (setStyle(style)) {
-            printLine("Successfully changed style to: " + "'<b>" + style + "</b>'");
-          }
+          setStyle(style);
         } else {
           printLine("Usage: style &lt;style&gt;");
           printLine("Available styles:");
           Object.keys(terminalstyles).forEach(function (style) {
-            return printLine(style);
+            printLine(style);
           });
         }
 
@@ -320,7 +325,7 @@ $(document).ready(function (e) {
         break;
 
       case "rm":
-        if (line.substr(command.length + 1, line.length) == "-rf /") {
+        if (args.length == 2 && args[0] == "-rf" && args[1] == "/") {
           console.log("Closing the page");
           $(".wrapper").addClass('macwrapper');
           $(".wrapper").append('<div class="macerror"></div>');
@@ -329,7 +334,6 @@ $(document).ready(function (e) {
           }, 4500);
           var audio = new Audio('files/sadmac.mp3');
           audio.play();
-          window.home();
           break;
         }
 
@@ -382,7 +386,7 @@ $(document).ready(function (e) {
       ;
     }
 
-    printLine(facts[r], null, "Fun Fact", "white");
+    printLine(facts[r], null, "Fun Fact", "gold");
     readfacts.push(r);
     console.log("Readfacts: " + readfacts);
   }
@@ -390,7 +394,6 @@ $(document).ready(function (e) {
   function setStyle(style) {
     if (Object.keys(terminalstyles).indexOf(style) <= -1) {
       printLine("Style '" + style + "' not known");
-      return;
     }
 
     setCookie("style", style);
@@ -399,7 +402,7 @@ $(document).ready(function (e) {
     root.style.setProperty('--terminal-inputline', terminalstyles[style][2]);
     root.style.setProperty('--color-logo', terminalstyles[style][3]);
     root.style.setProperty('--color-important', terminalstyles[style][4]);
-    return true;
+    printLine("Successfully changed style to: " + "'<b>" + style + "</b>'");
   }
 
   function lastlogin() {
@@ -515,7 +518,7 @@ $(document).ready(function (e) {
   }
 
   function printLine(content, style, service, servicestyle) {
-    if (content == null) {
+    if (content == null || content.length == 0 && service == null) {
       stream.append('<div class="line">' + '<p class="information">' + '<br/>' + '</p>' + '</div>');
       return;
     }

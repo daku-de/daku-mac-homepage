@@ -267,7 +267,7 @@ $(document).ready(function(e) {
          case "style":
             if (args.length == 1) {
                var style = args[0].toLowerCase();
-               setStyle(style);
+               if(setStyle(style)) printLine("Successfully changed style to: " + "'<b>" + style + "</b>'");
             } else {
                printLine("Usage: style &lt;style&gt;");
                printLine("Available styles:");
@@ -407,6 +407,7 @@ $(document).ready(function(e) {
    function setStyle(style) {
       if (Object.keys(terminalstyles).indexOf(style) <= -1) {
          printLine("Style '" + style + "' not known");
+         return false;
       }
       setCookie("style", style);
       root.style.setProperty('--terminal-background', terminalstyles[style][0]);
@@ -414,7 +415,7 @@ $(document).ready(function(e) {
       root.style.setProperty('--terminal-inputline', terminalstyles[style][2]);
       root.style.setProperty('--color-logo', terminalstyles[style][3]);
       root.style.setProperty('--color-important', terminalstyles[style][4]);
-      printLine("Successfully changed style to: " + "'<b>" + style + "</b>'");
+      return true;
    }
 
    function lastlogin() {

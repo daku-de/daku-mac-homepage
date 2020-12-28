@@ -107,8 +107,7 @@ $(document).ready(function(e) {
       if (getCookie("background") != "") {
          var i = parseInt(getCookie("background"));
          console.log("Cookie found: " + "background=" + i + ";");
-         var url = "url(" + backgrounds[i][0] + ")";
-         root.style.setProperty('--background-image', url);
+         $("#bg-" + i).click();
       }
 
       if(getCookie("style") != "") {

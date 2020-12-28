@@ -65,7 +65,7 @@ $(document).ready(function (e) {
     if (getCookie("background") != "") {
       var i = parseInt(getCookie("background"));
       console.log("Cookie found: " + "background=" + i + ";");
-      $("#bg-" + i).click();
+      setBackground(i);
     }
 
     if (getCookie("style") != "") {
@@ -377,6 +377,20 @@ $(document).ready(function (e) {
     }
   }
 
+  function setBackground(i) {
+    var url = "url(" + backgrounds[i][0] + ")";
+    root.style.setProperty('--background-image', url);
+
+    if (backgrounds[i].length == 3) {
+      var night_url = "url(" + backgrounds[i][2] + ")";
+      root.style.setProperty('--background-night-image', night_url);
+    } else {
+      root.style.setProperty('--background-night-image', "url()");
+    }
+
+    setCookie("background", i);
+  }
+
   function showBackgrounds() {
     $(".backgrounds").remove();
     $(".backgroundinfo").remove();
@@ -390,17 +404,7 @@ $(document).ready(function (e) {
       $(".backgrounds").append('<div class="bg-wrapper" id="bg-' + i + '"><img src="' + backgrounds[i][0] + '"><span>' + backgrounds[i][1] + cycle + '</span></div>');
       $("#bg-" + i).on('click', i, function (e) {
         var i = e.data;
-        var url = "url(" + backgrounds[i][0] + ")";
-        root.style.setProperty('--background-image', url);
-
-        if (backgrounds[i].length == 3) {
-          var night_url = "url(" + backgrounds[i][2] + ")";
-          root.style.setProperty('--background-night-image', night_url);
-        } else {
-          root.style.setProperty('--background-night-image', "url()");
-        }
-
-        setCookie("background", i);
+        setBackground(i);
       });
     }
   }

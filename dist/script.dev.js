@@ -100,7 +100,7 @@ $(document).ready(function (e) {
     if (totmin >= 11 * 60 && totmin <= 17 * 60) night_opacity = 0;
     if (totmin > 6 * 60 && totmin < 11 * 60) night_opacity = (10 * 60 + 30 - totmin) / 5 * 60;
     if (totmin > 17 * 60 && totmin < 22 * 60) night_opacity = (totmin - 18 * 60) / 5 * 60;
-    night_opacity = (Math.round(night_opacity * 100) / 100).toFixed(2);
+    night_opacity = (Math.round(night_opacity * 100) / 100).toFixed(3);
     document.getElementById("night-bg").style.setProperty("opacity", night_opacity);
   }
 

@@ -57,7 +57,8 @@ $(document).ready(function (e) {
     initCalc();
     initMail();
     setInterval(time);
-    setInterval(bg_cycle, 1000);
+    bg_cycle();
+    setInterval(bg_cycle, 60 * 1000);
     printTerminalWelcome();
     setCookie("lastlogin", new Date().toUTCString());
 
@@ -98,9 +99,9 @@ $(document).ready(function (e) {
     var night_opacity = 0;
     if (totmin >= 22 * 60 || totmin <= 6 * 60) night_opacity = 1;
     if (totmin >= 11 * 60 && totmin <= 17 * 60) night_opacity = 0;
-    if (totmin > 6 * 60 && totmin < 11 * 60) night_opacity = (10 * 60 + 30 - totmin) / 5 * 60;
-    if (totmin > 17 * 60 && totmin < 22 * 60) night_opacity = (totmin - 18 * 60) / 5 * 60;
-    night_opacity = (Math.round(night_opacity * 100) / 100).toFixed(3);
+    if (totmin > 6 * 60 && totmin < 11 * 60) night_opacity = (10 * 60 + 30 - totmin) / (5 * 60);
+    if (totmin > 17 * 60 && totmin < 22 * 60) night_opacity = (totmin - 17 * 60) / (5 * 60);
+    night_opacity = (Math.round(night_opacity * 1000) / 1000).toFixed(3);
     document.getElementById("night-bg").style.setProperty("opacity", night_opacity);
   }
 

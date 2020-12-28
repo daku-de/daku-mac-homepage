@@ -11,7 +11,8 @@ $(document).ready(function (e) {
   dir.getChild("subfolder1").addElement(new Folder("subsubfolder"));
   console.clear();
   var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["background", "Choose a different background image"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"], ["pwd", "Print name of current directory"], ["cd", "Change directory"], ["ls", "List directory contents"], ["rm", "Remove files or directories"], ["mkdir", "Create directory"], ["create", "Create file with content"], ["cat", "Print content of file"]];
-  var backgrounds = [["https://i.imgur.com/ZMGL5nP.jpg", "Default"], ["https://i.imgur.com/psAgyeh.jpg", "Mountain"], ["https://i.imgur.com/0ylkqeZ.jpg", "Galaxy"], ["https://i.imgur.com/VCmkUHl.jpg", "Mars"], ["https://picsum.photos/1920/1080?t=0", "Random"]];
+  var backgrounds = [//format [bg-url, bg-name, bg-night-url]
+  ["https://i.imgur.com/ZMGL5nP.jpg", "Default"], ["https://i.imgur.com/psAgyeh.jpg", "Mountain"], ["https://i.imgur.com/eEZ2YgX.jpg", "Mojave", "https://i.imgur.com/9G8q5cM.jpg"], ["https://i.imgur.com/U95zyMS.jpg", "Catalina", "https://i.imgur.com/47xbeoM.jpg"], ["https://i.imgur.com/VCmkUHl.jpg", "Mars"], ["https://picsum.photos/1920/1080?t=0", "Random"]];
   var previouscommands = [];
   var currentcommand = 0;
   var terminalstyles = {
@@ -56,6 +57,7 @@ $(document).ready(function (e) {
     initCalc();
     initMail();
     setInterval(time);
+    setInterval(bg_cycle, 1000);
     printTerminalWelcome();
     setCookie("lastlogin", new Date().toUTCString());
 
@@ -85,6 +87,21 @@ $(document).ready(function (e) {
     printLine();
     printLine("You can use this interface just like a normal terminal!", "important", "Info");
     printLine("For help type 'help'", "important", "Info");
+  }
+
+  function bg_cycle() {
+    //day & night cycle for background
+    var d = new Date();
+    var hours = d.getHours();
+    var minutes = d.getMinutes();
+    var totmin = hours * 60 + minutes;
+    var night_opacity = 0;
+    if (totmin >= 22 * 60 || totmin <= 6 * 60) night_opacity = 1;
+    if (totmin >= 11 * 60 && totmin <= 17 * 60) night_opacity = 0;
+    if (totmin > 6 * 60 && totmin < 11 * 60) night_opacity = (10 * 60 + 30 - totmin) / 5 * 60;
+    if (totmin > 17 * 60 && totmin < 22 * 60) night_opacity = (totmin - 18 * 60) / 5 * 60;
+    night_opacity = (Math.round(night_opacity * 100) / 100).toFixed(2);
+    document.getElementById("night-bg").style.setProperty("opacity", night_opacity);
   }
 
   var timestring = "";
@@ -223,6 +240,7 @@ $(document).ready(function (e) {
         printFact();
         break;
 
+      case "wallpaper":
       case "background":
         showBackgrounds();
         break;
@@ -367,11 +385,21 @@ $(document).ready(function (e) {
     stream.append('<div class="backgrounds">');
 
     for (var i = 0; i < backgrounds.length; i++) {
-      $(".backgrounds").append('<div class="bg-wrapper" id="bg-' + i + '"><img src="' + backgrounds[i][0] + '"><span>' + backgrounds[i][1] + '</span></div>');
+      var cycle = "";
+      if (backgrounds[i].length == 3) cycle = " (Dynamic)";
+      $(".backgrounds").append('<div class="bg-wrapper" id="bg-' + i + '"><img src="' + backgrounds[i][0] + '"><span>' + backgrounds[i][1] + cycle + '</span></div>');
       $("#bg-" + i).on('click', i, function (e) {
         var i = e.data;
         var url = "url(" + backgrounds[i][0] + ")";
         root.style.setProperty('--background-image', url);
+
+        if (backgrounds[i].length == 3) {
+          var night_url = "url(" + backgrounds[i][2] + ")";
+          root.style.setProperty('--background-night-image', night_url);
+        } else {
+          root.style.setProperty('--background-night-image', "url()");
+        }
+
         setCookie("background", i);
       });
     }

@@ -53,6 +53,7 @@ $windowradius: 5px;
    --color-logo: #60AA67;
 
    --background-image: url(https://i.imgur.com/ZMGL5nP.jpg);
+   --background-night-image: url();
 
 }
 
@@ -68,6 +69,18 @@ html {
    background-repeat: no-repeat;
    background-position: center;
    height: 100%;
+}
+
+#night-bg {
+   opacity: 0;
+   height: 100%;
+   width: 100%;
+   position: absolute;
+   background-image: var(--background-night-image);
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center;
+   z-index: -1;
 }
 
  #ie {
@@ -589,6 +602,7 @@ body {
     justify-content: center;
     display: flex;
     flex-wrap: wrap;
+    min-width: 200px;
 
     &:hover {
        background-color: rgb(255, 255, 255, 0.3);
@@ -603,6 +617,9 @@ body {
        margin-right: 10%;
        border-radius: 10px;
     }
+    span {
+       white-space: nowrap;
+    }
  }
 
  .terminal-wrapper {
@@ -612,6 +629,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+ }
+
+ #terminal {
+    min-width: 550px;
  }
 
  footer {

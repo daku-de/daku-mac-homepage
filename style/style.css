@@ -144,14 +144,11 @@ body .window-button, body .handle .buttons .third, body .handle .buttons .second
   color: rgba(0, 0, 0, 0.5);
 }
 body .window {
-  background-color: var(--terminal-background);
-  border-radius: 5px;
-  border-top-right-radius: 10px;
-  border-top-left-radius: 10px;
-  top: -10%;
+  top: -8.7%;
   width: 80%;
+  height: 77%;
   display: none;
-  flex-wrap: wrap;
+  flex-flow: column;
   z-index: 0;
 }
 body .window .terminal {
@@ -159,18 +156,17 @@ body .window .terminal {
   flex-flow: column;
 }
 body .window .window-content {
+  background-color: var(--terminal-background);
   border: 2px solid #a3a3a3;
   border-top: 0px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  min-height: 40px;
-  height: 600px;
-  height: 70vh;
+  flex-grow: 1;
   overflow-y: auto;
-  width: 100%;
 }
 body .handle {
   height: 22px;
+  min-height: 22px;
   background: linear-gradient(to bottom, #e6e6e6 0%, #a3a3a3 100%);
   border-top: 1px solid white;
   border-top-left-radius: 10px;
@@ -378,6 +374,7 @@ body .inputline .time {
   background: none;
   top: 0;
   display: none;
+  height: 75%;
 }
 #calc .window .handle {
   background: rgba(76, 76, 76, 0.4);
@@ -396,7 +393,7 @@ body .inputline .time {
   display: flex;
   left: 0;
   overflow: hidden;
-  height: calc(100% - 1.3em);
+  height: calc(100% - 19px);
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -534,7 +531,7 @@ body .inputline .time {
 
 .terminal-wrapper {
   overflow: hidden;
-  height: calc(100% - 1.3em);
+  height: calc(100% - 19px);
   width: 100%;
   display: flex;
   justify-content: center;

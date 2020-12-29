@@ -190,15 +190,14 @@ body {
    }
 
    .window {
-      background-color: var(--terminal-background);
-      border-radius: 5px;
-      border-top-right-radius: 10px;
-      border-top-left-radius: 10px;
-      top: -10%;
+      top: -8.7%;
       width: 80%;
+      height: 77%;
       display: none;
-      flex-wrap: wrap;
+      flex-flow: column;
       z-index: 0;
+
+      //border-bottom: 2px solid rgba(163, 163, 163, 1);
 
       .terminal {
          display: flex;
@@ -206,20 +205,23 @@ body {
       }
 
       .window-content {
+         background-color: var(--terminal-background);
          border: 2px solid rgba(163, 163, 163, 1);
          border-top: 0px;
          border-bottom-left-radius: 5px;
          border-bottom-right-radius: 5px;
-         min-height: 40px;
-         height: 600px;
-         height: 70vh;
+         //min-height: 40px;
+         flex-grow: 1;
+         //height: 600px;
+         //height: 70vh;
          overflow-y: auto;
-         width: 100%;
+         //width: 100%;
       }
    }
 
    .handle {
       height: 22px;
+      min-height: 22px;
       background: linear-gradient(to bottom, rgba(230, 230, 230, 1) 0%, rgba(163, 163, 163, 1) 100%);
 
       border-top: 1px solid white;
@@ -443,6 +445,7 @@ body {
       background: none;
       top: 0;
       display: none;
+      height: 75%;
 
       .handle {
          background: rgb(76, 76, 76, 0.4);
@@ -463,7 +466,7 @@ body {
       display: flex;
       left: 0;
       overflow: hidden;
-      height: calc(100% - 1.3em);
+      height: calc(100% - 19px);
       width: 100%;
       justify-content: center;
       align-items: center;
@@ -624,7 +627,7 @@ body {
 
  .terminal-wrapper {
     overflow: hidden;
-    height: calc(100% - 1.3em);
+    height: calc(100% - 19px);
     width: 100%;
     display: flex;
     justify-content: center;

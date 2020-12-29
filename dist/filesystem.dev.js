@@ -43,6 +43,12 @@ function () {
     value: function getName() {
       return this.name;
     }
+  }], [{
+    key: "validName",
+    value: function validName(name) {
+      var regex = /^\.?(\w+[\-_]?\w+)+(.\w+)?$/i;
+      return regex.test(name);
+    }
   }]);
 
   return File;
@@ -66,9 +72,13 @@ function (_File) {
   _createClass(Folder, [{
     key: "addElement",
     value: function addElement(element) {
+      if (!element instanceof File) {
+        return false;
+      }
+
       for (var i = 0; i < this.elements.length; ++i) {
-        if (this.elements[i].name == element.name && this.elements[i].constructor.name == element.constructor.name) {
-          return element.name + " already exists.";
+        if (this.elements[i].name == element.name) {
+          return false;
         }
       }
 
@@ -77,10 +87,15 @@ function (_File) {
       this.elements.sort(function (a, b) {
         return a.getName().localeCompare(b.getName());
       });
+      return true;
     }
   }, {
     key: "removeElement",
     value: function removeElement(element) {
+      if (!element instanceof String) {
+        return false;
+      }
+
       for (var i = 0; i < this.elements.length; ++i) {
         if (this.elements[i].name == element) {
           delete this.elements[i];

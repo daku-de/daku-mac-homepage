@@ -4,6 +4,11 @@ class File {
         this.parent = null;
     }
 
+    static validName(name) {
+        let regex = /^\.?(\w+[\-_]?\w+)+(.\w+)?$/i;
+        return regex.test(name);
+    }
+
     setParent(parent) {
         this.parent = parent;
     }
@@ -23,24 +28,31 @@ class Folder extends File{
         this.elements = [];
     }
 
-    addElement(element) {
+    addElement(element) {       
+        if (!element instanceof File) {            
+            return false;
+        }
         for (let i = 0; i < this.elements.length ; ++i) {
-            if (this.elements[i].name == element.name && this.elements[i].constructor.name == element.constructor.name) {
-                return element.name + " already exists.";
+            if (this.elements[i].name == element.name) {              
+                return false;
             }
         }   
         this.elements.push(element);
         element.setParent(this);
-        this.elements.sort((a, b) => {return a.getName().localeCompare(b.getName())});
+        this.elements.sort((a, b) => {return a.getName().localeCompare(b.getName())});       
+        return true;
     }
 
-    removeElement(element) {
+    removeElement(element) {     
+        if (!element instanceof String) {          
+            return false;
+        }
         for (let i = 0; i < this.elements.length ; ++i) {
             if (this.elements[i].name == element) {
                 delete this.elements[i];
                 this.elements.splice(i, 1);
             }
-        }   
+        }
     }
 
     getDirectory() {

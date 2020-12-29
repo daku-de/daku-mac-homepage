@@ -5,12 +5,12 @@ $(document).ready(function (e) {
   var inputbox = $(".inputline .inputbox");
   var root = document.documentElement;
   var dir = new Folder("home");
-  dir.addElement(new Textfile("info", "You can work with this filesystem with these commands: <br> \n      pwd <br>\n      ls <br>\n      cd &lt;directory&gt; <br>\n      rm &lt;file|directory&gt; <br>\n      mkdir &lt;directory&gt; <br>\n      create &lt;file&gt; &lt;content&gt; <br>\n      cat &lt;file&gt; <br><br>\n      This filesystem is not persistent!"));
+  dir.addElement(new Textfile("info", "You can work with this filesystem with these commands: <br> \n      pwd <br>\n      ls <br>\n      cd &lt;directory&gt; <br>\n      rm &lt;file|directory&gt; <br>\n      mkdir &lt;directory&gt; <br>\n      create &lt;file&gt; &lt;content&gt; <br>\n      cat &lt;file&gt; <br>\n      touch &lt;file&gt; <br> <br>\n      This filesystem is not persistent!"));
   dir.addElement(new Folder("subfolder2"));
   dir.addElement(new Folder("subfolder1"));
   dir.getChild("subfolder1").addElement(new Folder("subsubfolder"));
   console.clear();
-  var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["background", "Choose a different background image"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"], ["pwd", "Print name of current directory"], ["cd", "Change directory"], ["ls", "List directory contents"], ["rm", "Remove files or directories"], ["mkdir", "Create directory"], ["create", "Create file with content"], ["cat", "Print content of file"]];
+  var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["background", "Choose a different background image"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"], ["pwd", "Print name of current directory"], ["cd", "Change directory"], ["ls", "List directory contents"], ["rm", "Remove files or directories"], ["mkdir", "Create directory"], ["create", "Create file with content"], ["touch", "Create an empty file"], ["cat", "Print content of file"]];
   var backgrounds = [//format [bg-url, bg-name, bg-night-url]
   ["https://i.imgur.com/ZMGL5nP.jpg", "Default"], ["https://i.imgur.com/psAgyeh.jpg", "Mountain"], ["https://i.imgur.com/eEZ2YgX.jpg", "Mojave", "https://i.imgur.com/9G8q5cM.jpg"], ["https://i.imgur.com/U95zyMS.jpg", "Catalina", "https://i.imgur.com/47xbeoM.jpg"], ["https://i.imgur.com/VCmkUHl.jpg", "Mars"], ["https://picsum.photos/1920/1080?t=0", "Random"]];
   var previouscommands = [];
@@ -300,7 +300,7 @@ $(document).ready(function (e) {
         if (args.length == 1) {
           var _folder = args[0];
 
-          if (_folder == "" || _folder == "." || _folder == "..") {
+          if (!File.validName(_folder)) {
             printLine("Invalid foldername");
           } else {
             dir.addElement(new Folder(_folder));
@@ -329,15 +329,31 @@ $(document).ready(function (e) {
       case "create":
         if (args.length > 1) {
           var _file = args[0];
-          var content = line.substr(command.length + _file.length + 2, line.length);
+          var content = line.substr(line.indexOf(_file) + _file.length, line.length);
+          content = content.substr(content.indexOf(args[1]), content.length);
 
-          if (_file == "" || _file == "." || _file == "..") {
+          if (!File.validName(_file)) {
             printLine("Invalid filename");
           } else {
             dir.addElement(new Textfile(_file, content));
           }
         } else {
           printLine("Usage: create &lt;file&gt; &lt;content&gt;");
+        }
+
+        break;
+
+      case "touch":
+        if (args.length == 1) {
+          var _file2 = args[0];
+
+          if (!File.validName(_file2)) {
+            printLine("Invalid filename");
+          } else {
+            dir.addElement(new Textfile(_file2, ""));
+          }
+        } else {
+          printLine("Usage: touch &lt;file&gt;");
         }
 
         break;
@@ -483,9 +499,9 @@ $(document).ready(function (e) {
     printLine("A! _\\ \\  / /_/ // /__   _/ /   / __ | / /__ _\\ \\  ", "blue");
     printLine("A!/___/  \\____/ \\___/  /___/  /_/ |_|/____//___/  ", "blue");
     printLine();
-    printLine("A! - Twitter: [^https://twitter.com/daku_lol](DakuuLoL)");
-    printLine("A! - YouTube: [^https://www.youtube.com/channel/UCLcRQAp7hgOwfuPFFQBr8lw](Daku)");
-    printLine("A! - Twitch:  [^https://www.twitch.tv/dakustream](DakuStream)");
+    printLine("A! - Twitter: ");
+    printLine("A! - YouTube: ");
+    printLine("A! - Twitch:  ");
     printLine();
   }
 

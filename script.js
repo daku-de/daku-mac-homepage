@@ -13,7 +13,8 @@ $(document).ready(function(e) {
       rm &lt;file|directory&gt; <br>
       mkdir &lt;directory&gt; <br>
       create &lt;file&gt; &lt;content&gt; <br>
-      cat &lt;file&gt; <br><br>
+      cat &lt;file&gt; <br>
+      touch &lt;file&gt; <br> <br>
       This filesystem is not persistent!`));
    dir.addElement(new Folder("subfolder2"));
    dir.addElement(new Folder("subfolder1"));
@@ -36,6 +37,7 @@ $(document).ready(function(e) {
       ["rm", "Remove files or directories"],
       ["mkdir", "Create directory"],
       ["create", "Create file with content"],
+      ["touch", "Create an empty file"],
       ["cat", "Print content of file"]
    ];
 
@@ -326,7 +328,7 @@ $(document).ready(function(e) {
          case "mkdir":
             if (args.length == 1) {
                let folder = args[0];
-               if (folder == "" || folder == "." || folder == "..") {
+               if (!File.validName(folder)) {
                   printLine("Invalid foldername");
                } else {
                   dir.addElement(new Folder(folder));
@@ -352,14 +354,28 @@ $(document).ready(function(e) {
          case "create":
             if (args.length > 1) {
                let file = args[0];
-               let content = line.substr(command.length + file.length + 2, line.length);
-               if (file == "" || file == "." || file == "..") {
+               let content = line.substr(line.indexOf(file) + file.length, line.length);
+               content = content.substr(content.indexOf(args[1]), content.length);
+               if (!File.validName(file)) {
                   printLine("Invalid filename");
                } else {
                   dir.addElement(new Textfile(file, content));
                }
             } else {
                printLine("Usage: create &lt;file&gt; &lt;content&gt;");
+            }
+            break;
+
+         case "touch":
+            if (args.length == 1) {
+               let file = args[0];
+               if (!File.validName(file)) {
+                  printLine("Invalid filename");
+               } else {
+                  dir.addElement(new Textfile(file, ""));
+               }
+            } else {
+               printLine("Usage: touch &lt;file&gt;");
             }
             break;
 
@@ -490,9 +506,9 @@ $(document).ready(function(e) {
       printLine("A! _\\ \\  / /_/ // /__   _/ /   / __ | / /__ _\\ \\  ", "blue");
       printLine("A!/___/  \\____/ \\___/  /___/  /_/ |_|/____//___/  ", "blue");
       printLine();
-      printLine("A! - Twitter: [^https://twitter.com/daku_lol](DakuuLoL)");
-      printLine("A! - YouTube: [^https://www.youtube.com/channel/UCLcRQAp7hgOwfuPFFQBr8lw](Daku)");
-      printLine("A! - Twitch:  [^https://www.twitch.tv/dakustream](DakuStream)");
+      printLine("A! - Twitter: ");
+      printLine("A! - YouTube: ");
+      printLine("A! - Twitch:  ");
       printLine();
 
    }

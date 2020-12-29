@@ -132,7 +132,7 @@ $(document).ready(function(e) {
       printLine();
       printLine('Welcome to [^https://daku.im](<b>daku.im</b>)!');
       printLine();
-      printLine("You can use this interface just like a normal terminal!", "important", "Info");
+      printLine("You can use this interface just like a normal Unix shell!", "important", "Info");
       printLine("For help type 'help'", "important", "Info");
    }
 

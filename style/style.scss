@@ -197,10 +197,6 @@ body {
       flex-flow: column;
       z-index: 0;
 
-      border-bottom: 2px solid rgba(163, 163, 163, 1);
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
-
       .terminal {
          display: flex;
          flex-flow: column;
@@ -641,6 +637,10 @@ body {
 
  #terminal {
     min-width: 550px;
+    border-bottom: 2px solid rgba(163, 163, 163, 1);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
  }
 
  footer {

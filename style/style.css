@@ -150,9 +150,6 @@ body .window {
   display: none;
   flex-flow: column;
   z-index: 0;
-  border-bottom: 2px solid #a3a3a3;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
 }
 body .window .terminal {
   display: flex;
@@ -544,6 +541,9 @@ body .inputline .time {
 
 #terminal {
   min-width: 550px;
+  border-bottom: 2px solid #a3a3a3;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 footer {

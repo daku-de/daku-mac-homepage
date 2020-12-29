@@ -102,7 +102,7 @@ $(document).ready(function(e) {
       initMail();
       setInterval(time);
       bg_cycle();
-      setInterval(bg_cycle, 60*1000);
+      setInterval(bg_cycle, 1000);
       printTerminalWelcome();
       setCookie("lastlogin", new Date().toUTCString());
 
@@ -141,12 +141,13 @@ $(document).ready(function(e) {
       let d = new Date();
       let hours = d.getHours();
       let minutes = d.getMinutes();
+      let seconds = d.getSeconds();
       let totmin = hours*60+minutes;
       let night_opacity = 0;
       if (totmin >= 22*60 || totmin <= 6*60) night_opacity = 1;
       if (totmin >= 11*60 && totmin <= 17*60) night_opacity = 0;
-      if (totmin > 6*60 && totmin < 11*60) night_opacity = (10*60+30-totmin)/(5*60);
-      if (totmin > 17*60 && totmin < 22*60) night_opacity = (totmin-17*60)/(5*60);
+      if (totmin > 6*60 && totmin < 11*60) night_opacity = ((10*60+30-totmin)*60-seconds)/(5*60*60);
+      if (totmin > 17*60 && totmin < 22*60) night_opacity = ((totmin-17*60)*60+seconds)/(5*60*60);
       night_opacity = (Math.round(night_opacity * 1000)/1000).toFixed(3);
       document.getElementById("night-bg").style.setProperty("opacity", night_opacity);
    }

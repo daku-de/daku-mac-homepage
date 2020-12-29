@@ -5,7 +5,7 @@ class File {
     }
 
     static validName(name) {
-        let regex = /^\.?(\w+[\-_]?\w+)+(.\w+)?$/i;
+        let regex = /^\.?(\w+([\-_]\w+)?)+(.\w+)?$/i;
         return regex.test(name);
     }
 

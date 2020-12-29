@@ -46,7 +46,7 @@ function () {
   }], [{
     key: "validName",
     value: function validName(name) {
-      var regex = /^\.?(\w+[\-_]?\w+)+(.\w+)?$/i;
+      var regex = /^\.?(\w+([\-_]\w+)?)+(.\w+)?$/i;
       return regex.test(name);
     }
   }]);

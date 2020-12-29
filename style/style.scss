@@ -197,7 +197,9 @@ body {
       flex-flow: column;
       z-index: 0;
 
-      //border-bottom: 2px solid rgba(163, 163, 163, 1);
+      border-bottom: 2px solid rgba(163, 163, 163, 1);
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
 
       .terminal {
          display: flex;
@@ -208,6 +210,9 @@ body {
          background-color: var(--terminal-background);
          border: 2px solid rgba(163, 163, 163, 1);
          border-top: 0px;
+
+         border-bottom: 0px;
+
          border-bottom-left-radius: 5px;
          border-bottom-right-radius: 5px;
          //min-height: 40px;

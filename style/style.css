@@ -150,6 +150,9 @@ body .window {
   display: none;
   flex-flow: column;
   z-index: 0;
+  border-bottom: 2px solid #a3a3a3;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 body .window .terminal {
   display: flex;
@@ -159,6 +162,7 @@ body .window .window-content {
   background-color: var(--terminal-background);
   border: 2px solid #a3a3a3;
   border-top: 0px;
+  border-bottom: 0px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   flex-grow: 1;

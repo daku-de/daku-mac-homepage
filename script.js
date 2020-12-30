@@ -106,6 +106,8 @@ $(document).ready(function(e) {
       printTerminalWelcome();
       setCookie("lastlogin", new Date().toUTCString());
 
+      inputbox.focus();
+
       if (getCookie("background") != "") {
          var i = parseInt(getCookie("background"));
          console.log("Cookie found: " + "background=" + i + ";");

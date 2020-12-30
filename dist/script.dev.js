@@ -61,6 +61,7 @@ $(document).ready(function (e) {
     setInterval(bg_cycle, 1000);
     printTerminalWelcome();
     setCookie("lastlogin", new Date().toUTCString());
+    inputbox.focus();
 
     if (getCookie("background") != "") {
       var i = parseInt(getCookie("background"));

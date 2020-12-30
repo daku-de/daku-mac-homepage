@@ -20,7 +20,6 @@ $(document).ready(function(e) {
    dir.addElement(new Folder("subfolder1"));
    dir.getChild("subfolder1").addElement(new Folder("subsubfolder"));
 
-   console.clear();
    var commandlist = [
       ["help", "Show commands"],
       ["style", "Change the style of the console"],
@@ -61,14 +60,10 @@ $(document).ready(function(e) {
       twitter: ['#162D40', '#FFFFFF', '#15202B', '#1A91DA', '#B9585D']
    };
 
-   var pageindex = ["index", "about", "connect"];
-   var currentpage = "landing";
-
    var facts = ["'rm -rf /' will close this website", 
       "About 92% of the world’s currency exists only on hard drives", 
       "The new Texas Instrument calculators have ABC keyboards as the standardised tool for tests", 
       "Sister Mary K. Keller was the first woman in the US to be awarded a PhD in Computer Science"];
-   var url = "http://daku.im"
 
    var openedwindows = [];
 
@@ -655,7 +650,9 @@ function getCookie(cname) {
       c = c.substring(1);
     }
     if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
+       let val = c.substring(name.length, c.length);
+       console.log("Cookie read. " + name + "=" + val);
+      return val;
     }
   }
   return "";
@@ -819,13 +816,8 @@ function closeWindow(window) {
    window.style.setProperty("display", "none");
    window.style.setProperty("z-index", 0);
    var index = openedwindows.indexOf(window);
-   console.log(index);
    if (index > -1) {
       openedwindows.splice(index, 1);
-   }
-
-   for (var i = 0; i < openedwindows.length; ++i) {
-      if (openedwindows[i] == window) console.log("True");
    }
    layerWindows();
 }

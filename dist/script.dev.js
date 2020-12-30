@@ -9,7 +9,6 @@ $(document).ready(function (e) {
   dir.addElement(new Folder("subfolder2"));
   dir.addElement(new Folder("subfolder1"));
   dir.getChild("subfolder1").addElement(new Folder("subsubfolder"));
-  console.clear();
   var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["background", "Choose a different background image"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"], ["pwd", "Print name of current directory"], ["cd", "Change directory"], ["ls", "List directory contents"], ["rm", "Remove files or directories"], ["mkdir", "Create directory"], ["create", "Create file with content"], ["touch", "Create an empty file"], ["cat", "Print content of file"]];
   var backgrounds = [//format [bg-url, bg-name, bg-night-url]
   ["https://i.imgur.com/eEZ2YgX.jpg", "Mojave", "https://i.imgur.com/9G8q5cM.jpg"], ["https://i.imgur.com/ZMGL5nP.jpg", "Abstract"], ["https://i.imgur.com/psAgyeh.jpg", "Mountain"], ["https://i.imgur.com/U95zyMS.jpg", "Catalina", "https://i.imgur.com/47xbeoM.jpg"], ["https://i.imgur.com/VCmkUHl.jpg", "Mars"], ["https://picsum.photos/1920/1080?t=0", "Random"]];
@@ -24,10 +23,7 @@ $(document).ready(function (e) {
     pink: ["#ffcbe4", "#df0069", "#ffa4cf", "#6a0067", "#3f3fff"],
     twitter: ['#162D40', '#FFFFFF', '#15202B', '#1A91DA', '#B9585D']
   };
-  var pageindex = ["index", "about", "connect"];
-  var currentpage = "landing";
   var facts = ["'rm -rf /' will close this website", "About 92% of the world’s currency exists only on hard drives", "The new Texas Instrument calculators have ABC keyboards as the standardised tool for tests", "Sister Mary K. Keller was the first woman in the US to be awarded a PhD in Computer Science"];
-  var url = "http://daku.im";
   var openedwindows = [];
   /*
      Custom Text Styles
@@ -644,7 +640,9 @@ $(document).ready(function (e) {
       }
 
       if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
+        var val = c.substring(name.length, c.length);
+        console.log("Cookie read. " + name + "=" + val);
+        return val;
       }
     }
 
@@ -810,14 +808,9 @@ $(document).ready(function (e) {
     window.style.setProperty("display", "none");
     window.style.setProperty("z-index", 0);
     var index = openedwindows.indexOf(window);
-    console.log(index);
 
     if (index > -1) {
       openedwindows.splice(index, 1);
-    }
-
-    for (var i = 0; i < openedwindows.length; ++i) {
-      if (openedwindows[i] == window) console.log("True");
     }
 
     layerWindows();

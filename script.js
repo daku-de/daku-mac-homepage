@@ -105,7 +105,6 @@ $(document).ready(function(e) {
 
       if (getCookie("background") != "") {
          var i = parseInt(getCookie("background"));
-         console.log("Cookie found: " + "background=" + i + ";");
          setBackground(i);
       } else {
          setBackground(0);

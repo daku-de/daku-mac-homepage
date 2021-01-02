@@ -685,6 +685,10 @@ $(document).ready(function (e) {
         return;
       }
 
+      if (calc_result.toString().length > 12) {
+        calc_result = calc_result.toExponential(6);
+      }
+
       $('.calculator .result').text(calc_result);
     });
     $('#del').click(function () {

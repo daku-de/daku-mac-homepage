@@ -81,6 +81,23 @@ class Folder extends File{
         }
         return null;
     }
+
+    getString(depth) {
+        if (depth == null) depth = 0;
+        if (depth == 0) {
+            var res = '<span style="font-weight: bold">' + this.name + "</span>" + "<br>";
+        } else {
+            var res = '\u00A0'.repeat(depth*2-1) + "└" + this.name + "<br>";
+        }
+        for (let i = 0; i < this.elements.length ; ++i) {
+            if (this.elements[i] instanceof Folder) {
+                res += this.elements[i].getString(depth+1);
+            } else {
+                res += '\u00A0'.repeat((depth+1)*2-1) + "└" + this.elements[i].name + "<br>";
+            }
+        }
+        return res;  
+    }
 }
 
 class Textfile extends File {
@@ -94,3 +111,21 @@ class Textfile extends File {
         return this.content;
     }
 }
+
+var fs_root = new Folder("home");
+fs_root.addElement(new Textfile("info", `You can work with this filesystem with these commands: <br> 
+    dir <br>
+    pwd <br>
+    ls <br>
+    cd &lt;fs_rootectory&gt; <br>
+    rm &lt;file|fs_rootectory&gt; <br>
+    mkfs_root &lt;fs_rootectory&gt; <br>
+    create &lt;file&gt; &lt;content&gt; <br>
+    cat &lt;file&gt; <br>
+    touch &lt;file&gt; <br> <br>
+    This filesystem is not persistent!`));
+fs_root.addElement(new Folder("subfolder2"));
+fs_root.addElement(new Folder("subfolder1"));
+fs_root.getChild("subfolder1").addElement(new Folder("subsubfolder"));
+
+var dir = fs_root;

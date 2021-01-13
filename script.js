@@ -5,21 +5,6 @@ $(document).ready(function(e) {
    var inputbox = $(".inputline .inputbox");
    var root = document.documentElement;
 
-   var dir = new Folder("home");
-   dir.addElement(new Textfile("info", `You can work with this filesystem with these commands: <br> 
-      pwd <br>
-      ls <br>
-      cd &lt;directory&gt; <br>
-      rm &lt;file|directory&gt; <br>
-      mkdir &lt;directory&gt; <br>
-      create &lt;file&gt; &lt;content&gt; <br>
-      cat &lt;file&gt; <br>
-      touch &lt;file&gt; <br> <br>
-      This filesystem is not persistent!`));
-   dir.addElement(new Folder("subfolder2"));
-   dir.addElement(new Folder("subfolder1"));
-   dir.getChild("subfolder1").addElement(new Folder("subsubfolder"));
-
    var commandlist = [
       ["help", "Show commands"],
       ["style", "Change the style of the console"],
@@ -30,6 +15,7 @@ $(document).ready(function(e) {
       ["fact", "Display a random fact"],
       ["clear", "Clear the console"],
       ["reset", "Reset the whole console"],
+      ["dir", "Print the whole file system"],
       ["pwd", "Print name of current directory"],
       ["cd", "Change directory"],
       ["ls", "List directory contents"],
@@ -297,6 +283,10 @@ $(document).ready(function(e) {
 
          case "pwd":
             printLine(dir.getDirectory());
+            break;
+
+         case "dir":
+            printLine(fs_root.getString());
             break;
          
          case "ls":
@@ -584,6 +574,7 @@ $(document).ready(function(e) {
             '</div>');
          return;
       }
+      
 
       if (content[0] == "A" && content[1] == "!") {
          content = content.substr(2);

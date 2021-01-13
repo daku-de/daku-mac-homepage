@@ -4,12 +4,7 @@ $(document).ready(function (e) {
   var stream = $(".stream");
   var inputbox = $(".inputline .inputbox");
   var root = document.documentElement;
-  var dir = new Folder("home");
-  dir.addElement(new Textfile("info", "You can work with this filesystem with these commands: <br> \n      pwd <br>\n      ls <br>\n      cd &lt;directory&gt; <br>\n      rm &lt;file|directory&gt; <br>\n      mkdir &lt;directory&gt; <br>\n      create &lt;file&gt; &lt;content&gt; <br>\n      cat &lt;file&gt; <br>\n      touch &lt;file&gt; <br> <br>\n      This filesystem is not persistent!"));
-  dir.addElement(new Folder("subfolder2"));
-  dir.addElement(new Folder("subfolder1"));
-  dir.getChild("subfolder1").addElement(new Folder("subsubfolder"));
-  var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["background", "Choose a different background image"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"], ["pwd", "Print name of current directory"], ["cd", "Change directory"], ["ls", "List directory contents"], ["rm", "Remove files or directories"], ["mkdir", "Create directory"], ["create", "Create file with content"], ["touch", "Create an empty file"], ["cat", "Print content of file"]];
+  var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["background", "Choose a different background image"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"], ["dir", "Print the whole file system"], ["pwd", "Print name of current directory"], ["cd", "Change directory"], ["ls", "List directory contents"], ["rm", "Remove files or directories"], ["mkdir", "Create directory"], ["create", "Create file with content"], ["touch", "Create an empty file"], ["cat", "Print content of file"]];
   var backgrounds = [//format [bg-url, bg-name, bg-night-url]
   ["https://i.imgur.com/eEZ2YgX.jpg", "Mojave", "https://i.imgur.com/9G8q5cM.jpg"], ["https://i.imgur.com/ZMGL5nP.jpg", "Abstract"], ["https://i.imgur.com/psAgyeh.jpg", "Mountain"], ["https://i.imgur.com/U95zyMS.jpg", "Catalina", "https://i.imgur.com/47xbeoM.jpg"], ["https://i.imgur.com/VCmkUHl.jpg", "Mars"], ["https://picsum.photos/1920/1080?t=0", "Random"]];
   var previouscommands = [];
@@ -264,6 +259,10 @@ $(document).ready(function (e) {
 
       case "pwd":
         printLine(dir.getDirectory());
+        break;
+
+      case "dir":
+        printLine(fs_root.getString());
         break;
 
       case "ls":

@@ -139,6 +139,27 @@ function (_File) {
 
       return null;
     }
+  }, {
+    key: "getString",
+    value: function getString(depth) {
+      if (depth == null) depth = 0;
+
+      if (depth == 0) {
+        var res = '<span style="font-weight: bold">' + this.name + "</span>" + "<br>";
+      } else {
+        var res = "\xA0".repeat(depth * 2 - 1) + "└" + this.name + "<br>";
+      }
+
+      for (var i = 0; i < this.elements.length; ++i) {
+        if (this.elements[i] instanceof Folder) {
+          res += this.elements[i].getString(depth + 1);
+        } else {
+          res += "\xA0".repeat((depth + 1) * 2 - 1) + "└" + this.elements[i].name + "<br>";
+        }
+      }
+
+      return res;
+    }
   }]);
 
   return Folder;
@@ -169,3 +190,10 @@ function (_File2) {
 
   return Textfile;
 }(File);
+
+var fs_root = new Folder("home");
+fs_root.addElement(new Textfile("info", "You can work with this filesystem with these commands: <br> \n    dir <br>\n    pwd <br>\n    ls <br>\n    cd &lt;fs_rootectory&gt; <br>\n    rm &lt;file|fs_rootectory&gt; <br>\n    mkfs_root &lt;fs_rootectory&gt; <br>\n    create &lt;file&gt; &lt;content&gt; <br>\n    cat &lt;file&gt; <br>\n    touch &lt;file&gt; <br> <br>\n    This filesystem is not persistent!"));
+fs_root.addElement(new Folder("subfolder2"));
+fs_root.addElement(new Folder("subfolder1"));
+fs_root.getChild("subfolder1").addElement(new Folder("subsubfolder"));
+var dir = fs_root;

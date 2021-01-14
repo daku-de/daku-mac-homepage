@@ -97,7 +97,7 @@ class Folder extends File{
     getString(depth, arr) {
         let res = "";
         let name = this.name;
-        if (this == dir) name = '<span style="font-weight: bold; text-decoration: underline">' + this.name + "</span>" + " [CWD]";
+        if (this == dir) name = '<span style="font-weight: bold; text-decoration: underline">' + this.name + "</span>" + " (CWD)";
         if (depth == null) depth = 0;
         if (arr == null) arr = [];
         let last = false;

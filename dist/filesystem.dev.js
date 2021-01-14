@@ -159,7 +159,7 @@ function (_File) {
     value: function getString(depth, arr) {
       var res = "";
       var name = this.name;
-      if (this == dir) name = '<span style="font-weight: bold; text-decoration: underline">' + this.name + "</span>" + " [CWD]";
+      if (this == dir) name = '<span style="font-weight: bold; text-decoration: underline">' + this.name + "</span>" + " (CWD)";
       if (depth == null) depth = 0;
       if (arr == null) arr = [];
       var last = false;

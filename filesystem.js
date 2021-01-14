@@ -153,9 +153,9 @@ fs_root.addChild(new Textfile("info", `You can work with this filesystem with th
     tree <br>
     pwd <br>
     ls <br>
-    cd &lt;fs_rootectory&gt; <br>
-    rm &lt;file|fs_rootectory&gt; <br>
-    mkfs_root &lt;fs_rootectory&gt; <br>
+    cd &lt;directory&gt; <br>
+    rm &lt;file|directory&gt; <br>
+    mkfs_root &lt;directory&gt; <br>
     create &lt;file&gt; &lt;content&gt; <br>
     cat &lt;file&gt; <br>
     touch &lt;file&gt; <br> <br>

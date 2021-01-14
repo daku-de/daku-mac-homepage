@@ -238,7 +238,7 @@ function (_File2) {
 }(File);
 
 var fs_root = new Folder("home");
-fs_root.addChild(new Textfile("info", "You can work with this filesystem with these commands: <br> \n    tree <br>\n    pwd <br>\n    ls <br>\n    cd &lt;fs_rootectory&gt; <br>\n    rm &lt;file|fs_rootectory&gt; <br>\n    mkfs_root &lt;fs_rootectory&gt; <br>\n    create &lt;file&gt; &lt;content&gt; <br>\n    cat &lt;file&gt; <br>\n    touch &lt;file&gt; <br> <br>\n    This filesystem is not persistent!"));
+fs_root.addChild(new Textfile("info", "You can work with this filesystem with these commands: <br> \n    tree <br>\n    pwd <br>\n    ls <br>\n    cd &lt;directory&gt; <br>\n    rm &lt;file|directory&gt; <br>\n    mkfs_root &lt;directory&gt; <br>\n    create &lt;file&gt; &lt;content&gt; <br>\n    cat &lt;file&gt; <br>\n    touch &lt;file&gt; <br> <br>\n    This filesystem is not persistent!"));
 fs_root.addChild(new Folder("subfolder2"));
 fs_root.addChild(new Folder("subfolder1"));
 fs_root.getChild("subfolder1").addChild(new Folder("subsubfolder"));

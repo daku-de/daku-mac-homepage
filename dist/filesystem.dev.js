@@ -159,7 +159,7 @@ function (_File) {
     value: function getString(depth, arr) {
       var res = "";
       var name = this.name;
-      if (this == dir) name = '<span style="font-weight: bold; text-decoration: underline">' + this.name + "</span>";
+      if (this == dir) name = '<span style="font-weight: bold; text-decoration: underline">' + this.name + "</span>" + " [CWD]";
       if (depth == null) depth = 0;
       if (arr == null) arr = [];
       var last = false;
@@ -172,7 +172,7 @@ function (_File) {
       var pref = "";
 
       for (var i = 0; i < arr.length - 1; ++i) {
-        pref += arr[i] ? "\xA0\xA0\xA0" : "|\xA0\xA0";
+        pref += arr[i] ? "\xA0\xA0\xA0\xA0" : "|\xA0\xA0\xA0";
       }
 
       pref += last ? "`-- " : "|-- ";
@@ -225,7 +225,7 @@ function (_File2) {
       var pref = "";
 
       for (var i = 0; i < arr.length; ++i) {
-        pref += arr[i] ? "\xA0\xA0\xA0" : "|\xA0\xA0";
+        pref += arr[i] ? "\xA0\xA0\xA0\xA0" : "|\xA0\xA0\xA0";
       }
 
       pref += last ? "`-- " : "|-- ";

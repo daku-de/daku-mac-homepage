@@ -97,7 +97,7 @@ class Folder extends File{
     getString(depth, arr) {
         let res = "";
         let name = this.name;
-        if (this == dir) name = '<span style="font-weight: bold; text-decoration: underline">' + this.name + "</span>";
+        if (this == dir) name = '<span style="font-weight: bold; text-decoration: underline">' + this.name + "</span>" + " [CWD]";
         if (depth == null) depth = 0;
         if (arr == null) arr = [];
         let last = false;
@@ -107,7 +107,7 @@ class Folder extends File{
         if (depth != 0) arr.push(last);
         let pref = "";
         for (let i = 0; i < arr.length-1; ++i) {
-            pref += arr[i]?"\u00A0\u00A0\u00A0":"|\u00A0\u00A0";
+            pref += arr[i]?"\u00A0\u00A0\u00A0\u00A0":"|\u00A0\u00A0\u00A0";
         }
         pref += last?"`-- ":"|-- ";
         if (depth == 0) pref = "";
@@ -140,7 +140,7 @@ class Textfile extends File {
         let res = "";
         let pref = "";
         for (let i = 0; i < arr.length; ++i) {
-            pref += arr[i]?"\u00A0\u00A0\u00A0":"|\u00A0\u00A0";
+            pref += arr[i]?"\u00A0\u00A0\u00A0\u00A0":"|\u00A0\u00A0\u00A0";
         }
         pref += last?"`-- ":"|-- ";
         res += pref + '<i class="far fa-file"></i> ' + this.name + "<br>";

@@ -65,41 +65,41 @@ function (_File) {
     _classCallCheck(this, Folder);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Folder).call(this, name));
-    _this.elements = [];
+    _this.children = [];
     return _this;
   }
 
   _createClass(Folder, [{
-    key: "addElement",
-    value: function addElement(element) {
-      if (!element instanceof File) {
+    key: "addChild",
+    value: function addChild(child) {
+      if (!child instanceof File) {
         return false;
       }
 
-      for (var i = 0; i < this.elements.length; ++i) {
-        if (this.elements[i].name == element.name) {
+      for (var i = 0; i < this.children.length; ++i) {
+        if (this.children[i].name == child.name) {
           return false;
         }
       }
 
-      this.elements.push(element);
-      element.setParent(this);
-      this.elements.sort(function (a, b) {
+      this.children.push(child);
+      child.setParent(this);
+      this.children.sort(function (a, b) {
         return a.getName().localeCompare(b.getName());
       });
       return true;
     }
   }, {
-    key: "removeElement",
-    value: function removeElement(element) {
-      if (!element instanceof String) {
+    key: "removeChild",
+    value: function removeChild(child) {
+      if (!child instanceof String) {
         return false;
       }
 
-      for (var i = 0; i < this.elements.length; ++i) {
-        if (this.elements[i].name == element) {
-          delete this.elements[i];
-          this.elements.splice(i, 1);
+      for (var i = 0; i < this.children.length; ++i) {
+        if (this.children[i].name == child) {
+          delete this.children[i];
+          this.children.splice(i, 1);
         }
       }
     }
@@ -119,13 +119,13 @@ function (_File) {
     value: function getChildren() {
       var result = "";
 
-      for (var i = 0; i < this.elements.length; ++i) {
-        if (this.elements[i] instanceof Folder) {
-          result += ' <span style="color: var(--color-blue);text-decoration: underline;">' + this.elements[i].getName() + '</span>';
+      for (var i = 0; i < this.children.length; ++i) {
+        if (this.children[i] instanceof Folder) {
+          result += ' <span style="color: var(--color-blue);text-decoration: underline;">' + this.children[i].getName() + '</span>';
           continue;
         }
 
-        result += " " + this.elements[i].getName();
+        result += " " + this.children[i].getName();
       }
 
       return result;
@@ -133,29 +133,55 @@ function (_File) {
   }, {
     key: "getChild",
     value: function getChild(name) {
-      for (var i = 0; i < this.elements.length; ++i) {
-        if (this.elements[i].name == name) return this.elements[i];
+      for (var i = 0; i < this.children.length; ++i) {
+        if (this.children[i].name == name) return this.children[i];
       }
 
       return null;
     }
   }, {
-    key: "getString",
-    value: function getString(depth) {
-      if (depth == null) depth = 0;
-
-      if (depth == 0) {
-        var res = '<span style="font-weight: bold">' + this.name + "</span>" + "<br>";
+    key: "getHeight",
+    value: function getHeight() {
+      if (this.children.length == 0) {
+        return 0;
       } else {
-        var res = "\xA0".repeat(depth * 2 - 1) + "└" + this.name + "<br>";
+        var values = [];
+
+        for (var i = 0; i < this.children.length; ++i) {
+          if (this.children[i] instanceof Folder) values.push(this.children[i].getHeight());
+        }
+
+        return Math.max.apply(null, values) + 1;
+      }
+    }
+  }, {
+    key: "getString",
+    value: function getString(depth, arr) {
+      var res = "";
+      var name = this.name;
+      if (this == dir) name = '<span style="font-weight: bold; text-decoration: underline">' + this.name + "</span>";
+      if (depth == null) depth = 0;
+      if (arr == null) arr = [];
+      var last = false;
+
+      if (depth != 0 && this.parent.children[this.parent.children.length - 1] == this) {
+        last = true;
       }
 
-      for (var i = 0; i < this.elements.length; ++i) {
-        if (this.elements[i] instanceof Folder) {
-          res += this.elements[i].getString(depth + 1);
-        } else {
-          res += "\xA0".repeat((depth + 1) * 2 - 1) + "└" + this.elements[i].name + "<br>";
-        }
+      if (depth != 0) arr.push(last);
+      var pref = "";
+
+      for (var i = 0; i < arr.length - 1; ++i) {
+        pref += arr[i] ? "\xA0\xA0\xA0" : "|\xA0\xA0";
+      }
+
+      pref += last ? "`-- " : "|-- ";
+      if (depth == 0) pref = "";
+      res = pref + '<i class="far fa-folder"></i> ' + name + "<br>";
+
+      for (var _i = 0; _i < this.children.length; ++_i) {
+        var arr_copy = arr.slice();
+        res += this.children[_i].getString(depth + 1, arr_copy);
       }
 
       return res;
@@ -186,14 +212,34 @@ function (_File2) {
       if (this.content == null) return "";
       return this.content;
     }
+  }, {
+    key: "getString",
+    value: function getString(depth, arr) {
+      var last = false;
+
+      if (this.parent.children[this.parent.children.length - 1] == this) {
+        last = true;
+      }
+
+      var res = "";
+      var pref = "";
+
+      for (var i = 0; i < arr.length; ++i) {
+        pref += arr[i] ? "\xA0\xA0\xA0" : "|\xA0\xA0";
+      }
+
+      pref += last ? "`-- " : "|-- ";
+      res += pref + '<i class="far fa-file"></i> ' + this.name + "<br>";
+      return res;
+    }
   }]);
 
   return Textfile;
 }(File);
 
 var fs_root = new Folder("home");
-fs_root.addElement(new Textfile("info", "You can work with this filesystem with these commands: <br> \n    dir <br>\n    pwd <br>\n    ls <br>\n    cd &lt;fs_rootectory&gt; <br>\n    rm &lt;file|fs_rootectory&gt; <br>\n    mkfs_root &lt;fs_rootectory&gt; <br>\n    create &lt;file&gt; &lt;content&gt; <br>\n    cat &lt;file&gt; <br>\n    touch &lt;file&gt; <br> <br>\n    This filesystem is not persistent!"));
-fs_root.addElement(new Folder("subfolder2"));
-fs_root.addElement(new Folder("subfolder1"));
-fs_root.getChild("subfolder1").addElement(new Folder("subsubfolder"));
+fs_root.addChild(new Textfile("info", "You can work with this filesystem with these commands: <br> \n    tree <br>\n    pwd <br>\n    ls <br>\n    cd &lt;fs_rootectory&gt; <br>\n    rm &lt;file|fs_rootectory&gt; <br>\n    mkfs_root &lt;fs_rootectory&gt; <br>\n    create &lt;file&gt; &lt;content&gt; <br>\n    cat &lt;file&gt; <br>\n    touch &lt;file&gt; <br> <br>\n    This filesystem is not persistent!"));
+fs_root.addChild(new Folder("subfolder2"));
+fs_root.addChild(new Folder("subfolder1"));
+fs_root.getChild("subfolder1").addChild(new Folder("subsubfolder"));
 var dir = fs_root;

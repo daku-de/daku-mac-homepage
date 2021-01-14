@@ -4,7 +4,7 @@ $(document).ready(function (e) {
   var stream = $(".stream");
   var inputbox = $(".inputline .inputbox");
   var root = document.documentElement;
-  var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["background", "Choose a different background image"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"], ["dir", "Print the whole file system"], ["pwd", "Print name of current directory"], ["cd", "Change directory"], ["ls", "List directory contents"], ["rm", "Remove files or directories"], ["mkdir", "Create directory"], ["create", "Create file with content"], ["touch", "Create an empty file"], ["cat", "Print content of file"]];
+  var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["background", "Choose a different background image"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"], ["tree", "Print the whole file system as a tree"], ["pwd", "Print name of current directory"], ["cd", "Change directory"], ["ls", "List directory contents"], ["rm", "Remove files or directories"], ["mkdir", "Create directory"], ["create", "Create file with content"], ["touch", "Create an empty file"], ["cat", "Print content of file"]];
   var backgrounds = [//format [bg-url, bg-name, bg-night-url]
   ["https://i.imgur.com/eEZ2YgX.jpg", "Mojave", "https://i.imgur.com/9G8q5cM.jpg"], ["https://i.imgur.com/ZMGL5nP.jpg", "Abstract"], ["https://i.imgur.com/psAgyeh.jpg", "Mountain"], ["https://i.imgur.com/U95zyMS.jpg", "Catalina", "https://i.imgur.com/47xbeoM.jpg"], ["https://i.imgur.com/VCmkUHl.jpg", "Mars"], ["https://picsum.photos/1920/1080?t=0", "Random"]];
   var previouscommands = [];
@@ -177,8 +177,8 @@ $(document).ready(function (e) {
     command = command.replace(new RegExp(String.fromCharCode(160), "g"), "");
     var args = line.split(' ');
 
-    for (var _i = 0; _i < args.length; ++_i) {
-      args[_i] = args[_i].replace(new RegExp(String.fromCharCode(160), "g"), "");
+    for (var i = 0; i < args.length; ++i) {
+      args[i] = args[i].replace(new RegExp(String.fromCharCode(160), "g"), "");
     }
 
     args = args.filter(function (e) {
@@ -189,24 +189,18 @@ $(document).ready(function (e) {
     command = command.toLowerCase();
 
     switch (command) {
-      case "commands":
       case "help":
-        var maxlen = 0;
-
-        for (var i = 0; i < commandlist.length; i++) {
-          if (commandlist[i][0].length > maxlen) {
-            maxlen = commandlist[i][0].length;
-          }
+      case "help":
+        if (args.length <= 1) {
+          help(args[0]);
+        } else {
+          printLine("Usage: help [topic]");
         }
 
-        for (var i = 0; i < commandlist.length; i++) {
-          output = commandlist[i][0];
-          output += "\xA0".repeat(maxlen - commandlist[i][0].length);
-          output += " - " + commandlist[i][1];
-          console.log(output);
-          printLine(output, null, "Client");
-        }
+        break;
 
+      case "commands":
+        help("commands");
         break;
 
       case "echo":
@@ -261,7 +255,7 @@ $(document).ready(function (e) {
         printLine(dir.getDirectory());
         break;
 
-      case "dir":
+      case "tree":
         printLine(fs_root.getString());
         break;
 
@@ -301,7 +295,7 @@ $(document).ready(function (e) {
           if (!File.validName(_folder)) {
             printLine("Invalid foldername");
           } else {
-            dir.addElement(new Folder(_folder));
+            dir.addChild(new Folder(_folder));
           }
         } else {
           printLine("Usage: mkdir &lt;directory&gt;");
@@ -333,7 +327,7 @@ $(document).ready(function (e) {
           if (!File.validName(_file)) {
             printLine("Invalid filename");
           } else {
-            dir.addElement(new Textfile(_file, content));
+            dir.addChild(new Textfile(_file, content));
           }
         } else {
           printLine("Usage: create &lt;file&gt; &lt;content&gt;");
@@ -348,7 +342,7 @@ $(document).ready(function (e) {
           if (!File.validName(_file2)) {
             printLine("Invalid filename");
           } else {
-            dir.addElement(new Textfile(_file2, ""));
+            dir.addChild(new Textfile(_file2, ""));
           }
         } else {
           printLine("Usage: touch &lt;file&gt;");
@@ -370,7 +364,7 @@ $(document).ready(function (e) {
         }
 
         if (args.length == 1) {
-          dir.removeElement(args[0]);
+          dir.removeChild(args[0]);
         } else {
           printLine("Usage: rm &lt;directory&gt;");
         }
@@ -388,6 +382,43 @@ $(document).ready(function (e) {
       default:
         output = "Unrecognised command '" + command + "'.";
         printLine(output, null, "Client");
+    }
+  }
+
+  function help(arg) {
+    switch (arg) {
+      case undefined:
+      case "commands":
+        var maxlen = 0;
+
+        for (var i = 0; i < commandlist.length; i++) {
+          if (commandlist[i][0].length > maxlen) {
+            maxlen = commandlist[i][0].length;
+          }
+        }
+
+        for (var i = 0; i < commandlist.length; i++) {
+          output = commandlist[i][0];
+          output += "\xA0".repeat(maxlen - commandlist[i][0].length);
+          output += " - " + commandlist[i][1];
+          console.log(output);
+          printLine(output, null, "Client");
+        }
+
+        break;
+
+      case "filesystem":
+        break;
+
+      case "layout":
+        break;
+
+      case "features":
+        break;
+
+      default:
+        printLine("There is no help for '" + arg + "'!");
+        printLine("You can type 'help [topic]' for these topics: commands, filesystem, features, layout");
     }
   }
 

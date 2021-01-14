@@ -15,7 +15,7 @@ $(document).ready(function(e) {
       ["fact", "Display a random fact"],
       ["clear", "Clear the console"],
       ["reset", "Reset the whole console"],
-      ["dir", "Print the whole file system"],
+      ["tree", "Print the whole file system as a tree"],
       ["pwd", "Print name of current directory"],
       ["cd", "Change directory"],
       ["ls", "List directory contents"],
@@ -219,21 +219,16 @@ $(document).ready(function(e) {
       command = command.replace(/\//, '');
       command = command.toLowerCase();
       switch (command) {
-         case "commands":
          case "help":
-            var maxlen = 0;
-            for (var i = 0; i < commandlist.length; i++) {
-               if (commandlist[i][0].length > maxlen) {
-                  maxlen = commandlist[i][0].length
-               }
+            case "help":
+            if (args.length <= 1) {
+               help(args[0]);
+            } else {
+               printLine("Usage: help [topic]");
             }
-            for (var i = 0; i < commandlist.length; i++) {
-               output = commandlist[i][0];
-               output += ('\u00A0').repeat(maxlen - commandlist[i][0].length);
-               output += " - " + commandlist[i][1];
-               console.log(output);
-               printLine(output, null, "Client");
-            }
+            break;
+         case "commands":
+            help("commands");
             break;
          case "echo":
             var out = line.substr(line.split(' ')[0].length);
@@ -285,7 +280,7 @@ $(document).ready(function(e) {
             printLine(dir.getDirectory());
             break;
 
-         case "dir":
+         case "tree":
             printLine(fs_root.getString());
             break;
          
@@ -320,7 +315,7 @@ $(document).ready(function(e) {
                if (!File.validName(folder)) {
                   printLine("Invalid foldername");
                } else {
-                  dir.addElement(new Folder(folder));
+                  dir.addChild(new Folder(folder));
                }
             } else {
                printLine("Usage: mkdir &lt;directory&gt;");
@@ -348,7 +343,7 @@ $(document).ready(function(e) {
                if (!File.validName(file)) {
                   printLine("Invalid filename");
                } else {
-                  dir.addElement(new Textfile(file, content));
+                  dir.addChild(new Textfile(file, content));
                }
             } else {
                printLine("Usage: create &lt;file&gt; &lt;content&gt;");
@@ -361,7 +356,7 @@ $(document).ready(function(e) {
                if (!File.validName(file)) {
                   printLine("Invalid filename");
                } else {
-                  dir.addElement(new Textfile(file, ""));
+                  dir.addChild(new Textfile(file, ""));
                }
             } else {
                printLine("Usage: touch &lt;file&gt;");
@@ -379,7 +374,7 @@ $(document).ready(function(e) {
                break;
             }
             if (args.length == 1) {
-               dir.removeElement(args[0]);
+               dir.removeChild(args[0]);
             } else {
                printLine("Usage: rm &lt;directory&gt;");
             }
@@ -396,6 +391,36 @@ $(document).ready(function(e) {
          default:
             output = "Unrecognised command '" + command + "'.";
             printLine(output, null, "Client");
+      }
+   }
+
+   function help(arg) {
+      switch (arg) {
+         case undefined:
+         case "commands":
+            var maxlen = 0;
+            for (var i = 0; i < commandlist.length; i++) {
+               if (commandlist[i][0].length > maxlen) {
+                  maxlen = commandlist[i][0].length
+               }
+            }
+            for (var i = 0; i < commandlist.length; i++) {
+               output = commandlist[i][0];
+               output += ('\u00A0').repeat(maxlen - commandlist[i][0].length);
+               output += " - " + commandlist[i][1];
+               console.log(output);
+               printLine(output, null, "Client");
+            }
+            break;
+         case "filesystem":
+            break;
+         case "layout":
+            break;
+         case "features":
+            break;
+         default:
+            printLine("There is no help for '" + arg + "'!");
+            printLine("You can type 'help [topic]' for these topics: commands, filesystem, features, layout");
       }
    }
 

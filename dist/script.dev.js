@@ -18,7 +18,7 @@ $(document).ready(function (e) {
     pink: ["#ffcbe4", "#df0069", "#ffa4cf", "#6a0067", "#3f3fff"],
     twitter: ['#162D40', '#FFFFFF', '#15202B', '#1A91DA', '#B9585D']
   };
-  var facts = ["'rm -rf /' will close this website", "About 92% of the world’s currency exists only on hard drives", "The new Texas Instrument calculators have ABC keyboards as the standardised tool for tests", "Sister Mary K. Keller was the first woman in the US to be awarded a PhD in Computer Science"];
+  var facts = ["'rm -rf /' will close this website", "About 92% of the world’s currency exists only on hard drives", "The new Texas Instrument calculators have ABC keyboards as the standardised tool for tests", "Sister Mary K. Keller was the first woman in the US to be awarded a PhD in Computer Science", "Solving one of the remaining six Millennium Prize Problems will award you 1 million USD", "'Brainfuck' is a programming language consisting of only eight distinct characters. This is what a 'Hello World' program looks like in 'Brainfuck': <br>" + "++++++++++[>+++++++>++++++++++>+++<<<-]>++.>+.+++++++<br> ..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.", "The 'International Obfuscated C Code Contest' is a programming contest for the most creatively obfuscated C code"];
   var openedwindows = [];
   /*
      Custom Text Styles
@@ -38,7 +38,6 @@ $(document).ready(function (e) {
         
      Styles:
         *TEXT* - bold text
-        E! - Text is an error/notification
         A! - spaces are converted to non-breaking spaces (it's for ascii art - after all, this is a text based website)
   */
 
@@ -811,7 +810,6 @@ $(document).ready(function (e) {
   }
 
   function initWindows() {
-    //$( '.window-content' ).height($("body").height() * 0.7);
     $(function () {
       $('.window').draggable({
         containment: "parent",

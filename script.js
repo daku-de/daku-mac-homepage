@@ -400,6 +400,8 @@ $(document).ready(function(e) {
    function help(arg) {
       switch (arg) {
          case undefined:
+            break;
+         default:
          case "commands":
             var maxlen = 0;
             for (var i = 0; i < commandlist.length; i++) {
@@ -416,14 +418,35 @@ $(document).ready(function(e) {
             }
             break;
          case "filesystem":
+            printLine();
+            printLine("HELP - " + arg.charAt(0).toUpperCase() + arg.slice(1));
+            printLine();
+            printLine("You can work with this filesystem with basic UNIX commands like 'mkdir' and 'cd'.");
+            printLine("Right now it only allows you to alter the files in your current working directory (cwd). You can't use a path yet, this will be implemented at a later time!");
+            printLine();
+            printLine("Available Commands:");
             break;
          case "layout":
+            printLine();
+            printLine("HELP - " + arg.charAt(0).toUpperCase() + arg.slice(1));
+            printLine();
+            printLine("It is possible for you to change the look of this interface. Your settings will be saved as cookies.");
+            printLine("You can change the wallpaper as well as the style of the shell.");
+            printLine();
+            printLine("Available Commands:");
             break;
          case "features":
+            printLine();
+            printLine("HELP - " + arg.charAt(0).toUpperCase() + arg.slice(1));
+            printLine();
+            printLine("This page offers you different functionalities. E.g. you can use a calculator.");
+            printLine("");
+            printLine();
+            printLine("Available Commands:");
             break;
-         default:
-            printLine("There is no help for '" + arg + "'!");
-            printLine("You can type 'help [topic]' for these topics: commands, filesystem, features, layout");
+         // default:
+         //    printLine("There is no help for '" + arg.charAt(0).toUpperCase() + arg.slice(1) + "'!");
+         //    printLine("You can type 'help [topic]' for these topics: commands, filesystem, features, layout");
       }
    }
 

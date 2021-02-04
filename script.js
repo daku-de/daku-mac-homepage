@@ -23,7 +23,8 @@ $(document).ready(function(e) {
       ["mkdir", "Create directory"],
       ["create", "Create file with content"],
       ["touch", "Create an empty file"],
-      ["cat", "Print content of file"]
+      ["cat", "Print content of file"],
+      ["calc", "Opens the calculator"],
    ];
 
    var backgrounds = [ //format [bg-url, bg-name, bg-night-url]
@@ -259,6 +260,11 @@ $(document).ready(function(e) {
             printFact();
             break;
 
+         case "calc":
+         case "math":
+            $(".open-calculator").click();
+            break;
+
          case "wallpaper":
          case "background":
             showBackgrounds();
@@ -400,8 +406,7 @@ $(document).ready(function(e) {
    function help(arg) {
       switch (arg) {
          case undefined:
-            break;
-         default:
+
          case "commands":
             var maxlen = 0;
             for (var i = 0; i < commandlist.length; i++) {
@@ -444,9 +449,9 @@ $(document).ready(function(e) {
             printLine();
             printLine("Available Commands:");
             break;
-         // default:
-         //    printLine("There is no help for '" + arg.charAt(0).toUpperCase() + arg.slice(1) + "'!");
-         //    printLine("You can type 'help [topic]' for these topics: commands, filesystem, features, layout");
+         default:
+             printLine("There is no help for '" + arg.charAt(0).toUpperCase() + arg.slice(1) + "'!");
+             printLine("You can type 'help [topic]' for these topics: commands, filesystem, features, layout");
       }
    }
 

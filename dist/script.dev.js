@@ -3,28 +3,7 @@
 $(document).ready(function (e) {
   var stream = $(".stream");
   var inputbox = $(".inputline .inputbox");
-  var root = document.documentElement; // var commandlist = [
-  // ["help", "Show commands"],
-  // ["style", "Change the style of the console"],
-  // ["background", "Choose a different background image"],
-  // ["video", "Show youtube video"],
-  // ["echo", "Display given input"],
-  // ["socials", "Linktree to all of my socials"],
-  // ["fact", "Display a random fact"],
-  // ["clear", "Clear the console"],
-  // ["reset", "Reset the whole console"],
-  // ["tree", "Print the whole file system as a tree"],
-  // ["pwd", "Print name of current directory"],
-  // ["cd", "Change directory"],
-  // ["ls", "List directory contents"],
-  // ["rm", "Remove files or directories"],
-  // ["mkdir", "Create directory"],
-  // ["create", "Create file with content"],
-  // ["touch", "Create an empty file"],
-  // ["cat", "Print content of file"],
-  // ["calc", "Opens the calculator"],
-  // ];
-
+  var root = document.documentElement;
   var commandlist = {
     "shell": [["help", "Show help for a specific topic", "<topic>"], ["commands", "List all commands", ""], ["clear", "Clear the console", ""], ["reset", "Reset the whole page", ""]],
     "about": [["video", "Show youtube video", ""], ["socials", "Linktree to all of my socials", ""]],
@@ -634,6 +613,7 @@ $(document).ready(function (e) {
   }
 
   function printSocials() {
+    //TODO
     printLine("A!   ____  ____   _____   ____   ___    __    ____", "blue");
     printLine("A!  / __/ / __ \\ / ___/  /  _/  / _ |  / /   / __/", "blue");
     printLine("A! _\\ \\  / /_/ // /__   _/ /   / __ | / /__ _\\ \\  ", "blue");

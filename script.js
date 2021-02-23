@@ -445,30 +445,50 @@ $(document).ready(function(e) {
       function printCommandlist(commands) {
          printLine("Available commands:")
          printLine();
-         let max_len = 0;
+         let maxlen = "Command".length;
+         let maxlen_desc = "Description".length;
          for (let i = 0; i < commands.length; i++) {
             let e = commands[i];
-            if (e[0].length + e[2].length >= max_len) max_len = e[0].length + e[2].length;
+            if (e[0].length + e[2].length >= maxlen) maxlen = e[0].length + e[2].length;
+            if (e[1].length >= maxlen_desc) maxlen_desc = e[1].length;
          }
+         let box_top = '┌' +  ('─').repeat(maxlen+3) + '┬' + ('─').repeat(maxlen_desc+2) + '┐';
+         let box_mid = '├' +  ('─').repeat(maxlen+3) + '┼' + ('─').repeat(maxlen_desc+2) + '┤';
+         let box_bot = '└' +  ('─').repeat(maxlen+3) + '┴' + ('─').repeat(maxlen_desc+2) + '┘';
+         printLine(box_top);
+         let table_header = '│ ' + ('\u00A0').repeat(Math.floor((maxlen - "Command".length)/2)) + "<b>Command</b>" + ('\u00A0').repeat(Math.ceil((maxlen - "Command".length)/2)+1) + ' │ ';
+         table_header += ('\u00A0').repeat(Math.floor((maxlen_desc - "Description".length)/2)) + "<b>Description</b>" + ('\u00A0').repeat(Math.ceil((maxlen_desc - "Description".length)/2)) + ' │';
+         printLine(table_header);
+         printLine(box_mid);
          for (let i = 0; i < commands.length; i++) {
             let e = commands[i];
-            let output = e[0] + '\u00A0' + e[2];
-            output += ('\u00A0').repeat(max_len - (e[0].length + e[2].length)) + " | " + e[1];
+            console.log((maxlen - (e[0].length + e[2].length))/2);
+            let output = '│ ' + ('\u00A0').repeat(Math.floor((maxlen - (e[0].length + e[2].length))/2)) + e[0] + '\u00A0' + e[2];
+            output += ('\u00A0').repeat(Math.ceil((maxlen - (e[0].length + e[2].length))/2)) + " │ " + ('\u00A0').repeat(Math.floor((maxlen_desc - e[1].length)/2)) + e[1] + ('\u00A0').repeat(Math.ceil((maxlen_desc - e[1].length)/2)) + ' │';
             output = output.replace(/</g, "&lt;")
             output = output.replace(/>/g, "&gt;")
             printLine(output);
          }
+         printLine(box_bot);
+         printLine(commands.length + " commands");
          printLine();
       }
       arg != undefined ? arg = arg.toLowerCase() : arg;
       let keys = Object.keys(commandlist);
+      let topics = "<b>commands</b>, ";
+      for (let i = 0; i < keys.length; i++) {
+         topics += "<b>" + keys[i] + "</b>";
+         if (i != keys.length - 1) topics += ", ";
+      }
       switch (arg) {
          case undefined:
          case "commands":
             printLine();
             printLine("HELP - Commands");
             printLine();
-            printLine("Here is a list of all available commands, you can get more specific info by using 'help &lt;topic&gt;");
+            printLine("Here is a list of all available commands, you can get more specific info by using 'help &lt;topic&gt;'!");
+            printLine("These are the topics: " + topics);
+            printLine();
             let commands = [];
             for (let i = 0; i < keys.length; i++) {
                commands = commands.concat(commandlist[keys[i]]);
@@ -517,11 +537,6 @@ $(document).ready(function(e) {
             break;
          default:
              printLine("There is no help for '" + arg.charAt(0).toUpperCase() + arg.slice(1) + "'!");
-             let topics = "<b>commands</b>, ";
-             for (let i = 0; i < keys.length; i++) {
-               topics += "<b>" + keys[i] + "</b>";
-               if (i != keys.length - 1) topics += ", ";
-             }
              printLine("You can type 'help [topic]' for these topics: " + topics);
       }
    }

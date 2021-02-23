@@ -3,8 +3,35 @@
 $(document).ready(function (e) {
   var stream = $(".stream");
   var inputbox = $(".inputline .inputbox");
-  var root = document.documentElement;
-  var commandlist = [["help", "Show commands"], ["style", "Change the style of the console"], ["background", "Choose a different background image"], ["video", "Show youtube video"], ["echo", "Display given input"], ["socials", "Linktree to all of my socials"], ["fact", "Display a random fact"], ["clear", "Clear the console"], ["reset", "Reset the whole console"], ["tree", "Print the whole file system as a tree"], ["pwd", "Print name of current directory"], ["cd", "Change directory"], ["ls", "List directory contents"], ["rm", "Remove files or directories"], ["mkdir", "Create directory"], ["create", "Create file with content"], ["touch", "Create an empty file"], ["cat", "Print content of file"], ["calc", "Opens the calculator"]];
+  var root = document.documentElement; // var commandlist = [
+  // ["help", "Show commands"],
+  // ["style", "Change the style of the console"],
+  // ["background", "Choose a different background image"],
+  // ["video", "Show youtube video"],
+  // ["echo", "Display given input"],
+  // ["socials", "Linktree to all of my socials"],
+  // ["fact", "Display a random fact"],
+  // ["clear", "Clear the console"],
+  // ["reset", "Reset the whole console"],
+  // ["tree", "Print the whole file system as a tree"],
+  // ["pwd", "Print name of current directory"],
+  // ["cd", "Change directory"],
+  // ["ls", "List directory contents"],
+  // ["rm", "Remove files or directories"],
+  // ["mkdir", "Create directory"],
+  // ["create", "Create file with content"],
+  // ["touch", "Create an empty file"],
+  // ["cat", "Print content of file"],
+  // ["calc", "Opens the calculator"],
+  // ];
+
+  var commandlist = {
+    "shell": [["help", "Show help for a specific topic", "<topic>"], ["commands", "List all commands", ""], ["clear", "Clear the console", ""], ["reset", "Reset the whole page", ""]],
+    "about": [["video", "Show youtube video", ""], ["socials", "Linktree to all of my socials", ""]],
+    "features": [["echo", "Display given input", ""], ["calc", "Opens the calculator", ""], ["fact", "Displays a random fact", ""]],
+    "layout": [["style", "Change the look of the console", ""], ["background", "Choose a different background image", ""]],
+    "filesystem": [["tree", "Prints directory structure in the form of a tree", ""], ["pwd", "Print name of current directory", ""], ["ls", "List contents of the current directory", ""], ["cd", "Change the current directory", "<directory>"], ["mkdir", "Create a new directory", "<directory-name>"], ["create", "Create a file with custom content", "<file-name> <content>"], ["touch", "Create an empty file", "<file-name>"], ["cat", "Print contents of a file", "<file>"], ["rm", "Remove a file or directory", "<name>"]]
+  };
   var backgrounds = [//format [bg-url, bg-name, bg-night-url]
   ["https://i.imgur.com/eEZ2YgX.jpg", "Mojave", "https://i.imgur.com/9G8q5cM.jpg"], ["https://i.imgur.com/ZMGL5nP.jpg", "Abstract"], ["https://i.imgur.com/psAgyeh.jpg", "Mountain"], ["https://i.imgur.com/U95zyMS.jpg", "Catalina", "https://i.imgur.com/47xbeoM.jpg"], ["https://i.imgur.com/VCmkUHl.jpg", "Mars"], ["https://picsum.photos/1920/1080?t=0", "Random"]];
   var previouscommands = [];
@@ -390,45 +417,61 @@ $(document).ready(function (e) {
   }
 
   function help(arg) {
+    function printCommandlist(commands) {
+      printLine("Available commands:");
+      printLine();
+      var max_len = 0;
+
+      for (var i = 0; i < commands.length; i++) {
+        var _e = commands[i];
+        if (_e[0].length + _e[2].length >= max_len) max_len = _e[0].length + _e[2].length;
+      }
+
+      for (var _i = 0; _i < commands.length; _i++) {
+        var _e2 = commands[_i];
+
+        var _output = _e2[0] + "\xA0" + _e2[2];
+
+        _output += "\xA0".repeat(max_len - (_e2[0].length + _e2[2].length)) + " | " + _e2[1];
+        _output = _output.replace(/</g, "&lt;");
+        _output = _output.replace(/>/g, "&gt;");
+        printLine(_output);
+      }
+
+      printLine();
+    }
+
+    arg != undefined ? arg = arg.toLowerCase() : arg;
+    var keys = Object.keys(commandlist);
+
     switch (arg) {
       case undefined:
       case "commands":
-        var maxlen = 0;
+        printLine();
+        printLine("HELP - Commands");
+        printLine();
+        printLine("Here is a list of all available commands, you can get more specific info by using 'help &lt;topic&gt;");
+        var commands = [];
 
-        for (var i = 0; i < commandlist.length; i++) {
-          if (commandlist[i][0].length > maxlen) {
-            maxlen = commandlist[i][0].length;
-          }
+        for (var i = 0; i < keys.length; i++) {
+          commands = commands.concat(commandlist[keys[i]]);
         }
 
-        for (var i = 0; i < commandlist.length; i++) {
-          output = commandlist[i][0];
-          output += "\xA0".repeat(maxlen - commandlist[i][0].length);
-          output += " - " + commandlist[i][1];
-          console.log(output);
-          printLine(output, null, "Client");
-        }
-
+        printCommandlist(commands);
         break;
 
-      case "filesystem":
+      case "shell":
         printLine();
         printLine("HELP - " + arg.charAt(0).toUpperCase() + arg.slice(1));
         printLine();
-        printLine("You can work with this filesystem with basic UNIX commands like 'mkdir' and 'cd'.");
-        printLine("Right now it only allows you to alter the files in your current working directory (cwd). You can't use a path yet, this will be implemented at a later time!");
-        printLine();
-        printLine("Available Commands:");
+        printCommandlist(commandlist[arg]);
         break;
 
-      case "layout":
+      case "about":
         printLine();
         printLine("HELP - " + arg.charAt(0).toUpperCase() + arg.slice(1));
         printLine();
-        printLine("It is possible for you to change the look of this interface. Your settings will be saved as cookies.");
-        printLine("You can change the wallpaper as well as the style of the shell.");
-        printLine();
-        printLine("Available Commands:");
+        printCommandlist(commandlist[arg]);
         break;
 
       case "features":
@@ -438,12 +481,40 @@ $(document).ready(function (e) {
         printLine("This page offers you different functionalities. E.g. you can use a calculator.");
         printLine("");
         printLine();
-        printLine("Available Commands:");
+        printCommandlist(commandlist[arg]);
+        break;
+
+      case "layout":
+        printLine();
+        printLine("HELP - " + arg.charAt(0).toUpperCase() + arg.slice(1));
+        printLine();
+        printLine("It is possible for you to change the look of this interface. Your settings will be saved as cookies.");
+        printLine("You can change the wallpaper as well as the style of the shell.");
+        printLine();
+        printCommandlist(commandlist[arg]);
+        break;
+
+      case "filesystem":
+        printLine();
+        printLine("HELP - " + arg.charAt(0).toUpperCase() + arg.slice(1));
+        printLine();
+        printLine("You can work with this filesystem with basic UNIX commands like 'mkdir' and 'cd'.");
+        printLine("Right now it only allows you to alter the files in your current working directory (cwd). You can't use a path yet, this may be implemented at a later date!");
+        printLine("To change your current directory you can go up by using 'cd ..' or down by using 'cd folder'.");
+        printLine();
+        printCommandlist(commandlist[arg]);
         break;
 
       default:
         printLine("There is no help for '" + arg.charAt(0).toUpperCase() + arg.slice(1) + "'!");
-        printLine("You can type 'help [topic]' for these topics: commands, filesystem, features, layout");
+        var topics = "<b>commands</b>, ";
+
+        for (var _i2 = 0; _i2 < keys.length; _i2++) {
+          topics += "<b>" + keys[_i2] + "</b>";
+          if (_i2 != keys.length - 1) topics += ", ";
+        }
+
+        printLine("You can type 'help [topic]' for these topics: " + topics);
     }
   }
 

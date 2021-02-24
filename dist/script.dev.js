@@ -133,7 +133,6 @@ $(document).ready(function (e) {
 
   inputbox.keydown(function (e) {
     var text = inputbox.text();
-    console.log(e.which);
 
     if (e.which == 13) {
       //enter
@@ -419,7 +418,6 @@ $(document).ready(function (e) {
 
       for (var _i = 0; _i < commands.length; _i++) {
         var _e2 = commands[_i];
-        console.log((maxlen - (_e2[0].length + _e2[2].length)) / 2);
 
         var _output = '│ ' + "\xA0".repeat(Math.floor((maxlen - (_e2[0].length + _e2[2].length)) / 2)) + _e2[0] + "\xA0" + _e2[2];
 

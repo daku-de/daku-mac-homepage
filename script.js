@@ -184,7 +184,6 @@ $(document).ready(function(e) {
 
    inputbox.keydown(function(e) {
       var text = inputbox.text();
-      console.log(e.which);
       if (e.which == 13) { //enter
          text = text.replace(/</g, "&lt;");
          text = text.replace(/>/g, "&gt;");
@@ -440,7 +439,6 @@ $(document).ready(function(e) {
          printLine(box_mid);
          for (let i = 0; i < commands.length; i++) {
             let e = commands[i];
-            console.log((maxlen - (e[0].length + e[2].length))/2);
             let output = '│ ' + ('\u00A0').repeat(Math.floor((maxlen - (e[0].length + e[2].length))/2)) + e[0] + '\u00A0' + e[2];
             output += ('\u00A0').repeat(Math.ceil((maxlen - (e[0].length + e[2].length))/2)) + " │ " + ('\u00A0').repeat(Math.floor((maxlen_desc - e[1].length)/2)) + e[1] + ('\u00A0').repeat(Math.ceil((maxlen_desc - e[1].length)/2)) + ' │';
             output = output.replace(/</g, "&lt;")

@@ -407,14 +407,14 @@ $(document).ready(function (e) {
         if (_e[1].length >= maxlen_desc) maxlen_desc = _e[1].length;
       }
 
-      var box_top = '┌' + '─'.repeat(maxlen + 3) + '┬' + '─'.repeat(maxlen_desc + 2) + '┐';
-      var box_mid = '├' + '─'.repeat(maxlen + 3) + '┼' + '─'.repeat(maxlen_desc + 2) + '┤';
-      var box_bot = '└' + '─'.repeat(maxlen + 3) + '┴' + '─'.repeat(maxlen_desc + 2) + '┘';
-      printLine(box_top);
-      var table_header = '│ ' + "\xA0".repeat(Math.floor((maxlen - "Command".length) / 2)) + "<b>Command</b>" + "\xA0".repeat(Math.ceil((maxlen - "Command".length) / 2) + 1) + ' │ ';
-      table_header += "\xA0".repeat(Math.floor((maxlen_desc - "Description".length) / 2)) + "<b>Description</b>" + "\xA0".repeat(Math.ceil((maxlen_desc - "Description".length) / 2)) + ' │';
-      printLine(table_header);
-      printLine(box_mid);
+      var cmd_table = "";
+      var box_top = '┌' + '─'.repeat(maxlen + 3) + '┬' + '─'.repeat(maxlen_desc + 2) + '┐' + "<br>";
+      var box_mid = '├' + '─'.repeat(maxlen + 3) + '┼' + '─'.repeat(maxlen_desc + 2) + '┤' + "<br>";
+      var box_bot = '└' + '─'.repeat(maxlen + 3) + '┴' + '─'.repeat(maxlen_desc + 2) + '┘' + "<br>";
+      cmd_table += box_top;
+      cmd_table += '│ ' + "\xA0".repeat(Math.floor((maxlen - "Command".length) / 2)) + "<b>Command</b>" + "\xA0".repeat(Math.ceil((maxlen - "Command".length) / 2) + 1) + ' │ ';
+      cmd_table += "\xA0".repeat(Math.floor((maxlen_desc - "Description".length) / 2)) + "<b>Description</b>" + "\xA0".repeat(Math.ceil((maxlen_desc - "Description".length) / 2)) + ' │' + "<br>";
+      cmd_table += box_mid;
 
       for (var _i = 0; _i < commands.length; _i++) {
         var _e2 = commands[_i];
@@ -424,10 +424,11 @@ $(document).ready(function (e) {
         _output += "\xA0".repeat(Math.ceil((maxlen - (_e2[0].length + _e2[2].length)) / 2)) + " │ " + "\xA0".repeat(Math.floor((maxlen_desc - _e2[1].length) / 2)) + _e2[1] + "\xA0".repeat(Math.ceil((maxlen_desc - _e2[1].length) / 2)) + ' │';
         _output = _output.replace(/</g, "&lt;");
         _output = _output.replace(/>/g, "&gt;");
-        printLine(_output);
+        cmd_table += _output + "<br>";
       }
 
-      printLine(box_bot);
+      cmd_table += box_bot;
+      printLine(cmd_table);
       printLine(commands.length + " commands");
       printLine();
     }
@@ -505,8 +506,10 @@ $(document).ready(function (e) {
         break;
 
       default:
+        printLine();
         printLine("There is no help for '" + arg.charAt(0).toUpperCase() + arg.slice(1) + "'!");
         printLine("You can type 'help [topic]' for these topics: " + topics);
+        printLine();
     }
   }
 

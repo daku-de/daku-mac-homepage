@@ -429,23 +429,24 @@ $(document).ready(function(e) {
             if (e[0].length + e[2].length >= maxlen) maxlen = e[0].length + e[2].length;
             if (e[1].length >= maxlen_desc) maxlen_desc = e[1].length;
          }
-         let box_top = '┌' +  ('─').repeat(maxlen+3) + '┬' + ('─').repeat(maxlen_desc+2) + '┐';
-         let box_mid = '├' +  ('─').repeat(maxlen+3) + '┼' + ('─').repeat(maxlen_desc+2) + '┤';
-         let box_bot = '└' +  ('─').repeat(maxlen+3) + '┴' + ('─').repeat(maxlen_desc+2) + '┘';
-         printLine(box_top);
-         let table_header = '│ ' + ('\u00A0').repeat(Math.floor((maxlen - "Command".length)/2)) + "<b>Command</b>" + ('\u00A0').repeat(Math.ceil((maxlen - "Command".length)/2)+1) + ' │ ';
-         table_header += ('\u00A0').repeat(Math.floor((maxlen_desc - "Description".length)/2)) + "<b>Description</b>" + ('\u00A0').repeat(Math.ceil((maxlen_desc - "Description".length)/2)) + ' │';
-         printLine(table_header);
-         printLine(box_mid);
+         let cmd_table = "";
+         let box_top = '┌' +  ('─').repeat(maxlen+3) + '┬' + ('─').repeat(maxlen_desc+2) + '┐' + "<br>";
+         let box_mid = '├' +  ('─').repeat(maxlen+3) + '┼' + ('─').repeat(maxlen_desc+2) + '┤' + "<br>";
+         let box_bot = '└' +  ('─').repeat(maxlen+3) + '┴' + ('─').repeat(maxlen_desc+2) + '┘' + "<br>";
+         cmd_table += box_top;
+         cmd_table += '│ ' + ('\u00A0').repeat(Math.floor((maxlen - "Command".length)/2)) + "<b>Command</b>" + ('\u00A0').repeat(Math.ceil((maxlen - "Command".length)/2)+1) + ' │ ';
+         cmd_table += ('\u00A0').repeat(Math.floor((maxlen_desc - "Description".length)/2)) + "<b>Description</b>" + ('\u00A0').repeat(Math.ceil((maxlen_desc - "Description".length)/2)) + ' │' + "<br>";
+         cmd_table += box_mid;
          for (let i = 0; i < commands.length; i++) {
             let e = commands[i];
             let output = '│ ' + ('\u00A0').repeat(Math.floor((maxlen - (e[0].length + e[2].length))/2)) + e[0] + '\u00A0' + e[2];
             output += ('\u00A0').repeat(Math.ceil((maxlen - (e[0].length + e[2].length))/2)) + " │ " + ('\u00A0').repeat(Math.floor((maxlen_desc - e[1].length)/2)) + e[1] + ('\u00A0').repeat(Math.ceil((maxlen_desc - e[1].length)/2)) + ' │';
             output = output.replace(/</g, "&lt;")
             output = output.replace(/>/g, "&gt;")
-            printLine(output);
+            cmd_table += output + "<br>";
          }
-         printLine(box_bot);
+         cmd_table += box_bot;
+         printLine(cmd_table)
          printLine(commands.length + " commands");
          printLine();
       }
@@ -512,9 +513,11 @@ $(document).ready(function(e) {
             printCommandlist(commandlist[arg]);
             break;
          default:
-             printLine("There is no help for '" + arg.charAt(0).toUpperCase() + arg.slice(1) + "'!");
-             printLine("You can type 'help [topic]' for these topics: " + topics);
-      }
+            printLine();
+            printLine("There is no help for '" + arg.charAt(0).toUpperCase() + arg.slice(1) + "'!");
+            printLine("You can type 'help [topic]' for these topics: " + topics);
+            printLine();
+   }
    }
 
    function setBackground(i) {

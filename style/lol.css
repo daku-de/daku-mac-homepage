@@ -1,0 +1,38 @@
+html {
+  background-color: bisque;
+  height: 100%;
+}
+
+body {
+  font-family: "Fira Mono", Monospace;
+  display: flex;
+  margin: 0;
+  vertical-align: middle;
+  align-items: center;
+  flex-flow: column;
+  text-align: center;
+  overflow: hidden;
+  height: 100%;
+  font-size: 18px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+#lol-logo {
+  width: 300px;
+  margin: 40px 0 80px;
+}
+
+#contact {
+  color: #29a3cc;
+}
+#contact:hover {
+  text-decoration: underline;
+}
+
+.question {
+  font-size: 30px;
+}

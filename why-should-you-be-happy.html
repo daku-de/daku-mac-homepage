@@ -11,6 +11,13 @@
       <script src="https://kit.fontawesome.com/b4b7a26c21.js" crossorigin="anonymous"></script>
    </head>
    <body>
+       <audio loop id="audio">
+            <source src="./files/king.mp3" type="audio/mp3">
+        </audio>
+        <script>
+            document.getElementById("audio").volume = 0.01;
+            var promise = document.getElementById("audio").play();
+        </script>
        <img src="./files/lol-logo.png" alt="League of Legends" id="lol-logo"/>
         <div class="reasons section">
             <span class="question">Why should you be happy to have me in your LoL team?</span>
@@ -37,15 +44,33 @@
             </ul>
         </div>
         <h1>Enjoy the free win!</h1>
-        <h1>Did you like having me on your team? You did for sure!</h1>
+        <h1 class="b">Did you like having me on your team? You did for sure!</h1>
         <div>You want to give me feedback or apologize for feeding? Feel free to <span id="contact">contact me</span></div>
+        <div id="audiobutton" title="ActiveUseroni feat. Pa$$ - King"><i class="fas fa-volume-mute"></i></div>
          <script>
+            promise.then(() => {
+                audioplaying = true;
+                document.getElementById("audiobutton").innerHTML = '<i class="fas fa-volume-up"></i>'
+            }, null);
+            var audioplaying = false;
             $("#contact").click(() => {
                 var user="daku.im";
                 var service="mail";
                 var tld="de";
                 window.location.href = service + "to:" + user + "@" + service + "." + tld;
-            })
+            });
+            $("#audiobutton").click(() => {
+                if (!audioplaying) {
+                    document.getElementById("audio").play();
+                    document.getElementById("audio").volume = 0.01;
+                    document.getElementById("audiobutton").innerHTML = '<i class="fas fa-volume-up"></i>';
+                    audioplaying = true;
+                } else {
+                    audioplaying = false;
+                    document.getElementById("audio").volume = 0;
+                    document.getElementById("audiobutton").innerHTML = '<i class="fas fa-volume-mute">';
+                }
+            });
       </script>
    </body>
 </html>

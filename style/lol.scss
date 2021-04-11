@@ -52,6 +52,17 @@ ul {
     background-color: black;
 }
 
+#catjam {
+    position: absolute;
+    display: none;
+    bottom: 115px;
+    right: 40px;
+    font-size: 40px;
+    width: calc(1.2em + 30px);
+    padding: 0;
+    z-index: 10;
+}
+
 .section {
     width: 80%;
     border: 4px ridge red;

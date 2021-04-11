@@ -46,11 +46,13 @@
         <h1>Enjoy the free win!</h1>
         <h1 class="b">Did you like having me on your team? You did for sure!</h1>
         <div>You want to give me feedback or apologize for feeding? Feel free to <span id="contact">contact me</span></div>
+        <img src="./files/catjam.gif" alt="catJam" id="catjam"/>
         <div id="audiobutton" title="ActiveUseroni feat. Pa$$ - King"><i class="fas fa-volume-mute"></i></div>
          <script>
             promise.then(() => {
                 audioplaying = true;
-                document.getElementById("audiobutton").innerHTML = '<i class="fas fa-volume-up"></i>'
+                document.getElementById("audiobutton").innerHTML = '<i class="fas fa-volume-up"></i>';
+                document.getElementById("catjam").style.setProperty("display", "block");
             }, null);
             var audioplaying = false;
             $("#contact").click(() => {
@@ -64,11 +66,13 @@
                     document.getElementById("audio").play();
                     document.getElementById("audio").volume = 0.01;
                     document.getElementById("audiobutton").innerHTML = '<i class="fas fa-volume-up"></i>';
+                    document.getElementById("catjam").style.setProperty("display", "block");
                     audioplaying = true;
                 } else {
                     audioplaying = false;
                     document.getElementById("audio").volume = 0;
                     document.getElementById("audiobutton").innerHTML = '<i class="fas fa-volume-mute">';
+                    document.getElementById("catjam").style.setProperty("display", "none");
                 }
             });
       </script>

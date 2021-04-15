@@ -14,7 +14,7 @@ body {
   align-items: center;
   flex-flow: column;
   text-align: center;
-  overflow: hidden;
+  overflow-x: hidden;
   height: 100%;
   background-color: rgba(32, 32, 32, 0.4);
   font-size: 18px;
@@ -37,6 +37,7 @@ ul {
 }
 #contact:hover {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 #audiobutton {
@@ -49,6 +50,9 @@ ul {
   width: 1.2em;
   border: 2px solid white;
   background-color: black;
+}
+#audiobutton:hover {
+  cursor: pointer;
 }
 
 #catjam {
@@ -92,4 +96,8 @@ div {
 
 .question {
   font-size: 30px;
+}
+
+.footer {
+  padding-bottom: 0;
 }

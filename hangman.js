@@ -163,7 +163,7 @@ function newHangmanGame() {
     stream.append('<div class="line"><br></div>');
     stream.append('<div class="line" style="font-size: 1.5em;">Welcome to\u00A0<span style="color: var(--color-logo); font-weight: bold;"> Hangman</span>!</div>');
     stream.append('<div class="line">This is round number ' + round + '.</div>');
-    stream.append('<div class="line">You can input single chars or guess for a complete word. Type "exit" to leave the game prematurely. </div>');
+    stream.append('<div class="line">You can input single chars or guess for a complete word. Type ' + "'exit' to leave the game prematurely. </div>");
     stream.append('<div class="line"><br></div>');
     stream.append('<div class="line" id="hangmanOutput-' + round + '" style="display: inline-block;"></div>');
     stream.append('<div class="line"><br></div>');

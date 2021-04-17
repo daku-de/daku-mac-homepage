@@ -4,10 +4,13 @@ $(document).ready(function (e) {
   var stream = $(".stream");
   var inputbox = $(".inputline .inputbox");
   var root = document.documentElement;
+  var radioPlaying = false;
+  var radio = document.getElementById("radio");
+  radio.volume = 0.03;
   var commandlist = {
     "shell": [["help", "Show help for a specific topic", "<topic>"], ["commands", "List all commands", ""], ["clear", "Clear the console", ""], ["reset", "Reset the whole page", ""]],
     "about": [["video", "Show youtube video", ""], ["socials", "Linktree to all of my socials", ""]],
-    "features": [["hangman", "Start a game of hangman", ""], ["echo", "Display given input", ""], ["calc", "Opens the calculator", ""], ["fact", "Displays a random fact", ""]],
+    "features": [["hangman", "Start a game of hangman", ""], ["echo", "Display given input", ""], ["calc", "Opens the calculator", ""], ["radio", 'Listen to ILoveRadio.de', "<volume>"], ["fact", "Displays a random fact", ""]],
     "layout": [["style", "Change the look of the console", ""], ["background", "Choose a different background image", ""]],
     "filesystem": [["tree", "Prints directory structure in the form of a tree", ""], ["pwd", "Print name of current directory", ""], ["ls", "List contents of the current directory", ""], ["cd", "Change the current directory", "<directory>"], ["mkdir", "Create a new directory", "<directory-name>"], ["create", "Create a file with custom content", "<file-name> <content>"], ["touch", "Create an empty file", "<file-name>"], ["cat", "Print contents of a file", "<file>"], ["rm", "Remove a file or directory", "<name>"]]
   };
@@ -24,7 +27,7 @@ $(document).ready(function (e) {
     pink: ["#ffcbe4", "#df0069", "#ffa4cf", "#6a0067", "#3f3fff"],
     twitter: ['#162D40', '#FFFFFF', '#15202B', '#1A91DA', '#B9585D']
   };
-  var facts = ["'rm -rf /' will close this website", "About 92% of the world’s currency exists only on hard drives", "The new Texas Instrument calculators have ABC keyboards as the standardised tool for tests", "Sister Mary K. Keller was the first woman in the US to be awarded a PhD in Computer Science", "Solving one of the remaining six Millennium Prize Problems will award you 1 million USD", "'Brainfuck' is a programming language consisting of only eight distinct characters. This is what a 'Hello World' program looks like in 'Brainfuck': <br>" + "++++++++++[>+++++++>++++++++++>+++<<<-]>++.>+.+++++++<br> ..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.", "The 'International Obfuscated C Code Contest' is a programming contest for the most creatively obfuscated C code"];
+  var facts = ["'rm -rf /' will close this website", "About 92% of the world’s currency exists only on hard drives", "The new Texas Instrument calculators have ABC keyboards as the standardised tool for tests", "Sister Mary K. Keller was the first woman in the US to be awarded a PhD in Computer Science", "Solving one of the remaining six Millennium Prize Problems will award you 1 million USD", "'Brainfuck' is a programming language consisting of only eight distinct characters. This is what a 'Hello World' program looks like in 'Brainfuck': <br>" + "++++++++++[>+++++++>++++++++++>+++<<<-]>++.>+.+++++++<br> ..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.", "The 'International Obfuscated C Code Contest' is a programming contest for the most creatively obfuscated C code", "The first hard disk drive, the IBM Model 350, stored 3.75 MB of data"];
   var openedwindows = [];
   /*
      Custom Text Styles
@@ -242,6 +245,55 @@ $(document).ready(function (e) {
 
       case "hangman":
         newHangmanGame();
+        break;
+
+      case "pause":
+        radio.pause();
+        radioPlaying = false;
+        break;
+
+      case "radio":
+        var v = 0;
+
+        if (args.length > 1 && (args[0] == "v" || args[0] == "volume") && args[1] != 0) {
+          v = parseInt(args[1]);
+          console.log(v);
+
+          if (v >= 0 && v <= 100) {
+            radio.volume = v / 1000;
+            radio.play();
+            radioPlaying = true;
+          } else {
+            printLine("Usage: radio &lt;volume&gt;. The value has to be between 0 and 100. Current volume is " + radio.volume * 1000 + ".");
+          }
+
+          break;
+        }
+
+        if (args.length >= 1 && (v = parseInt(args[0])) != NaN) {
+          if (v >= 0 && v <= 100) {
+            radio.volume = v / 1000;
+            radio.play();
+            radioPlaying = true;
+            printLine("Changed the volume to " + radio.volume * 1000 + ".");
+          } else {
+            printLine("Usage: radio &lt;volume&gt;. The value has to be between 0 and 100. Current volume is " + radio.volume * 1000 + ".");
+          }
+
+          break;
+        }
+
+        if (radioPlaying) {
+          radio.pause();
+          radioPlaying = false;
+          printLine("No longer listening to the radio.");
+        } else {
+          radio.play();
+          radioPlaying = true;
+          printLine("Now listening to [^https://www.ilovemusic.de/](ILoveRadio.de). To pause the radio use 'pause' or just 'radio'.");
+          printLine("To change the volume use 'radio &lt;volume&gt;'. The value has to be between 0 and 100. Current volume is " + radio.volume * 1000 + ".");
+        }
+
         break;
 
       case "calc":

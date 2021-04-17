@@ -5,6 +5,10 @@ $(document).ready(function(e) {
    var inputbox = $(".inputline .inputbox");
    var root = document.documentElement;
 
+   var radioPlaying = false;
+   let radio = document.getElementById("radio");
+   radio.volume = 0.03;
+
    var commandlist = {
       "shell": [
          ["help", "Show help for a specific topic", "<topic>"],
@@ -22,6 +26,7 @@ $(document).ready(function(e) {
          ["hangman", "Start a game of hangman", ""],
          ["echo", "Display given input", ""],
          ["calc", "Opens the calculator", ""],
+         ["radio", 'Listen to ILoveRadio.de', "<volume>"],
          ["fact", "Displays a random fact", ""]
       ],
 
@@ -70,7 +75,8 @@ $(document).ready(function(e) {
       "Solving one of the remaining six Millennium Prize Problems will award you 1 million USD",
       "'Brainfuck' is a programming language consisting of only eight distinct characters. This is what a 'Hello World' program looks like in 'Brainfuck': <br>"
       + "++++++++++[>+++++++>++++++++++>+++<<<-]>++.>+.+++++++<br> ..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.",
-      "The 'International Obfuscated C Code Contest' is a programming contest for the most creatively obfuscated C code"];
+      "The 'International Obfuscated C Code Contest' is a programming contest for the most creatively obfuscated C code",
+      "The first hard disk drive, the IBM Model 350, stored 3.75 MB of data"];
 
    var openedwindows = [];
 
@@ -284,6 +290,48 @@ $(document).ready(function(e) {
 
          case "hangman":
             newHangmanGame();
+            break;
+
+         case "pause":
+            radio.pause();
+            radioPlaying = false;
+            break;
+
+         case "radio":
+            let v = 0;
+            if(args.length > 1 && (args[0] == "v" || args[0] == "volume") && args[1] != 0) {
+               v = parseInt(args[1]);
+               console.log(v);
+               if (v >= 0 && v <= 100) {
+                  radio.volume = v/1000;
+                  radio.play();
+                  radioPlaying = true;
+               } else {
+                  printLine("Usage: radio &lt;volume&gt;. The value has to be between 0 and 100. Current volume is " + radio.volume * 1000 + ".");
+               }
+               break;
+            }
+            if (args.length >= 1 && (v = parseInt(args[0])) != NaN) {
+               if (v >= 0 && v <= 100) {
+                  radio.volume = v/1000;
+                  radio.play();
+                  radioPlaying = true;
+                  printLine("Changed the volume to " + radio.volume * 1000 + ".");
+               } else {
+                  printLine("Usage: radio &lt;volume&gt;. The value has to be between 0 and 100. Current volume is " + radio.volume * 1000 + ".");
+               }
+               break;
+            }
+            if (radioPlaying) {
+               radio.pause();
+               radioPlaying = false;
+               printLine("No longer listening to the radio.");
+            } else {
+               radio.play();
+               radioPlaying = true;
+               printLine("Now listening to [^https://www.ilovemusic.de/](ILoveRadio.de). To pause the radio use 'pause' or just 'radio'.");
+               printLine("To change the volume use 'radio &lt;volume&gt;'. The value has to be between 0 and 100. Current volume is " + radio.volume * 1000 + ".");
+            }
             break;
 
          case "calc":

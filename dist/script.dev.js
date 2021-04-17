@@ -150,6 +150,7 @@ $(document).ready(function (e) {
         try {
           cmd(command, text);
         } catch (e) {
+          console.log(e.message);
           setTimeout(function () {
             inputbox.text("");
           }, 1);

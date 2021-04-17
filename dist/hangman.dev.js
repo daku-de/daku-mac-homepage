@@ -15,7 +15,8 @@ function () {
     _classCallCheck(this, Hangman);
 
     this.solved = false;
-    this.word = words[Math.floor(Math.random() * words.length)];
+    this.index = Math.floor(Math.random() * words.length);
+    this.word = words[this.index];
     this.guesses = [];
     this.misses = [];
     this.numMissed = 1;
@@ -138,6 +139,7 @@ function () {
     key: "win",
     value: function win() {
       if (this.solved) {
+        words.splice(this.index, 1);
         return true;
       }
 
@@ -148,6 +150,7 @@ function () {
       }
 
       this.solved = true;
+      words.splice(this.index, 1);
       return true;
     }
   }, {
@@ -174,10 +177,16 @@ var round = 0;
 function newHangmanGame() {
   var inputline = $(".inputline");
   var inputbox = $(".inputline .inputbox");
+  var stream = $(".stream");
+
+  if (words.length == 0) {
+    stream.append('<div class="line">You managed to guess every word! Congratulations! There are no more words left!</div>');
+    return;
+  }
+
   round++;
   inputline.css("display", "none");
   var hangman = new Hangman();
-  var stream = $(".stream");
   stream.append('<div class="line"><br></div>');
   stream.append("<div class=\"line\" style=\"font-size: 1.5em;\">Welcome to\xA0<span style=\"color: var(--color-logo); font-weight: bold;\"> Hangman</span>!</div>");
   stream.append('<div class="line">This is round number ' + round + '.</div>');

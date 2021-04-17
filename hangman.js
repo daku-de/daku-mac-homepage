@@ -1,11 +1,12 @@
-const words = ["Ethernet", "Agile", "Algorithm", "Processor", "Hangman", "Computer", "Database", "Coding", "Boolean", "Syntax", "Compiler", "Array", "JavaScript", "Python",
+let words = ["Ethernet", "Agile", "Algorithm", "Processor", "Hangman", "Computer", "Database", "Coding", "Boolean", "Syntax", "Compiler", "Array", "JavaScript", "Python",
 "Software", "Interface", "Security", "Heuristic", "Pattern", "Integer", "Hardware", "Generalization", "Specialization"];
 
 class Hangman {
     
     constructor() {
         this.solved = false;
-        this.word = words[Math.floor(Math.random() * words.length)];
+        this.index = Math.floor(Math.random() * words.length);
+        this.word = words[this.index];
         this.guesses = [];
         this.misses = [];
         this.numMissed = 1;
@@ -120,6 +121,7 @@ class Hangman {
 
     win() {
         if (this.solved) {
+            words.splice(this.index, 1);
             return true;
         }
         for (let i = 0; i < this.word.length; ++i) {
@@ -128,6 +130,7 @@ class Hangman {
             }
         }
         this.solved = true;
+        words.splice(this.index, 1);
         return true;
     }
 
@@ -149,10 +152,14 @@ let round = 0;
 function newHangmanGame() {
     const inputline = $(".inputline");
     const inputbox = $(".inputline .inputbox");
+    const stream = $(".stream");
+    if (words.length == 0) {
+        stream.append('<div class="line">You managed to guess every word! Congratulations! There are no more words left!</div>');
+        return;
+    }
     round++;
     inputline.css("display", "none");
     let hangman = new Hangman();
-    const stream = $(".stream");
     stream.append('<div class="line"><br></div>');
     stream.append('<div class="line" style="font-size: 1.5em;">Welcome to\u00A0<span style="color: var(--color-logo); font-weight: bold;"> Hangman</span>!</div>');
     stream.append('<div class="line">This is round number ' + round + '.</div>');

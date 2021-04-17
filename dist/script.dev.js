@@ -146,7 +146,14 @@ $(document).ready(function (e) {
       if (text !== "") {
         previouscommands[currentcommand] = text;
         currentcommand = previouscommands.length;
-        cmd(command, text);
+
+        try {
+          cmd(command, text);
+        } catch (e) {
+          setTimeout(function () {
+            inputbox.text("");
+          }, 1);
+        }
       } //remove newline
 
 

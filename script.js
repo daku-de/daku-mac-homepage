@@ -19,6 +19,7 @@ $(document).ready(function(e) {
       ],
 
       "features": [
+         ["hangman", "Start a game of hangman", ""],
          ["echo", "Display given input", ""],
          ["calc", "Opens the calculator", ""],
          ["fact", "Displays a random fact", ""]
@@ -272,6 +273,10 @@ $(document).ready(function(e) {
          
          case "fact":
             printFact();
+            break;
+
+         case "hangman":
+            newHangmanGame();
             break;
 
          case "calc":

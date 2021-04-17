@@ -231,6 +231,19 @@ body .handle .title img {
 body .stream {
   margin-top: 8px;
 }
+body .stream .hangmanInput {
+  background-color: var(--terminal-inputline);
+  outline: none;
+  overflow-wrap: break-word;
+  margin: 0;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  padding-left: 10px;
+  display: inline-block;
+  max-height: 1.5em;
+  overflow: hidden;
+}
 body .line {
   margin: 0;
   padding: 0;

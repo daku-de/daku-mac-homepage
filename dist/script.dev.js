@@ -7,7 +7,7 @@ $(document).ready(function (e) {
   var commandlist = {
     "shell": [["help", "Show help for a specific topic", "<topic>"], ["commands", "List all commands", ""], ["clear", "Clear the console", ""], ["reset", "Reset the whole page", ""]],
     "about": [["video", "Show youtube video", ""], ["socials", "Linktree to all of my socials", ""]],
-    "features": [["echo", "Display given input", ""], ["calc", "Opens the calculator", ""], ["fact", "Displays a random fact", ""]],
+    "features": [["hangman", "Start a game of hangman", ""], ["echo", "Display given input", ""], ["calc", "Opens the calculator", ""], ["fact", "Displays a random fact", ""]],
     "layout": [["style", "Change the look of the console", ""], ["background", "Choose a different background image", ""]],
     "filesystem": [["tree", "Prints directory structure in the form of a tree", ""], ["pwd", "Print name of current directory", ""], ["ls", "List contents of the current directory", ""], ["cd", "Change the current directory", "<directory>"], ["mkdir", "Create a new directory", "<directory-name>"], ["create", "Create a file with custom content", "<file-name> <content>"], ["touch", "Create an empty file", "<file-name>"], ["cat", "Print contents of a file", "<file>"], ["rm", "Remove a file or directory", "<name>"]]
   };
@@ -230,6 +230,10 @@ $(document).ready(function (e) {
 
       case "fact":
         printFact();
+        break;
+
+      case "hangman":
+        newHangmanGame();
         break;
 
       case "calc":

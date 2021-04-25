@@ -24,6 +24,7 @@ $(document).ready(function(e) {
 
       "features": [
          ["hangman", "Start a game of hangman", ""],
+         ["wiki", "Get information about a specific topic", "<topic>"],
          ["echo", "Display given input", ""],
          ["calc", "Opens the calculator", ""],
          ["radio", 'Listen to ILoveRadio.de', "<volume>"],
@@ -286,6 +287,55 @@ $(document).ready(function(e) {
          
          case "fact":
             printFact();
+            break;
+
+         case "wiki":
+            let x = new XMLHttpRequest();
+            let wiki_title = "";
+            args.forEach((v) => {
+               wiki_title = wiki_title.concat(v + "%20")
+            });
+            let search_url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + wiki_title + "&limit=1&format=json&explaintext=1&origin=*"
+      
+
+            x.onreadystatechange = function() {
+               if (x.readyState == XMLHttpRequest.DONE) {
+                  let wiki_search_info = JSON.parse(x.responseText);
+                  let req = new XMLHttpRequest();
+                  let wiki_page = wiki_search_info[1][0];
+                  if (wiki_page == undefined) {
+                     printLine();
+                     printLine("No suitable page found.");
+                     printLine();
+                     return;
+                  }
+                  let url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&rvprop=content&format=json&titles=" + wiki_page + "&redirects&rvsection=0&origin=*";
+
+                  req.onreadystatechange = function() {
+                     if (req.readyState == XMLHttpRequest.DONE) {
+                        let wiki_info = JSON.parse(req.responseText);
+                        console.log(wiki_info);
+                        let extract = wiki_info.query.pages[Object.keys(wiki_info.query.pages)[0]].extract;
+                        let desc = extract.substr(0, extract.indexOf("\n"));
+                        if (desc.includes("may refer to")) {
+                           printLine();
+                           printLine("No suitable page found.");
+                           printLine();
+                           return;
+                        }
+                        printLine();
+                        printLine("<b>" + wiki_info.query.pages[Object.keys(wiki_info.query.pages)[0]].title + "</b>");
+                        printLine();
+                        printLine(desc);
+                        printLine();
+                     }
+                  }
+                  req.open("GET", url);
+                  req.send();
+               }
+            }
+            x.open("GET", search_url);
+            x.send();
             break;
 
          case "hangman":

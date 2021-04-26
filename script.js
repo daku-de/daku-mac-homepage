@@ -309,20 +309,24 @@ $(document).ready(function(e) {
                      printLine();
                      return;
                   }
-                  let url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&rvprop=content&format=json&titles=" + wiki_page + "&redirects&rvsection=0&origin=*";
+                  let url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&format=json&titles=" + wiki_page + "&redirects&origin=*";
 
                   req.onreadystatechange = function() {
                      if (req.readyState == XMLHttpRequest.DONE) {
                         let wiki_info = JSON.parse(req.responseText);
-                        console.log(wiki_info);
                         let extract = wiki_info.query.pages[Object.keys(wiki_info.query.pages)[0]].extract;
-                        let desc = extract.substr(0, extract.indexOf("\n"));
-                        if (desc.includes("may refer to")) {
+                        extract = extract.replace(/ \(listen\)/g, "");
+                        if (extract.includes("refer to:") || extract.includes("nickname of the following people:")) {
+                           extract = extract.replace(/\n/g, "<br>");
+                           if (extract.includes("<br><br>== See also ==")) extract = extract.substr(0, extract.indexOf("<br><br>== See also =="));
                            printLine();
-                           printLine("No suitable page found.");
+                           printLine("<b>" + wiki_info.query.pages[Object.keys(wiki_info.query.pages)[0]].title);
                            printLine();
+                           printLine(extract);
+                           printLine()
                            return;
                         }
+                        let desc = extract.substr(0, extract.indexOf("\n"));
                         printLine();
                         printLine("<b>" + wiki_info.query.pages[Object.keys(wiki_info.query.pages)[0]].title + "</b>");
                         printLine();

@@ -284,6 +284,7 @@ $(document).ready(function (e) {
                 }
 
                 var desc = extract.substr(0, extract.indexOf("\n"));
+                if (desc.includes(":")) desc = desc.substr(0, desc.indexOf(".") + 1);
                 printLine();
                 printLine("<b>" + wiki_info.query.pages[Object.keys(wiki_info.query.pages)[0]].title + "</b>");
                 printLine();

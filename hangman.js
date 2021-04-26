@@ -1,5 +1,6 @@
 let words = ["Ethernet", "Agile", "Algorithm", "Processor", "Hangman", "Computer", "Database", "Coding", "Boolean", "Syntax", "Compiler", "Array", "JavaScript", "Python",
-"Software", "Interface", "Security", "Heuristic", "Pattern", "Integer", "Hardware", "Generalization", "Specialization"];
+"Software", "Interface", "Security", "Heuristic", "Pattern", "Integer", "Hardware", "Generalization", "Specialization", "Alan Turing", "Reverse Engineering", "Cloud Computing",
+"Big Data", "Recursion", "Machine Learning", "von Neumann architecture", "Race Condition", "Cryptography"];
 
 class Hangman {
     
@@ -110,7 +111,11 @@ class Hangman {
                 if (this.guesses.includes(this.word.toLowerCase().charAt(i))) {
                     res = res.concat(this.word.charAt(i));
                 } else {
-                    res = res.concat("*");
+                    if (this.word.toLowerCase().charAt(i) == " " || this.word.toLowerCase().charAt(i) == "-") {
+                        res = res.concat(this.word.toLowerCase().charAt(i));
+                    } else {
+                        res = res.concat("*");
+                    }
                 }
             }
         }
@@ -125,7 +130,7 @@ class Hangman {
             return true;
         }
         for (let i = 0; i < this.word.length; ++i) {
-            if (!this.guesses.includes(this.word.toLowerCase().charAt(i))) {
+            if (!this.guesses.includes(this.word.toLowerCase().charAt(i)) && this.word.toLowerCase().charAt(i) != " " && this.word.toLowerCase().charAt(i) != "-") {
                 return false;
             }
         }

@@ -3,7 +3,7 @@
   --terminal-text: #ffffff;
   --terminal-inputline: #23292C;
   --style-highlighttext:0;
-  --stlye-highlightbackground:0;
+  --stlye-highlightbackground:#00adb5;
   --color-pink: #d787af;
   --color-cream: #ffd7af;
   --color-lightblue: #75d1d1;
@@ -127,10 +127,10 @@ body {
 }
 body .window a {
   color: inherit;
+  text-decoration: none;
 }
 body .window a:hover {
-  color: #FFFFAE;
-  background-color: #005F5F;
+  text-decoration: underline;
 }
 body .window-button, body .handle .buttons .third, body .handle .buttons .second, body .handle .buttons .first {
   padding: 0;
@@ -231,7 +231,7 @@ body .handle .title img {
 body .stream {
   margin-top: 8px;
 }
-body .stream .hangmanInput {
+body .stream .customInput {
   background-color: var(--terminal-inputline);
   outline: none;
   overflow-wrap: break-word;
@@ -288,7 +288,7 @@ body .inputline .time {
 
 ::selection {
   color: #FFFFAE;
-  background: #005F5F;
+  background: #00adb5;
 }
 
 ::-webkit-scrollbar {

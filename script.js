@@ -25,9 +25,10 @@ $(document).ready(function(e) {
       "features": [
          ["hangman", "Start a game of hangman", ""],
          ["wiki", "Get information about a specific topic", "<topic>"],
+         ["hlgame", "Start a game of HigherLower", ""],
          ["echo", "Display given input", ""],
          ["calc", "Opens the calculator", ""],
-         ["radio", 'Listen to ILoveRadio.de', "<volume>"],
+         ["radio", 'Listen to ILoveRadio.de', "<volume|pause>"],
          ["fact", "Displays a random fact", ""]
       ],
 
@@ -295,7 +296,7 @@ $(document).ready(function(e) {
             args.forEach((v) => {
                wiki_title = wiki_title.concat(v + "%20")
             });
-            let search_url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + wiki_title + "&limit=1&format=json&explaintext=1&origin=*"
+            let search_url = "https://en.wikipedia.org/w/api.php?action=opensearch&search=" + wiki_title + "&limit=1&format=json&explaintext&origin=*"
       
 
             x.onreadystatechange = function() {
@@ -309,27 +310,27 @@ $(document).ready(function(e) {
                      printLine();
                      return;
                   }
-                  let url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&format=json&titles=" + wiki_page + "&redirects&origin=*";
+                  let url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext&format=json&titles=" + wiki_page + "&redirects&origin=*";
 
                   req.onreadystatechange = function() {
                      if (req.readyState == XMLHttpRequest.DONE) {
                         let wiki_info = JSON.parse(req.responseText);
                         let extract = wiki_info.query.pages[Object.keys(wiki_info.query.pages)[0]].extract;
+                        let pageid = wiki_info.query.pages[Object.keys(wiki_info.query.pages)[0]].pageid;
                         extract = extract.replace(/ \(listen\)/g, "");
+                        extract = extract.replace(/\n/g, "<br>");
                         if (extract.includes("refer to:") || extract.includes("nickname of the following people:")) {
-                           extract = extract.replace(/\n/g, "<br>");
                            if (extract.includes("<br><br>== See also ==")) extract = extract.substr(0, extract.indexOf("<br><br>== See also =="));
                            printLine();
-                           printLine("<b>" + wiki_info.query.pages[Object.keys(wiki_info.query.pages)[0]].title);
+                           printLine('<span style="font-size: 1.5em; font-weight: bold;"><a href="' + "http://en.wikipedia.org/wiki?curid=" + pageid + '" target="_blank">' + wiki_info.query.pages[Object.keys(wiki_info.query.pages)[0]].title + "</a></span>");
                            printLine();
                            printLine(extract);
                            printLine()
                            return;
                         }
-                        let desc = extract.substr(0, extract.indexOf("\n"));
-                        if (desc.includes(":")) desc = desc.substr(0, desc.indexOf(".")+1);
+                        let desc = extract.substr(0, extract.indexOf("<br><br><br>"));
                         printLine();
-                        printLine("<b>" + wiki_info.query.pages[Object.keys(wiki_info.query.pages)[0]].title + "</b>");
+                        printLine('<span style="font-size: 1.5em; font-weight: bold;"><a href="' + "http://en.wikipedia.org/wiki?curid=" + pageid + '" target="_blank">' + wiki_info.query.pages[Object.keys(wiki_info.query.pages)[0]].title + "</a></span>");
                         printLine();
                         printLine(desc);
                         printLine();
@@ -344,39 +345,43 @@ $(document).ready(function(e) {
             break;
 
          case "hangman":
-            newHangmanGame();
+            newGame("hangman");
             break;
 
-         case "pause":
-            radio.pause();
-            radioPlaying = false;
+         case "hlgame":
+            newGame("hlgame");
             break;
 
          case "radio":
-            let v = 0;
-            if(args.length > 1 && (args[0] == "v" || args[0] == "volume") && args[1] != 0) {
-               v = parseInt(args[1]);
-               console.log(v);
-               if (v >= 0 && v <= 100) {
-                  radio.volume = v/1000;
-                  radio.play();
-                  radioPlaying = true;
-               } else {
-                  printLine("Usage: radio &lt;volume&gt;. The value has to be between 0 and 100. Current volume is " + radio.volume * 1000 + ".");
-               }
+            if (args.length > 1) {
+               printLine("Usage: radio &lt;volume&gt;. The value has to be between 0 and 100. Current volume is " + radio.volume * 1000 + ".");
                break;
             }
-            if (args.length >= 1 && (v = parseInt(args[0])) != NaN) {
-               if (v >= 0 && v <= 100) {
-                  radio.volume = v/1000;
-                  radio.play();
-                  radioPlaying = true;
+
+            if (args.length == 1) {
+
+               if (args[0] == "pause") {
+                  radio.pause();
+                  radioPlaying = false;
+                  break;
+               }
+               let v = args[0];
+               if (!/^\d+$/.test(v) || v > 100 || v < 0) {
+                  printLine("Usage: radio &lt;volume&gt;. The value has to be between 0 and 100. Current volume is " + radio.volume * 1000 + ".");
+                  break;
+               }
+               radio.volume = v/1000;
+               radio.play();
+               if (!radioPlaying) {
+                  printLine("Now listening to [^https://www.ilovemusic.de/](ILoveRadio.de). To pause the radio use 'radio pause' or just 'radio'.");
+                  printLine("To change the volume use 'radio &lt;volume&gt;'. The value has to be between 0 and 100. Current volume is " + radio.volume * 1000 + ".");
+               } else {
                   printLine("Changed the volume to " + radio.volume * 1000 + ".");
-               } else {
-                  printLine("Usage: radio &lt;volume&gt;. The value has to be between 0 and 100. Current volume is " + radio.volume * 1000 + ".");
                }
+               radioPlaying = true;
                break;
             }
+
             if (radioPlaying) {
                radio.pause();
                radioPlaying = false;
@@ -384,7 +389,7 @@ $(document).ready(function(e) {
             } else {
                radio.play();
                radioPlaying = true;
-               printLine("Now listening to [^https://www.ilovemusic.de/](ILoveRadio.de). To pause the radio use 'pause' or just 'radio'.");
+               printLine("Now listening to [^https://www.ilovemusic.de/](ILoveRadio.de). To pause the radio use 'radio pause' or just 'radio'.");
                printLine("To change the volume use 'radio &lt;volume&gt;'. The value has to be between 0 and 100. Current volume is " + radio.volume * 1000 + ".");
             }
             break;

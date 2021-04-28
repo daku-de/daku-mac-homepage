@@ -1,5 +1,17 @@
 "use strict";
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -7,24 +19,133 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var words = ["Ethernet", "Agile", "Algorithm", "Processor", "Hangman", "Computer", "Database", "Coding", "Boolean", "Syntax", "Compiler", "Array", "JavaScript", "Python", "Software", "Interface", "Security", "Heuristic", "Pattern", "Integer", "Hardware", "Generalization", "Specialization", "Alan Turing", "Reverse Engineering", "Cloud Computing", "Big Data", "Recursion", "Machine Learning", "von Neumann architecture", "Race Condition", "Cryptography"];
+var inputline;
+var inputbox;
+var stream;
+
+function ordinal_suffix(n) {
+  var od = n % 10,
+      td = Math.floor(n % 100 / 10);
+  if (td == 1) return n + "th";
+  if (od == 1) return n + "st";
+  if (od == 2) return n + "nd";
+  if (od == 3) return n + "rd";
+  return n + "th";
+}
+
+var Game =
+/*#__PURE__*/
+function () {
+  function Game(name) {
+    _classCallCheck(this, Game);
+
+    this.name = name;
+    this.numMissed = 0;
+    this.round = 0;
+    this.solved = false;
+    this.over = false;
+  }
+
+  _createClass(Game, null, [{
+    key: "initNewRound",
+    value: function initNewRound(obj) {
+      obj.round++;
+      inputline.css("display", "none");
+      stream.append('<div class="line"><br></div>');
+      stream.append("<div class=\"line\" style=\"font-size: 1.5em;\">Welcome to\xA0<span style=\"color: var(--color-" + obj.color + '); font-weight: bold;">' + obj.name.replace(/^./, obj.name[0].toUpperCase()) + '</span>!</div>');
+      stream.append('<div class="line">This is your ' + ordinal_suffix(obj.round) + ' round.</div>');
+      stream.append('<div class="line">' + obj.msg + ' Type ' + "'exit' to leave the game prematurely. </div>");
+      stream.append('<div class="line"><br></div>');
+      stream.append('<div class="line" id="' + obj.name + 'Output-' + obj.round + '" style="display: inline-block;"></div>');
+      stream.append('<div class="line"><br></div>');
+      stream.append('<div class="line" id="' + obj.name + 'Answer-' + obj.round + '"></div>');
+      stream.append('<div class="line"><br></div>');
+      stream.append('<div class="line ' + obj.name + '">Input:</div>');
+      stream.append('<div class="line ' + obj.name + ' customInput" id="' + obj.name + 'Input-' + obj.round + '" contenteditable="true" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></div>');
+      obj.output = $("#" + obj.name + "Output-" + obj.round);
+      obj.answer = $("#" + obj.name + "Answer-" + obj.round);
+      obj.input = $("#" + obj.name + "Input-" + obj.round);
+      obj.input.focus();
+      setTimeout(function () {
+        obj.input.text("");
+      }, 1);
+      obj.output.html(obj.getOutput());
+      obj.answer.html("Started a new round of " + obj.name.replace(/^./, obj.name[0].toUpperCase()) + "!");
+      obj.input.keydown(function (e) {
+        if (e.which != 13) return;
+        var input = obj.input.text();
+
+        if (input == "exit" || input == "quit" || input == "end") {
+          Game.endRound(obj);
+          obj.over = true;
+          obj.output.html(obj.getOutput());
+          obj.answer.html("You left the game. You can start a new round.");
+          return;
+        }
+
+        obj.answer.html(obj.guess(input));
+        obj.output.html(obj.getOutput());
+        setTimeout(function () {
+          obj.input.text("");
+        }, 1);
+
+        if (obj.roundOver()) {
+          Game.endRound(obj);
+        }
+      });
+    }
+  }, {
+    key: "endRound",
+    value: function endRound(obj) {
+      $("." + obj.name).remove();
+      obj.answer.html(obj.roundOverMessage());
+      inputline.css("display", "");
+      inputbox.focus();
+      setTimeout(function () {
+        inputbox.html("");
+      }, 1);
+    }
+  }]);
+
+  return Game;
+}();
 
 var Hangman =
 /*#__PURE__*/
-function () {
+function (_Game) {
+  _inherits(Hangman, _Game);
+
   function Hangman() {
+    var _this;
+
     _classCallCheck(this, Hangman);
 
-    this.solved = false;
-    this.index = Math.floor(Math.random() * words.length);
-    this.word = words[this.index];
-    this.guesses = [];
-    this.misses = [];
-    this.numMissed = 1;
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Hangman).call(this, "Hangman"));
+    _this.index = Math.floor(Math.random() * words.length);
+    _this.word = words[_this.index];
+    _this.guesses = [];
+    _this.misses = [];
+    _this.numMissed = 1;
+    _this.color = "red";
+    _this.msg = "You can input single chars or guess for a complete word.";
+    return _this;
   }
 
   _createClass(Hangman, [{
-    key: "checkChar",
-    value: function checkChar(c) {
+    key: "newGame",
+    value: function newGame() {
+      this.index = Math.floor(Math.random() * words.length);
+      this.word = words[this.index];
+      this.guesses = [];
+      this.misses = [];
+      this.numMissed = 1;
+      this.solved = false;
+      this.over = false;
+      Game.initNewRound(this);
+    }
+  }, {
+    key: "guess",
+    value: function guess(c) {
       c = c.toLowerCase();
       var msg;
       if (c.length > 1) return this.checkWord(c);
@@ -55,6 +176,7 @@ function () {
       if (this.word.toLowerCase() == w) {
         msg = "You guessed the word!";
         this.solved = true;
+        this.over = true;
       } else {
         msg = "That is not the correct word!";
         this.numMissed++;
@@ -63,8 +185,8 @@ function () {
       return msg;
     }
   }, {
-    key: "getHangman",
-    value: function getHangman() {
+    key: "getOutput",
+    value: function getOutput() {
       var res = "";
 
       if (this.numMissed < 2) {
@@ -140,6 +262,17 @@ function () {
       return res;
     }
   }, {
+    key: "roundOver",
+    value: function roundOver() {
+      return this.win() || this.dead();
+    }
+  }, {
+    key: "roundOverMessage",
+    value: function roundOverMessage() {
+      if (this.win()) return "Congrats you guessed the word!";
+      return "Sadly you were not able to find the correct word! The correct word was:\xA0<b>" + hangman.getWord() + "</b>";
+    }
+  }, {
     key: "win",
     value: function win() {
       if (this.solved) {
@@ -154,6 +287,7 @@ function () {
       }
 
       this.solved = true;
+      this.over = true;
       words.splice(this.index, 1);
       return true;
     }
@@ -174,84 +308,99 @@ function () {
   }]);
 
   return Hangman;
-}();
+}(Game);
 
-var round = 0;
+var HigherLower =
+/*#__PURE__*/
+function (_Game2) {
+  _inherits(HigherLower, _Game2);
 
-function newHangmanGame() {
-  var inputline = $(".inputline");
-  var inputbox = $(".inputline .inputbox");
-  var stream = $(".stream");
+  function HigherLower() {
+    var _this2;
 
-  if (words.length == 0) {
-    stream.append('<div class="line">You managed to guess every word! Congratulations! There are no more words left!</div>');
-    return;
+    _classCallCheck(this, HigherLower);
+
+    _this2 = _possibleConstructorReturn(this, _getPrototypeOf(HigherLower).call(this, "HigherLower"));
+    _this2.guesses = [];
+    _this2.number = Math.floor(Math.random() * 101);
+    _this2.color = "blue";
+    _this2.msg = "You can input a number between 0 and 100, both included.";
+    return _this2;
   }
 
-  round++;
-  inputline.css("display", "none");
-  var hangman = new Hangman();
-  stream.append('<div class="line"><br></div>');
-  stream.append("<div class=\"line\" style=\"font-size: 1.5em;\">Welcome to\xA0<span style=\"color: var(--color-logo); font-weight: bold;\"> Hangman</span>!</div>");
-  stream.append('<div class="line">This is round number ' + round + '.</div>');
-  stream.append('<div class="line">You can input single chars or guess for a complete word. Type ' + "'exit' to leave the game prematurely. </div>");
-  stream.append('<div class="line"><br></div>');
-  stream.append('<div class="line" id="hangmanOutput-' + round + '" style="display: inline-block;"></div>');
-  stream.append('<div class="line"><br></div>');
-  stream.append('<div class="line" id="hangmanAnswer-' + round + '"></div>');
-  stream.append('<div class="line"><br></div>');
-  stream.append('<div class="line hangman">Input:</div>');
-  stream.append('<div class="line hangman hangmanInput" id="hangmanInput-' + round + '" contenteditable="true" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" autofocus="autofocus"></div>');
-  var hangmanOutput = $("#hangmanOutput-" + round);
-  var hangmanAnswer = $("#hangmanAnswer-" + round);
-  var hangmanInput = $("#hangmanInput-" + round);
-  hangmanInput.focus();
-  setTimeout(function () {
-    hangmanInput.text("");
-  }, 1);
-  hangmanOutput.html(hangman.getHangman());
-  hangmanAnswer.html("Started a new round of Hangman!");
-  hangmanInput.keydown(function (e) {
-    var text = hangmanInput.text();
+  _createClass(HigherLower, [{
+    key: "newGame",
+    value: function newGame() {
+      this.number = Math.floor(Math.random() * 101);
+      this.guesses = [];
+      this.numMissed = 0;
+      this.solved = false;
+      this.over = false;
+      Game.initNewRound(this);
+    }
+  }, {
+    key: "guess",
+    value: function guess(n) {
+      if (!/^\d+$/.test(n) || n > 100 || n < 0) return "Invalid input. Enter a number between 0 and 100, both included.";
+      this.guesses.push(n);
 
-    if (e.which == 13) {
-      if (text == "exit" || text == "quit" || text == "end") {
-        $(".hangman").remove();
-        hangmanAnswer.html("You left the game. You can start a new round.");
-        inputline.css("display", "");
-        inputbox.focus();
-        setTimeout(function () {
-          inputbox.html("");
-        }, 1);
-        return;
-      }
-
-      var answer = hangman.checkChar(text);
-      hangmanAnswer.html(answer);
-      hangmanOutput.html(hangman.getHangman());
-      setTimeout(function () {
-        hangmanInput.text("");
-      }, 1);
-
-      if (hangman.dead()) {
-        $(".hangman").remove();
-        hangmanAnswer.html("Sadly you were not able to find the correct word! The correct word was:\xA0<b>" + hangman.getWord() + "</b>");
-        inputline.css("display", "");
-        inputbox.focus();
-        setTimeout(function () {
-          inputbox.text("");
-        }, 1);
-      }
-
-      if (hangman.win()) {
-        $(".hangman").remove();
-        hangmanAnswer.html("Congrats you guessed the word!");
-        inputline.css("display", "");
-        inputbox.focus();
-        setTimeout(function () {
-          inputbox.text("");
-        }, 1);
+      if (n < this.number) {
+        this.numMissed++;
+        return "The number is too low!";
+      } else if (n > this.number) {
+        this.numMissed++;
+        return "The number is too high!";
+      } else {
+        this.solved = true;
+        this.over = true;
       }
     }
-  });
+  }, {
+    key: "getOutput",
+    value: function getOutput() {
+      var res;
+      if (this.roundOver()) return '<span style="font-size: 2em;">The number was ' + this.number + '.</span>';
+      if (this.guesses.length == 0) res = "Make a guess!";
+      var n = this.guesses[this.guesses.length - 1];
+      if (n > this.number) res = n + " > ?";
+      if (n < this.number) res = n + " < ?";
+      if (n == this.number) res = n + " = " + this.number;
+      return '<span style="font-size: 4em;">' + res + '</span>';
+    }
+  }, {
+    key: "roundOver",
+    value: function roundOver() {
+      return this.solved || this.over;
+    }
+  }, {
+    key: "roundOverMessage",
+    value: function roundOverMessage() {
+      if (this.numMissed == 1) return "Congratulations! You guessed the right number on your first try! Impressive!";
+      if (this.numMissed < 5) return "Good job. You guessed the number! It took you\xA0<b>" + this.numMissed + "</b>\xA0tries. That's pretty good.";
+      if (this.numMissed <= 10) return "You guessed the number after\xA0<b>" + this.numMissed + "</b>\xA0tries.";
+      return "It took you\xA0<b>" + this.numMissed + "</b>\xA0tries to guess the correct number. Play a new round, I'm sure you can do better!";
+    }
+  }]);
+
+  return HigherLower;
+}(Game);
+
+var hangman = new Hangman();
+var hlgame = new HigherLower();
+
+function newGame(name) {
+  stream = $(".stream");
+  inputbox = $(".inputline .inputbox");
+  inputline = $(".inputline");
+  name = name.toLowerCase();
+
+  switch (name) {
+    case "hangman":
+      hangman.newGame();
+      break;
+
+    case "hlgame":
+      hlgame.newGame();
+      break;
+  }
 }

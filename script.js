@@ -117,15 +117,17 @@ $(document).ready(function(e) {
 
       inputbox.focus();
 
-      if (getCookie("background") != "") {
-         var i = parseInt(getCookie("background"));
+      let bg_cookie = getCookie("background");
+      if (bg_cookie != "") {
+         var i = parseInt(bg_cookie);
          setBackground(i);
       } else {
          setBackground(0);
       }
 
-      if(getCookie("style") != "") {
-         setStyle(getCookie("style"));
+      let style_cookie = getCookie("style");
+      if(style_cookie != "") {
+         setStyle(style_cookie);
       }
 
    }
@@ -697,9 +699,9 @@ $(document).ready(function(e) {
 
    function lastlogin() {
       var lastlogin_date;
-      if (getCookie("lastlogin") != "") {
-         lastlogin_date = new Date(getCookie("lastlogin"));
-         console.log(lastlogin_date);
+      let lastlogin_cookie = getCookie("lastlogin");
+      if (lastlogin_cookie != "") {
+         lastlogin_date = new Date(lastlogin_cookie);
       }
       if (lastlogin_date == null) {
          printLine("Last Login: never");

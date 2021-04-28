@@ -276,6 +276,7 @@ class HigherLower extends Game {
         this.numMissed = 0;
         this.solved = false;
         this.over = false;
+        console.log(this.number);
 
         Game.initNewRound(this);
     }
@@ -283,14 +284,11 @@ class HigherLower extends Game {
     guess(n) {
         if (!/^\d+$/.test(n) || n > 100 || n < 0) return "Invalid input. Enter a number between 0 and 100, both included.";
         this.guesses.push(n);
+        this.numMissed++;
         if (n < this.number) {
-            this.numMissed++;
             return "The number is too low!";
-
         } else if (n > this.number) {
-            this.numMissed++;
             return "The number is too high!";
-
         } else {
             this.solved = true;
             this.over = true;

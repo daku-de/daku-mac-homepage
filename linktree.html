@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Cutie Daku ❤ | Linktree</title>
+    <link rel="icon" type="image/vnd.microsoft.icon" href="linktree.ico">
+    <link rel="stylesheet" href="style/linktree.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+</head>
+<body>
+    <div id="jebaited"></div>
+    <div id="wrapper">
+        <img id="pb" src="https://i.imgur.com/jxlLLWN.png">
+        <span class="name">Cutie Daku ❤</span>
+        <div class="button-container"><div class="button shaking"><img src="https://d1fdloi71mui9q.cloudfront.net/3w6BldMSkOp82ZYZ19q3_oA25yw3oEkBs3K73"><span>ONLYFÀNS 😊</span></div></div>
+        <div class="button-container"><div class="button"><img src="https://d1fdloi71mui9q.cloudfront.net/684zSfP9ROij5F6rUWqL_26k0XFD7tS8c0IrI">Instagram 📷</div></div>
+        <div class="button-container"><div class="button"><img src="https://d1fdloi71mui9q.cloudfront.net/RvLlVRP5TFSByOuL14Le_nq855JbFeFdx97CZ">Twitter 🐦</div></div>
+        <div class="button-container"><div class="button"><img src="https://d1fdloi71mui9q.cloudfront.net/K7QeimybSEiYmyxwx6o2_09oJ7ze5l8VI0tyq">YouTube 🎥</div></div>
+    </div> 
+    
+    <script>       
+        var colors = new Array(
+        [62,35,255],
+        [60,255,60],
+        [255,35,98],
+        [45,175,230],
+        [255,0,255],
+        [255,128,0]);
+        var step = 0;
+        var colorIndices = [0,1,2,3];
+        var gradientSpeed = 0.0016;
+        function updateGradient()
+        {
+        
+        if ( $===undefined ) return;
+        
+        var c0_0 = colors[colorIndices[0]];
+        var c0_1 = colors[colorIndices[1]];
+        var c1_0 = colors[colorIndices[2]];
+        var c1_1 = colors[colorIndices[3]];
+
+        var istep = 1 - step;
+        var r1 = Math.round(istep * c0_0[0] + step * c0_1[0]);
+        var g1 = Math.round(istep * c0_0[1] + step * c0_1[1]);
+        var b1 = Math.round(istep * c0_0[2] + step * c0_1[2]);
+        var color1 = "rgb("+r1+","+g1+","+b1+")";
+
+        var r2 = Math.round(istep * c1_0[0] + step * c1_1[0]);
+        var g2 = Math.round(istep * c1_0[1] + step * c1_1[1]);
+        var b2 = Math.round(istep * c1_0[2] + step * c1_1[2]);
+        var color2 = "rgb("+r2+","+g2+","+b2+")";
+
+        $('#wrapper').css({
+        background: "-webkit-gradient(linear, left top, right top, from("+color1+"), to("+color2+"))"}).css({
+            background: "-moz-linear-gradient(left, "+color1+" 0%, "+color2+" 100%)"});
+        
+        step += gradientSpeed;
+        if ( step >= 1 )
+        {
+            step %= 1;
+            colorIndices[0] = colorIndices[1];
+            colorIndices[2] = colorIndices[3];
+            
+            //pick two new target color indices
+            //do not pick the same as the current one
+            colorIndices[1] = ( colorIndices[1] + Math.floor( 1 + Math.random() * (colors.length - 1))) % colors.length;
+            colorIndices[3] = ( colorIndices[3] + Math.floor( 1 + Math.random() * (colors.length - 1))) % colors.length;
+            
+        }
+        }
+        setInterval(updateGradient,10);
+
+        $('.button-container').on('click', () => {
+            var audio = new Audio('files/jebaited.mp3');
+            audio.loop = true;
+            audio.play();
+            $('#jebaited').css("display", "block");
+        })
+    </script>
+</body>
+
+</html>

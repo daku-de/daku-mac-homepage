@@ -7,6 +7,12 @@ html, body {
   margin: 0;
 }
 
+a, a:hover, a:focus, a:active {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+}
+
 #pb {
   height: 96px;
   width: 96px;
@@ -23,11 +29,13 @@ html, body {
   background-image: url("https://cdn.streamelements.com/uploads/1379b70c-8eaa-4a0e-bbf9-5be80f178077.gif");
   background-color: black;
   background-size: cover;
+  background-position: center;
   display: none;
 }
 
 .name {
   color: white;
+  margin-bottom: 8px;
 }
 
 #wrapper {
@@ -56,8 +64,8 @@ html, body {
 }
 
 .button-container {
-  margin-top: 32px;
-  max-width: 80%;
+  margin-top: 24px;
+  max-width: 97vw;
   width: 680px;
   display: flex;
 }

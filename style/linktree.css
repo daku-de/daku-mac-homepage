@@ -46,6 +46,8 @@ html, body {
   overflow: hidden;
   box-sizing: border-box;
   padding-top: 36px;
+  background: #ff770c;
+  background: linear-gradient(122deg, #ff770c 0%, #dc4e5a 46%, #ff4043 100%);
 }
 
 .shaking {

@@ -11,6 +11,7 @@ a, a:hover, a:focus, a:active {
   text-decoration: none;
   color: inherit;
   display: flex;
+  margin-top: 24px;
 }
 
 #pb {
@@ -49,9 +50,10 @@ a, a:hover, a:focus, a:active {
   padding-left: 12px;
   padding-right: 12px;
   padding-top: 24px;
-  padding-bottom: 24px;
+  padding-bottom: 100px;
   flex-flow: column;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   box-sizing: border-box;
   padding-top: 36px;
   background: #ff770c;
@@ -66,11 +68,16 @@ a, a:hover, a:focus, a:active {
 .button-container {
   margin-top: 24px;
   max-width: 97vw;
+  min-width: 300px;
   width: 680px;
   display: flex;
 }
 .button-container :hover {
   cursor: pointer;
+}
+
+a .button-container {
+  margin-top: 0px;
 }
 
 .button {
@@ -87,6 +94,8 @@ a, a:hover, a:focus, a:active {
   padding-right: 66px;
   border-radius: 30px;
   box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.16);
+  border: 2px solid white;
+  line-height: 1.5em;
 }
 .button span {
   width: 100%;

@@ -31,7 +31,8 @@ html, body {
     background-color: black;
     background-size: cover;
     background-position: center;
-    display: none;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .name {

@@ -11,6 +11,7 @@
 </head>
 <body>
     <div id="jebaited"></div>
+    <audio preload="auto" src="files/jebaited.mp3" id="jebaitaudio"></audio>
     <div id="wrapper">
         <img id="pb" src="https://i.imgur.com/jxlLLWN.png">
         <span class="name">Cutie Daku ❤</span>
@@ -75,10 +76,10 @@
         setInterval(updateGradient,10);
 
         $('.jebait').on('click', () => {
-            var audio = new Audio('files/jebaited.mp3');
+            var audio = document.getElementById("jebaitaudio");
             audio.loop = true;
             audio.play();
-            $('#jebaited').css("display", "block");
+            $('#jebaited').css("opacity", "100");
         })
     </script>
 </body>

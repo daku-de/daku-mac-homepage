@@ -14,7 +14,7 @@
     <audio preload="auto" src="files/jebaited.mp3" id="jebaitaudio"></audio>
     <div id="wrapper">
         <img id="pb" src="https://i.imgur.com/jxlLLWN.png">
-        <span class="name">Cutie Daku ❤</span>
+        <span class="name" id="name">Cutie Daku ❤</span>
         <div class="button-container jebait"><div class="button shaking"><img src="https://d1fdloi71mui9q.cloudfront.net/3w6BldMSkOp82ZYZ19q3_oA25yw3oEkBs3K73"><span>ONLYFÀNS 😊</span></div></div>
         <div class="button-container jebait"><div class="button"><img src="https://d1fdloi71mui9q.cloudfront.net/684zSfP9ROij5F6rUWqL_26k0XFD7tS8c0IrI">Instagram 📷</div></div>
         <div class="button-container jebait"><div class="button"><img src="https://d1fdloi71mui9q.cloudfront.net/RvLlVRP5TFSByOuL14Le_nq855JbFeFdx97CZ">Twitter 🐦</div></div>
@@ -81,6 +81,16 @@
             audio.play();
             $('#jebaited').css("opacity", "100");
         })
+
+        const urlParams = new URLSearchParams(window.location.search);
+        console.log(urlParams);
+        const name = urlParams.get('n');
+        console.log(name);
+        if (name != undefined && name != null && name.length > 3) {
+            document.getElementById("name").innerHTML = name + " ❤";
+            document.title = name + " ❤" + " | Linktree";
+        }
+
     </script>
 </body>
 

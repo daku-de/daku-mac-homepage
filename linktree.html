@@ -93,11 +93,23 @@
             document.location.href = "https://www.twitch.tv/cutiedaku";
         });
 
+        var hash = (s, n) => {
+            var hash = 0, i, chr;
+            if (s.length === 0) return hash;
+            for (i = 0; i < s.length; i++) {
+                chr   = s.charCodeAt(i);
+                hash  = ((hash << 5) - hash) + chr;
+                hash |= 0;
+            }
+            return Math.abs(hash%n);
+        };
+
         const urlParams = new URLSearchParams(window.location.search);
-        console.log(urlParams);
         const name = urlParams.get('n');
-        console.log(name);
+
+        let pbs = ["https://i.imgur.com/FDx3Nze.jpg", "https://i.imgur.com/soklL2G.png", "https://i.imgur.com/DEym5sQ.jpg", "https://i.imgur.com/XEiYz2H.jpg"];
         if (name != undefined && name != null && name.length > 3) {
+            document.getElementById("pb").src = pbs[hash(name, 4)];
             document.getElementById("name").innerHTML = name + " ❤";
             document.title = name + " ❤" + " | Linktree";
         }

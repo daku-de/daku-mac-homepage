@@ -108,7 +108,7 @@
         const name = urlParams.get('n');
 
         let pbs = ["https://i.imgur.com/FDx3Nze.jpg", "https://i.imgur.com/soklL2G.png", "https://i.imgur.com/DEym5sQ.jpg", "https://i.imgur.com/XEiYz2H.jpg"];
-        if (name != undefined && name != null && name.length > 3) {
+        if (name != undefined && name != null && name.length > 3 && name.length <= 35) {
             document.getElementById("pb").src = pbs[hash(name, 4)];
             document.getElementById("name").innerHTML = name + " ❤";
             document.title = name + " ❤" + " | Linktree";

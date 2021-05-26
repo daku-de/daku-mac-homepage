@@ -20,7 +20,7 @@
         <div class="button-container jebait"><div class="button"><img src="https://d1fdloi71mui9q.cloudfront.net/RvLlVRP5TFSByOuL14Le_nq855JbFeFdx97CZ">Twitter 🐦</div></div>
         <div class="button-container jebait"><div class="button"><img src="https://d1fdloi71mui9q.cloudfront.net/K7QeimybSEiYmyxwx6o2_09oJ7ze5l8VI0tyq">YouTube 🎥</div></div>
         <div class="button-container jebait"><div class="button"><img src="https://d1fdloi71mui9q.cloudfront.net/4u40M1fwQcKOCxJnl5lG_qBG7jG2wG3611BLR">TikTok 💃</div></div>
-        <a href="https://www.twitch.tv/cutiedaku"><div class="button-container"><div class="button"><img src="https://d1fdloi71mui9q.cloudfront.net/uUUckTzaRUCudojnPRf7_7i4014TNhXGpc3f4">Twitch 🔴</div></div></a>
+        <div class="button-container" id="twitch"><div class="button"><img src="https://d1fdloi71mui9q.cloudfront.net/uUUckTzaRUCudojnPRf7_7i4014TNhXGpc3f4">Twitch 🔴</div></div>
     </div> 
     
     <script>       
@@ -81,7 +81,17 @@
             audio.play();
             $('#jebaited').css("opacity", "100");
             $('#jebaited').css("pointer-events", "auto");
-        })
+            var gif = document.getElementById("jebaited");
+            if (gif.requestFullscreen) {
+                gif.requestFullscreen();
+            } else if (gif.webkitRequestFullscreen) {
+                gif.webkitRequestFullscreen();
+            } 
+        });
+
+        $('#twitch').on('click', () => {
+            document.location.href = "https://www.twitch.tv/cutiedaku";
+        });
 
         const urlParams = new URLSearchParams(window.location.search);
         console.log(urlParams);

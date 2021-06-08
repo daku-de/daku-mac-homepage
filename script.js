@@ -925,7 +925,7 @@ function calc() {
          return;
       }
       if (calc_result.toString().length > 12) {
-         calc_result = calc_result.toExponential(6);
+         calc_result = calc_result.toExponential(4);
       }
       $( '.calculator .result' ).text(calc_result);
    });

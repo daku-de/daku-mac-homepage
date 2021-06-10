@@ -73,6 +73,13 @@ html {
   }
 }
 
+.unselectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 header {
   background: linear-gradient(to bottom, #e6e6e6 0%, #a3a3a3 100%);
   color: black;
@@ -463,6 +470,8 @@ body .inputline .time {
 }
 #calc .calculator .display .input {
   display: block;
+  overflow-x: auto;
+  user-select: text;
 }
 #calc .calculator button {
   border: 0;

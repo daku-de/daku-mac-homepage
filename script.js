@@ -19,7 +19,7 @@ function countChars() {
    let counter = document.getElementById("mail-char-counter");
    counter.innerHTML = (1925-chars) + " characters left";
 
-   if (1925-chars < 50) {
+   if (1925-chars <= 50) {
       counter.style.color = "#B9585D";
    } else {
       counter.style.color = "rgb(160, 158, 164)";
@@ -431,6 +431,7 @@ $(document).ready(function(e) {
             break;
 
          case "mail":
+         case "email":
          case "contact":
             $(".open-mail").click();
             break;
@@ -933,7 +934,8 @@ function calc() {
          resetCalc();
       }
       calc_input += $(this).text();
-      $( '.calculator .input' ).text(calc_input);
+      $( '.calculator .input' ).val(calc_input);
+      document.getElementById("calc-input").scrollLeft = document.getElementById("calc-input").scrollWidth;
    });
    $( '.op' ).click(function() {
       if (calc_result != "") {
@@ -943,7 +945,8 @@ function calc() {
       }
       if (calc_input == "") return;
       calc_input += $(this).text();
-      $( '.calculator .input' ).text(calc_input);
+      $( '.calculator .input' ).val(calc_input);
+      document.getElementById("calc-input").scrollLeft = document.getElementById("calc-input").scrollWidth;
    });
    $( '.equals' ).click(function() {
       try {
@@ -970,11 +973,12 @@ function calc() {
       }
       if (calc_input.length <= 1) {
          calc_input = "";
-         $( '.calculator .input' ).html("<br>");
+         $( '.calculator .input' ).val("");
          return;
       }
       calc_input = calc_input.substring(0, calc_input.length-1);
-      $( '.calculator .input' ).text(calc_input);
+      $( '.calculator .input' ).val(calc_input);
+      document.getElementById("calc-input").scrollLeft = document.getElementById("calc-input").scrollWidth;
    });
    $( '#ac' ).click(function() {
       resetCalc();
@@ -994,7 +998,7 @@ function resetCalc() {
    console.log("Resetting calculator");
    calc_input = "";
    calc_result = "";
-   $( '.calculator .input' ).html("<br>");
+   $( '.calculator .input' ).val("");
    $( '.calculator .result' ).html("<br>");
 }
 

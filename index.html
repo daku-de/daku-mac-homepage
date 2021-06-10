@@ -94,15 +94,15 @@
             </div>
             <div class="window-content">
                <div id="mail-header">
-                  <div class="row"><span>To:</span><input id="mail-recipient" value="daku.im@mail.de" readonly tabindex="-1"></div>
-                  <div class="row"><span>Subject:</span><input id="mail-subject" placeholder="Enter a subject" maxlength="72" tabindex="1"></div>
+                  <div class="row"><span class="unselectable">To:</span><input id="mail-recipient" value="daku.im@mail.de" readonly tabindex="-1"></div>
+                  <div class="row"><span class="unselectable">Subject:</span><input id="mail-subject" placeholder="Enter a subject" maxlength="72" tabindex="1"></div>
                </div>
                <div id="mail-body">
-                  <span>Body:</span>
+                  <span class="unselectable">Body:</span>
                   <textarea id="mail-message" placeholder="Enter your message. Feel free to ask questions or give feedback about this page! The character limit is 1925." maxlength="1925" tabindex="2" onkeydown="countChars()" onkeyup="countChars()"></textarea>
-                  <div id="mail-char-counter">1925 characters left</div>
+                  <div id="mail-char-counter" class="unselectable">1925 characters left</div>
                </div>
-               <button onclick="sendMail()" id="send-mail" tabindex="3">Send Mail</button>
+               <button onclick="sendMail()" id="send-mail" class="unselectable" tabindex="3">Send Mail</button>
             </div>
          </div>
       </div>
@@ -123,10 +123,10 @@
                <div class="window-content" id="calc-content">
                   <div class="calculator">
                      <div class="display">
-                        <div class="line input"><br></div>
+                        <input class="line input" readonly value="0" id="calc-input">
                         <div class="line result"><br></div>
                      </div>
-                     <div class="calc-input">
+                     <div class="calc-input unselectable">
                         <div class="calc-row">
                            <button id="ac" tabindex="-1">AC</button>
                            <button class="num" tabindex="-1">(</button>

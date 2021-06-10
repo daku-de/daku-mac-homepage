@@ -105,6 +105,13 @@ html {
    }
  }
 
+ .unselectable {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+ }
+
 header {
    background: linear-gradient(to bottom, rgba(230, 230, 230, 1) 0%, rgba(163, 163, 163, 1) 100%);
    color: black;
@@ -549,6 +556,8 @@ body {
          }
          .input {
             display: block;
+            overflow-x: auto;
+            user-select: text;
          }
       }
 

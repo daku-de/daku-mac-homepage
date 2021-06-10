@@ -150,7 +150,6 @@ body .window {
   display: none;
   flex-flow: column;
   z-index: 0;
-  border-bottom: 2px solid #a3a3a3;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
@@ -163,7 +162,7 @@ body .window .window-content {
   border: 2px solid #a3a3a3;
   border-top: 0px;
   padding-top: 8px;
-  border-bottom: 0px;
+  border-bottom: 2px solid #a3a3a3;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   flex-grow: 1;
@@ -668,7 +667,6 @@ textarea:focus {
   font-size: 17px;
   font-family: IBM Plex Mono, sans-serif;
   font-weight: bold;
-  border-bottom: #000000 solid 2px;
   width: 80%;
   min-width: 400px;
   top: -40px;
@@ -682,6 +680,7 @@ textarea:focus {
   border: #000000 solid 2px;
   border-bottom: none;
   padding-bottom: 16px;
+  border-bottom: #000000 solid 2px;
 }
 #mail-window .handle {
   background-color: #191919;

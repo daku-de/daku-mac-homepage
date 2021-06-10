@@ -15,6 +15,7 @@ function sendMail() {
   window.location.href = mailto;
   document.getElementById("mail-subject").value = "";
   document.getElementById("mail-message").value = "";
+  countChars();
 }
 
 function countChars() {

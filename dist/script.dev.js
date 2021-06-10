@@ -1,8 +1,22 @@
 "use strict";
 
+function sendMail() {
+  var mailto = "mailto:" + document.getElementById("mail-recipient").value + "?";
+  var subject = document.getElementById("mail-subject").value;
+  var message = document.getElementById("mail-message").value;
+  if (subject != null) mailto += "subject=" + subject + "&";
+
+  if (message != null) {
+    message = message.replace(/\n/g, "%0D%0A");
+    mailto += "body=" + message;
+  }
+
+  window.location.href = mailto;
+}
+
 $(document).ready(function (e) {
   var stream = $(".stream");
-  var inputbox = $(".inputline .inputbox");
+  var inputbox = $("#terminalinput");
   var root = document.documentElement;
   var radioPlaying = false;
   var radio = document.getElementById("radio");
@@ -10,7 +24,7 @@ $(document).ready(function (e) {
   var commandlist = {
     "shell": [["help", "Show help for a specific topic", "<topic>"], ["commands", "List all commands", ""], ["clear", "Clear the console", ""], ["reset", "Reset the whole page", ""]],
     "about": [["video", "Show youtube video", ""], ["socials", "Linktree to all of my socials", ""]],
-    "features": [["hangman", "Start a game of hangman", ""], ["wiki", "Get information about a specific topic", "<topic>"], ["hlgame", "Start a game of HigherLower", ""], ["echo", "Display given input", ""], ["calc", "Opens the calculator", ""], ["radio", 'Listen to ILoveRadio.de', "<volume|pause>"], ["fact", "Displays a random fact", ""]],
+    "features": [["hangman", "Start a game of hangman", ""], ["wiki", "Get information about a specific topic", "<topic>"], ["hlgame", "Start a game of HigherLower", ""], ["echo", "Display given input", ""], ["calc", "Opens the calculator", ""], ["mail", "Opens the contact form", ""], ["radio", 'Listen to ILoveRadio.de', "<volume|pause>"], ["fact", "Displays a random fact", ""]],
     "layout": [["style", "Change the look of the console", ""], ["background", "Choose a different background image", ""]],
     "filesystem": [["tree", "Prints directory structure in the form of a tree", ""], ["pwd", "Print name of current directory", ""], ["ls", "List contents of the current directory", ""], ["cd", "Change the current directory", "<directory>"], ["mkdir", "Create a new directory", "<directory-name>"], ["create", "Create a file with custom content", "<file-name> <content>"], ["touch", "Create an empty file", "<file-name>"], ["cat", "Print contents of a file", "<file>"], ["rm", "Remove a file or directory", "<name>"]]
   };
@@ -363,6 +377,11 @@ $(document).ready(function (e) {
       case "calc":
       case "math":
         $(".open-calculator").click();
+        break;
+
+      case "mail":
+      case "contact":
+        $(".open-mail").click();
         break;
 
       case "wallpaper":
@@ -771,9 +790,9 @@ $(document).ready(function (e) {
       var end = content.indexOf(")");
 
       if (newpage) {
-        content = content.replace(content.substring(start, end + 1), "").splice(start, 0, '<a href="' + url + '" target="_blank"><b>' + uname + '</b></a>');
+        content = content.replace(content.substring(start, end + 1), "").splice(start, 0, '<a href="' + url + '" target="_blank" tabindex="-1"><b>' + uname + '</b></a>');
       } else {
-        content = content.replace(content.substring(start, end + 1), "").splice(start, 0, '<a href="' + url + '"><b>' + uname + '</b></a>');
+        content = content.replace(content.substring(start, end + 1), "").splice(start, 0, '<a href="' + url + '"  tabindex="-1">><b>' + uname + '</b></a>');
       }
     }
 
@@ -995,14 +1014,29 @@ $(document).ready(function (e) {
       resetCalc();
     });
     calc();
-  }
+  } // function initMail() {
+  //    $(".open-mail").click(() => {
+  //       var user="daku.im";
+  //       var service="mail";
+  //       var tld="de";
+  //       window.location.href = service + "to:" + user + "@" + service + "." + tld;
+  //    });
+  // }
+
 
   function initMail() {
     $(".open-mail").click(function () {
-      var user = "daku.im";
-      var service = "mail";
-      var tld = "de";
-      window.location.href = service + "to:" + user + "@" + service + "." + tld;
+      var zindex = $('#mail-window').css("z-index");
+
+      if (zindex != String(openedwindows.length) || zindex == "0") {
+        windowOnTop(document.getElementById("mail-window"));
+        inputbox.focus();
+      } else {
+        $(".close-mail").click();
+      }
+    });
+    $(".close-mail").on('click', function (e) {
+      closeWindow(document.getElementById("mail-window"));
     });
   }
 
@@ -1072,6 +1106,22 @@ $(document).ready(function (e) {
     for (var i = 0; i < openedwindows.length; ++i) {
       openedwindows[i].style.setProperty("display", "flex");
       openedwindows[i].style.setProperty("z-index", i + 1);
+    }
+
+    if ($('#mail-window').css("z-index") != String(openedwindows.length)) {
+      document.getElementById("mail-subject").tabIndex = "-1";
+      document.getElementById("mail-message").tabIndex = "-1";
+      document.getElementById("send-mail").tabIndex = "-1";
+    } else {
+      document.getElementById("mail-subject").tabIndex = "1";
+      document.getElementById("mail-message").tabIndex = "2";
+      document.getElementById("send-mail").tabIndex = "3";
+    }
+
+    if ($('#terminal').css("z-index") != String(openedwindows.length)) {
+      document.getElementById("terminalinput").tabIndex = "-1";
+    } else {
+      document.getElementById("terminalinput").tabIndex = "1";
     }
   }
 });

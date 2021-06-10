@@ -150,6 +150,9 @@ body .window {
   display: none;
   flex-flow: column;
   z-index: 0;
+  border-bottom: 2px solid #a3a3a3;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 body .window .terminal {
   display: flex;
@@ -159,6 +162,7 @@ body .window .window-content {
   background-color: var(--terminal-background);
   border: 2px solid #a3a3a3;
   border-top: 0px;
+  padding-top: 8px;
   border-bottom: 0px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -228,9 +232,6 @@ body .handle .title img {
   margin-right: 5px;
   vertical-align: middle;
 }
-body .stream {
-  margin-top: 8px;
-}
 body .stream .customInput {
   background-color: var(--terminal-inputline);
   outline: none;
@@ -292,7 +293,7 @@ body .inputline .time {
 }
 
 ::-webkit-scrollbar {
-  background-color: var(--terminal-background);
+  background-color: transparent;
   width: 10px;
   height: 10px;
 }
@@ -567,20 +568,151 @@ body .inputline .time {
   white-space: nowrap;
 }
 
-.terminal-wrapper {
+.window-wrapper {
   overflow: hidden;
   height: calc(100% - 19px);
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
 }
 
 #terminal {
   min-width: 780px;
-  border-bottom: 2px solid #a3a3a3;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+}
+
+input {
+  line-height: 1.15;
+  height: 100%;
+  margin: 0;
+  font-size: inherit;
+  font-weight: normal;
+  background-color: transparent;
+  border-style: none;
+  --webkit-appearance: none;
+  -moz-appearance: none;
+  color: #ffffff;
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  font-family: IBM Plex Mono, sans-serif;
+  font-style: normal;
+}
+
+input:focus {
+  outline: none;
+}
+
+textarea {
+  line-height: 1.15;
+  margin: 0;
+  font-size: inherit;
+  font-weight: normal;
+  background-color: transparent;
+  border-style: none;
+  --webkit-appearance: none;
+  -moz-appearance: none;
+  color: #ffffff;
+  width: 100%;
+  padding: 16px;
+  box-sizing: border-box;
+  resize: none;
+  font-family: IBM Plex Mono, sans-serif;
+  font-style: normal;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+#mail-header {
+  display: flex;
+  flex-flow: column;
+  border-bottom: #000000 solid 2px;
+}
+#mail-header input {
+  width: 100%;
+  padding: 16px;
+}
+
+#mail-body {
+  display: flex;
+  flex-flow: column;
+  padding-top: 16px;
+  flex-grow: 1;
+}
+#mail-body span {
+  padding-left: 16px;
+}
+#mail-body textarea {
+  flex-grow: 1;
+  margin-bottom: 16px;
+}
+
+#mail-window {
+  font-size: 17px;
+  font-family: IBM Plex Mono, sans-serif;
+  font-weight: bold;
+  border-bottom: #000000 solid 2px;
+  width: 80%;
+  min-width: 400px;
+  top: -40px;
+  left: 30px;
+}
+#mail-window .window-content {
+  background-color: #191919;
+  color: #a09ea4;
+  display: flex;
+  flex-flow: column;
+  border: #000000 solid 2px;
+  border-bottom: none;
+  padding-bottom: 16px;
+}
+#mail-window .handle {
+  background-color: #191919;
+  background: #191919;
+  border: #000000 solid 2px;
+  border-bottom: none;
+  box-sizing: border-box;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  height: auto;
+}
+#mail-window .handle .title {
+  font-weight: normal;
+  color: white;
+}
+#mail-window button {
+  line-height: 1.15;
+  margin-left: 32px;
+  margin-right: 32px;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: normal;
+  padding: 0.5em;
+  background: transparent;
+  color: #a09ea4;
+  border: #000000 solid 2px;
+  border-radius: 10px;
+}
+#mail-window button:hover, #mail-window button:focus {
+  background-color: #ffffff;
+  color: black;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.row {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
 }
 
 footer {

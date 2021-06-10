@@ -7,11 +7,26 @@ function sendMail() {
   if (subject != null) mailto += "subject=" + subject + "&";
 
   if (message != null) {
+    console.log(message);
     message = message.replace(/\n/g, "%0D%0A");
     mailto += "body=" + message;
   }
 
   window.location.href = mailto;
+  document.getElementById("mail-subject").value = "";
+  document.getElementById("mail-message").value = "";
+}
+
+function countChars() {
+  var chars = document.getElementById("mail-message").value.length;
+  var counter = document.getElementById("mail-char-counter");
+  counter.innerHTML = 1925 - chars + " characters left";
+
+  if (1925 - chars < 50) {
+    counter.style.color = "#B9585D";
+  } else {
+    counter.style.color = "rgb(160, 158, 164)";
+  }
 }
 
 $(document).ready(function (e) {

@@ -4,10 +4,25 @@ function sendMail() {
    let message = document.getElementById("mail-message").value;
    if (subject != null) mailto += "subject=" + subject + "&";
    if (message != null) {
+      console.log(message);
       message = message.replace(/\n/g, "%0D%0A");
       mailto += "body=" + message;
    }
    window.location.href = mailto;
+   document.getElementById("mail-subject").value = "";
+   document.getElementById("mail-message").value = "";
+}
+
+function countChars() {
+   let chars = document.getElementById("mail-message").value.length;
+   let counter = document.getElementById("mail-char-counter");
+   counter.innerHTML = (1925-chars) + " characters left";
+
+   if (1925-chars < 50) {
+      counter.style.color = "#B9585D";
+   } else {
+      counter.style.color = "rgb(160, 158, 164)";
+   }
 }
 
 

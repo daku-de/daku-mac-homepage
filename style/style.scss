@@ -741,6 +741,7 @@ textarea:focus {
 }
 
 #mail-body {
+   position: relative;
    display: flex;
    flex-flow: column;
    padding-top: 16px;
@@ -752,6 +753,19 @@ textarea:focus {
       flex-grow: 1;
       margin-bottom: 16px;
    }
+}
+
+#mail-char-counter {
+   position: absolute;
+   font-size: 10px;
+   margin: 16px;
+   padding: 2px;
+   border: #000000 solid 1px;
+   text-align: left;
+   border-radius: 4px;
+   right: 0;
+   bottom: 0;
+   background-color: rgb(25, 25, 25);
 }
 
 #mail-window {
@@ -806,7 +820,7 @@ textarea:focus {
    button:hover, button:focus {
       background-color: #ffffff;
       color: black;
-      border: none;
+      border: #ffffff solid 2px;
       cursor: pointer;
       outline: none;
    }

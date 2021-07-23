@@ -95,11 +95,11 @@
             <div class="window-content">
                <div id="mail-header">
                   <div class="row"><span class="unselectable">To:</span><input id="mail-recipient" value="daku.im@mail.de" readonly tabindex="-1"></div>
-                  <div class="row"><span class="unselectable">Subject:</span><input id="mail-subject" placeholder="Enter a subject" maxlength="72" tabindex="1"></div>
+                  <div class="row"><span class="unselectable">Subject:</span><input id="mail-subject" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Enter a subject" maxlength="72" tabindex="1"></div>
                </div>
                <div id="mail-body">
                   <span class="unselectable">Body:</span>
-                  <textarea id="mail-message" placeholder="Enter your message. Feel free to ask questions or give feedback about this page! The character limit is 1925." maxlength="1925" tabindex="2" onkeydown="countChars()" onkeyup="countChars()"></textarea>
+                  <textarea id="mail-message" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Enter your message. Feel free to ask questions or give feedback about this page! The character limit is 1925." maxlength="1925" tabindex="2" onkeydown="countChars()" onkeyup="countChars()"></textarea>
                   <div id="mail-char-counter" class="unselectable">1925 characters left</div>
                </div>
                <button onclick="sendMail()" id="send-mail" class="unselectable" tabindex="3">Send Mail</button>

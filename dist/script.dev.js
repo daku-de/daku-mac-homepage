@@ -1,21 +1,54 @@
 "use strict";
 
 function sendMail() {
-  var mailto = "mailto:" + document.getElementById("mail-recipient").value + "?";
   var subject = document.getElementById("mail-subject").value;
   var message = document.getElementById("mail-message").value;
-  if (subject != null) mailto += "subject=" + subject + "&";
+  var sender = document.getElementById("mail-recipient").value;
+  console.log(subject);
+  console.log(message);
+  console.log(sender);
 
-  if (message != null) {
-    console.log(message);
-    message = message.replace(/\n/g, "%0D%0A");
-    mailto += "body=" + message;
+  if (subject == "" || message == "") {
+    alert("Enter a subject and message");
+    return;
   }
 
-  window.location.href = mailto;
-  document.getElementById("mail-subject").value = "";
-  document.getElementById("mail-message").value = "";
-  countChars();
+  if (sender != "Anon" && !sender.match(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)) {
+    alert("Enter valid email");
+    return;
+  }
+
+  var req = new XMLHttpRequest();
+  var url = "https://script.google.com/macros/s/AKfycbynZwb1L_-ouAYfA-1Sm-rHNMGyCxfwpCh1bpQqnepyMXjHtbIGMqmyAVwNQCihfs3o4A/exec";
+  req.open("POST", url);
+  req.setRequestHeader("Content-Type", "application/json");
+
+  req.onreadystatechange = function () {
+    if (req.readyState == 4) {
+      console.log(req.status);
+      console.log(req.responseText);
+    }
+  };
+
+  var data = JSON.stringify({
+    "subject": subject,
+    "message": message,
+    "sender": sender
+  });
+  req.send(data);
+  return; // let mailto = "mailto:" + document.getElementById("mail-recipient").value + "?";
+  // let subject = document.getElementById("mail-subject").value;
+  // let message = document.getElementById("mail-message").value;
+  // if (subject != null) mailto += "subject=" + subject + "&";
+  // if (message != null) {
+  //    console.log(message);
+  //    message = message.replace(/\n/g, "%0D%0A");
+  //    mailto += "body=" + message;
+  // }
+  // window.location.href = mailto;
+  // document.getElementById("mail-subject").value = "";
+  // document.getElementById("mail-message").value = "";
+  // countChars();
 }
 
 function countChars() {

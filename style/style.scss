@@ -727,7 +727,6 @@ textarea {
    --webkit-appearance: none;
    -moz-appearance: none;
    color: #ffffff;
-   width: 100%;
    padding: 16px;
    box-sizing: border-box;
    resize: none;
@@ -742,11 +741,20 @@ textarea:focus {
 #mail-header {
    display: flex;
    flex-flow: column;
+   
    input {
       width: 100%;
-      padding: 16px;
+      padding: 10px;
+      margin: 6px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+   }
+
+   .row {
+      margin-top: 4px;
    }
    border-bottom: #000000 solid 2px;
+   padding-bottom: 4px;
 }
 
 #mail-body {
@@ -759,7 +767,12 @@ textarea:focus {
       padding-left: 16px;
    }
    textarea {
+      box-sizing: border-box;
+      border: 1px solid transparent;
+      border-radius: 10px;
       flex-grow: 1;
+      padding: 10px;
+      margin: 6px;
       margin-bottom: 16px;
    }
 }
@@ -826,6 +839,8 @@ textarea:focus {
       color: rgb(160, 158, 164);
       border: #000000 solid 2px;
       border-radius: 10px;
+      animation-name: none;
+      animation-duration: 2s;
    }
    button:hover, button:focus {
       background-color: #ffffff;
@@ -833,6 +848,33 @@ textarea:focus {
       border: #ffffff solid 2px;
       cursor: pointer;
       outline: none;
+   }
+}
+
+@keyframes send-mail-success {
+   30% {
+      background: #4fd364;
+      border-color: #4fd364;
+      color: white;
+   }
+   90% {
+      background: #4fd364;
+      border-color: #4fd364;
+      color: white;
+   }
+}
+
+@keyframes send-mail-failure {
+   30% {
+      background: #FF2C2C;
+      border-color: #FF2C2C;
+      color: white;
+   }
+
+   90% {
+      background: #FF2C2C;
+      border-color: #FF2C2C;
+      color: white;
    }
 }
 

@@ -2,68 +2,74 @@ function sendMail() {
 
    let subject = document.getElementById("mail-subject").value;
    let message = document.getElementById("mail-message").value;
-   let sender = document.getElementById("mail-recipient").value;
+   let sender = document.getElementById("mail-sender").value;
 
-   console.log(subject);
-   console.log(message);
-   console.log(sender);
-   if (subject == "" || message == "") {
-      alert("Enter a subject and message");
-      return;
+   let invalid = false;
+
+   if (subject == "") {
+      document.getElementById("mail-subject").style.setProperty("border", "1px solid #FF2C2C");
+      invalid = true;
+   }
+   if (message == "") {
+      document.getElementById("mail-message").style.setProperty("border", "1px solid #FF2C2C");
+      invalid = true;
    }
 
-   if (sender != "Anon" && !sender.match(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)) {
-      alert("Enter valid email");
+   if (!sender.match(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)) {
+      document.getElementById("mail-sender").style.setProperty("border", "1px solid #FF2C2C");
+      invalid = true;
+   }
+
+   if (invalid) {
       return;
    }
 
    let req = new XMLHttpRequest();
-   let url = "https://script.google.com/macros/s/AKfycbynZwb1L_-ouAYfA-1Sm-rHNMGyCxfwpCh1bpQqnepyMXjHtbIGMqmyAVwNQCihfs3o4A/exec";
+   let url = "https://script.google.com/macros/s/AKfycbzt5J31VrUxqRiPpV0JB4rIdiyO-iw9UtmMj1pk7Vmrl6bumMNUDSX2Yi0e7Evq7GeHdw/exec";
    req.open("POST", url);
-   req.setRequestHeader("Content-Type", "application/json");
+   req.setRequestHeader("Content-Type", "text/plain");
 
    req.onreadystatechange = function() {
       if (req.readyState == 4) {
-         console.log(req.status);
-         console.log(req.responseText);
+         if (req.status == 200) {
+            document.getElementById("mail-subject").value = "";
+            document.getElementById("mail-message").value = "";
+            countChars();
+            document.getElementById("send-mail").style.setProperty("animation-name", "send-mail-success");
+            setTimeout(() => document.getElementById("send-mail").style.setProperty("animation-name", "none"), 2000);
+
+         } else {
+            document.getElementById("send-mail").style.setProperty("animation-name", "send-mail-failure");
+            setTimeout(() => document.getElementById("send-mail").style.setProperty("animation-name", "none"), 2000);
+         }
       }
    };
 
    let data = JSON.stringify({
       "subject": subject,
-      "message": message,
+      "body": message,
       "sender": sender
    });
-
    req.send(data);
 
-
    return;
-   // let mailto = "mailto:" + document.getElementById("mail-recipient").value + "?";
-   // let subject = document.getElementById("mail-subject").value;
-   // let message = document.getElementById("mail-message").value;
-   // if (subject != null) mailto += "subject=" + subject + "&";
-   // if (message != null) {
-   //    console.log(message);
-   //    message = message.replace(/\n/g, "%0D%0A");
-   //    mailto += "body=" + message;
-   // }
-   // window.location.href = mailto;
-   // document.getElementById("mail-subject").value = "";
-   // document.getElementById("mail-message").value = "";
-   // countChars();
 }
 
 function countChars() {
+   let maxchars = 2500;
    let chars = document.getElementById("mail-message").value.length;
    let counter = document.getElementById("mail-char-counter");
-   counter.innerHTML = (1925-chars) + " characters left";
+   counter.innerHTML = (maxchars-chars) + " characters left";
 
-   if (1925-chars <= 50) {
+   if (maxchars-chars <= 50) {
       counter.style.color = "#B9585D";
    } else {
       counter.style.color = "rgb(160, 158, 164)";
    }
+}
+
+function removeBorder(obj) {
+   obj.style.setProperty("border", "1px solid transparent");
 }
 
 
@@ -1157,12 +1163,14 @@ function layerWindows() {
    }
    if ($('#mail-window').css("z-index") != String(openedwindows.length)) {
       document.getElementById("mail-subject").tabIndex = "-1";
+      document.getElementById("mail-sender").tabIndex = "-1";
       document.getElementById("mail-message").tabIndex = "-1";
       document.getElementById("send-mail").tabIndex = "-1";
    } else {
-      document.getElementById("mail-subject").tabIndex = "1";
-      document.getElementById("mail-message").tabIndex = "2";
-      document.getElementById("send-mail").tabIndex = "3";
+      document.getElementById("mail-sender").tabIndex = "1";
+      document.getElementById("mail-subject").tabIndex = "2";
+      document.getElementById("mail-message").tabIndex = "3";
+      document.getElementById("send-mail").tabIndex = "4";
    }
    if($('#terminal').css("z-index") != String(openedwindows.length)) {
       document.getElementById("terminalinput").tabIndex = "-1";

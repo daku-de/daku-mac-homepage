@@ -1079,15 +1079,7 @@ $(document).ready(function (e) {
       resetCalc();
     });
     calc();
-  } // function initMail() {
-  //    $(".open-mail").click(() => {
-  //       var user="daku.im";
-  //       var service="mail";
-  //       var tld="de";
-  //       window.location.href = service + "to:" + user + "@" + service + "." + tld;
-  //    });
-  // }
-
+  }
 
   function initMail() {
     $(".open-mail").click(function () {

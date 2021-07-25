@@ -113,36 +113,45 @@ html {
  }
 
 header {
-   background: linear-gradient(to bottom, rgba(230, 230, 230, 1) 0%, rgba(163, 163, 163, 1) 100%);
+   //background: linear-gradient(to bottom, rgba(230, 230, 230, 1) 0%, rgba(163, 163, 163, 1) 100%);
+   border-bottom: 1px solid darkgray;
+   background-color: rgb(244, 244, 244);
    color: black;
    font-family: 'Helvetica', sans-serif;
    display: block;
    font-size: 0.9em;
    height: 1.3em;
+   min-width: 630px;
    user-select: none;
-   overflow: hidden;
+   z-index: 999;
+   -webkit-box-shadow: 0px 0px 17px 4px rgba(0, 0, 0, 0.72);
+   box-shadow: 0px 0px 17px 4px rgba(0, 0, 0, 0.72);
 
    ul {
       margin: 1px 5px;
+      margin-left: 12px;
       padding: 0 3px;
-      overflow: hidden;
+      padding-left: 0px;
+      position: relative;
    }
 
    li {
       display: inline-block;
       line-height: 1.3em;
       padding: 0 0.5em;
-      position: relative;
       margin: 0px;
       padding: 0px;
       cursor: default;
+      z-index: 999;
+      position: relative;
    }
 
    .left {
       float: left;
 
       li {
-         padding-left: 12px;
+         padding-right: 6px;
+         padding-left: 6px;
       }
    }
 
@@ -161,6 +170,82 @@ header {
          color: darkblue;
       }
    }
+}
+
+.nav-wrap ul {
+   display: none;
+   margin: 0;
+   color: black;
+   position: absolute;
+   background-color: rgb(244, 244, 244);
+   flex-flow: column;
+   text-align: left;
+   font-family: 'Helvetica', sans-serif;
+   list-style: none;
+   top: 100%;
+   left: 0;
+   z-index: 999;
+   padding: 0px;
+   border-bottom-left-radius: 4px;
+   border-bottom-right-radius: 4px;
+   border-top: 1px solid rgb(226, 226, 226);
+   animation-duration: 1s;
+
+   a {
+      text-decoration: none;
+      display: block;
+      padding: 2px;
+      padding-left: 25px;
+   }
+
+   i {
+      float: right;
+      padding-right: 8px;
+   }
+
+   li {
+      padding: 0px;
+      width: 220px;
+      z-index: inherit;
+      word-wrap: break-word;
+      line-height: 120%;
+
+      a:hover {
+         color: white;
+      }
+   }
+
+   li:hover {
+      background-color: rgb(18, 83, 223);
+      color: white;
+   }
+
+
+   hr {
+      width: 100%;
+      font-size: 0px;
+      border-top: 1px solid rgb(226, 226, 226);
+      box-sizing: border-box;
+      margin-top: 4px;
+      margin-bottom: 4px;
+   }
+
+}
+
+.wlan ul {
+   transform: translateX(-50%);
+   top: 100%;
+   left: 50%;
+}
+
+.nav-wrap ul ul {
+   top: 0;
+   left: 100%;
+   border: 0;
+}
+
+.nav-wrap li:hover>ul {
+   display: flex;
 }
 
 body {
@@ -208,6 +293,11 @@ body {
 
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+
+      -webkit-box-shadow: 0px 0px 17px 4px rgba(0, 0, 0, 0.4);
+      box-shadow: 0px 0px 17px 4px rgba(0, 0, 0, 0.4);
 
       .terminal {
          display: flex;
@@ -216,12 +306,13 @@ body {
 
       .window-content {
          background-color: var(--terminal-background);
-         border: 2px solid rgba(163, 163, 163, 1);
+         //border: 2px solid rgba(163, 163, 163, 1);
+         border: 2px solid rgb(244, 244, 244);
          border-top: 0px;
 
          padding-top: 8px;
 
-         border-bottom: 2px solid rgba(163, 163, 163, 1);
+         //border-bottom: 2px solid rgba(163, 163, 163, 1);
 
          border-bottom-left-radius: 5px;
          border-bottom-right-radius: 5px;
@@ -237,7 +328,8 @@ body {
    .handle {
       height: 22px;
       min-height: 22px;
-      background: linear-gradient(to bottom, rgba(230, 230, 230, 1) 0%, rgba(163, 163, 163, 1) 100%);
+      //background: linear-gradient(to bottom, rgba(230, 230, 230, 1) 0%, rgba(163, 163, 163, 1) 100%);
+      background-color: rgb(244, 244, 244);
 
       border-top: 1px solid white;
       border-top-left-radius: 10px;
@@ -383,7 +475,7 @@ body {
    background:$highlight;
 }
 ::-webkit-scrollbar{background-color:transparent;width:10px;height:10px;}
-::-webkit-scrollbar-thumb{background-color:$grey;}
+::-webkit-scrollbar-thumb{background-color:rgb(200, 200, 200);}
 ::-webkit-scrollbar-corner{background-color:var(--terminal-background);}
 ::-webkit-resizer{background-color:var(--terminal-background);}
 
@@ -923,7 +1015,8 @@ footer {
       justify-content: center;
 
       .footer-bar {
-         background: linear-gradient(to top, rgba(230, 230, 230, 0.8) 0%, rgba(163, 163, 163, 0.6) 100%);
+         //background: linear-gradient(to top, rgba(230, 230, 230, 0.8) 0%, rgba(163, 163, 163, 0.6) 100%);
+         background: linear-gradient(to top, rgba(244, 244, 244, 0.8) 0%, rgba(220, 220, 220, 0.6) 100%);
          height: 100%;
          margin-top: 15px;
          transform: rotatex(45deg);

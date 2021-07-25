@@ -32,9 +32,11 @@ function sendMail() {
    req.onreadystatechange = function() {
       if (req.readyState == 4) {
          if (req.status == 200) {
+
             document.getElementById("mail-subject").value = "";
             document.getElementById("mail-message").value = "";
             countChars();
+            
             document.getElementById("send-mail").style.setProperty("animation-name", "send-mail-success");
             setTimeout(() => document.getElementById("send-mail").style.setProperty("animation-name", "none"), 2000);
 
@@ -1071,15 +1073,6 @@ function initCalc() {
 
    calc();
 }
-
-// function initMail() {
-//    $(".open-mail").click(() => {
-//       var user="daku.im";
-//       var service="mail";
-//       var tld="de";
-//       window.location.href = service + "to:" + user + "@" + service + "." + tld;
-//    });
-// }
 
 function initMail() {
    $(".open-mail").click(() => {

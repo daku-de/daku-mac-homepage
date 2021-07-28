@@ -140,7 +140,6 @@ $(document).ready(function(e) {
    
    var terminalstyles = { //Custom Terminal Styles ([TerminalBackground, TerminalText, InputlineBackground, Logo, Important])
       default: ["#313F46", "#ffffff", "#23292C", "#60AA67", "#B9585D"],
-      dark: ["#3A3A3A", "#EFEFAE", "#262626", "#ffe419", "#E3A786"],
       hackerman: ["#000000", "#0ed400","#000000", "#ff0fff", "#E3A786"],
       white: ["#ffffff", "#000000", "#ffffff", "#ff8205", "#c40000"],
       pink: ["#ffcbe4", "#df0069", "#ffa4cf", "#6a0067", "#3f3fff"],

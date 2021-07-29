@@ -1,6 +1,7 @@
-let words = ["Ethernet", "Agile", "Algorithm", "Processor", "Hangman", "Computer", "Database", "Coding", "Boolean", "Syntax", "Compiler", "Array", "JavaScript", "Python",
-"Software", "Interface", "Security", "Heuristic", "Pattern", "Integer", "Hardware", "Generalization", "Specialization", "Alan Turing", "Reverse Engineering", "Cloud Computing",
-"Big Data", "Recursion", "Machine Learning", "von Neumann architecture", "Race Condition", "Cryptography"];
+let words = [ "Agile", "Alan Turing", "Algorithm", "Array", "Big Data", "Boolean", "Cloud Computing", "Coding", "Compiler", "Computer", "Cryptography", 
+    "Database", "Data Lake", "Data Warehouse","Ethernet", "Fibonacci", "Generalization", "Hangman", "Hardware", "Heuristic", "Integer", "Interface", "JavaScript",
+    "Machine Learning", "Metadata", "Pattern", "Processor", "Python", "Race Condition", "Recursion", "Repository", "Reverse Engineering", "Security", "Semaphore",
+    "Software", "Specialization", "Syntax", "von Neumann architecture"];
 
 let inputline;
 let inputbox;
@@ -111,6 +112,9 @@ class Hangman extends Game {
 
     guess(c) {
         c = c.toLowerCase();
+        c = c.replace(new RegExp(String.fromCharCode(160), "g"), "");
+        c = c.replace(/ +/g, " ");
+        c = c.replace(/ $/g, "");
         let msg;
         if (c.length > 1) return this.checkWord(c);
         if (c.length != 1 || !c.match(/[a-z]/i)) {
@@ -133,7 +137,9 @@ class Hangman extends Game {
 
     checkWord(w) {
         let msg;
-        if (this.word.toLowerCase() == w) {
+        if (!w.match(/^[a-z ]*$/)) {
+            msg = "Your answer contains invalid characters. Only letters are allowed!";
+        } else if (this.word.toLowerCase() == w) {
             msg = "You guessed the word!"
             this.solved = true;
             this.over = true;
@@ -320,8 +326,45 @@ class HigherLower extends Game {
 
 }
 
+class Anagrams extends Game {
+
+    constructor(sec) {
+        super("Anagrams");
+        this.time = sec;
+
+        let i = 30;
+        let timer = setInterval(() => {
+            //console.log(i);
+            i = i-1;
+            if (i <= -1) clearInterval(timer);
+        }, 1000);
+    }
+
+    newGame() {
+
+    }
+
+    guess() {
+
+    }
+
+    getOutput() {
+
+    }
+
+    roundOver() {
+
+    }
+
+    roundOverMessage() {
+        
+    }
+    
+}
+
 const hangman = new Hangman();
 const hlgame = new HigherLower();
+const anagrams = new Anagrams(45);
 
 function newGame(name) {
     stream = $(".stream");
@@ -335,6 +378,9 @@ function newGame(name) {
             break;
         case "hlgame":
             hlgame.newGame();
+            break;
+        case "anagrams":
+            anagrams.newGame();
             break;
     }
 }

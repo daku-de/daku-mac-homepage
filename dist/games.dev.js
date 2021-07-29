@@ -18,7 +18,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var words = ["Ethernet", "Agile", "Algorithm", "Processor", "Hangman", "Computer", "Database", "Coding", "Boolean", "Syntax", "Compiler", "Array", "JavaScript", "Python", "Software", "Interface", "Security", "Heuristic", "Pattern", "Integer", "Hardware", "Generalization", "Specialization", "Alan Turing", "Reverse Engineering", "Cloud Computing", "Big Data", "Recursion", "Machine Learning", "von Neumann architecture", "Race Condition", "Cryptography"];
+var words = ["Agile", "Alan Turing", "Algorithm", "Array", "Big Data", "Boolean", "Cloud Computing", "Coding", "Compiler", "Computer", "Cryptography", "Database", "Data Lake", "Data Warehouse", "Ethernet", "Fibonacci", "Generalization", "Hangman", "Hardware", "Heuristic", "Integer", "Interface", "JavaScript", "Machine Learning", "Metadata", "Pattern", "Processor", "Python", "Race Condition", "Recursion", "Repository", "Reverse Engineering", "Security", "Semaphore", "Software", "Specialization", "Syntax", "von Neumann architecture"];
 var inputline;
 var inputbox;
 var stream;
@@ -147,6 +147,9 @@ function (_Game) {
     key: "guess",
     value: function guess(c) {
       c = c.toLowerCase();
+      c = c.replace(new RegExp(String.fromCharCode(160), "g"), "");
+      c = c.replace(/ +/g, " ");
+      c = c.replace(/ $/g, "");
       var msg;
       if (c.length > 1) return this.checkWord(c);
 
@@ -173,7 +176,9 @@ function (_Game) {
     value: function checkWord(w) {
       var msg;
 
-      if (this.word.toLowerCase() == w) {
+      if (!w.match(/^[a-z ]*$/)) {
+        msg = "Your answer contains invalid characters. Only letters are allowed!";
+      } else if (this.word.toLowerCase() == w) {
         msg = "You guessed the word!";
         this.solved = true;
         this.over = true;
@@ -385,8 +390,50 @@ function (_Game2) {
   return HigherLower;
 }(Game);
 
+var Anagrams =
+/*#__PURE__*/
+function (_Game3) {
+  _inherits(Anagrams, _Game3);
+
+  function Anagrams(sec) {
+    var _this3;
+
+    _classCallCheck(this, Anagrams);
+
+    _this3 = _possibleConstructorReturn(this, _getPrototypeOf(Anagrams).call(this, "Anagrams"));
+    _this3.time = sec;
+    var i = 30;
+    var timer = setInterval(function () {
+      //console.log(i);
+      i = i - 1;
+      if (i <= -1) clearInterval(timer);
+    }, 1000);
+    return _this3;
+  }
+
+  _createClass(Anagrams, [{
+    key: "newGame",
+    value: function newGame() {}
+  }, {
+    key: "guess",
+    value: function guess() {}
+  }, {
+    key: "getOutput",
+    value: function getOutput() {}
+  }, {
+    key: "roundOver",
+    value: function roundOver() {}
+  }, {
+    key: "roundOverMessage",
+    value: function roundOverMessage() {}
+  }]);
+
+  return Anagrams;
+}(Game);
+
 var hangman = new Hangman();
 var hlgame = new HigherLower();
+var anagrams = new Anagrams(45);
 
 function newGame(name) {
   stream = $(".stream");
@@ -401,6 +448,10 @@ function newGame(name) {
 
     case "hlgame":
       hlgame.newGame();
+      break;
+
+    case "anagrams":
+      anagrams.newGame();
       break;
   }
 }

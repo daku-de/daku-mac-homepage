@@ -31,7 +31,7 @@ function sendMail() {
   req.setRequestHeader("Content-Type", "text/plain");
 
   req.onreadystatechange = function () {
-    if (req.readyState == 4) {
+    if (req.readyState == XMLHttpRequest.DONE) {
       if (req.status == 200) {
         document.getElementById("mail-subject").value = "";
         document.getElementById("mail-message").value = "";
@@ -85,7 +85,7 @@ $(document).ready(function (e) {
   var commandlist = {
     "shell": [["help", "Show help for a specific topic", "<topic>"], ["commands", "List all commands", ""], ["clear", "Clear the console", ""], ["reset", "Reset the whole page", ""]],
     "about": [["video", "Show youtube video", ""], ["socials", "Linktree to all of my socials", ""]],
-    "features": [["hangman", "Start a game of hangman", ""], ["wiki", "Get information about a specific topic", "<topic>"], ["hlgame", "Start a game of HigherLower", ""], ["echo", "Display given input", ""], ["calc", "Opens the calculator", ""], ["mail", "Opens the contact form", ""], ["radio", 'Listen to ILoveRadio.de', "<volume|pause>"], ["fact", "Displays a random fact", ""]],
+    "features": [["hangman", "Start a game of hangman", ""], ["wiki", "Get information about a specific topic", "<topic>"], ["hlgame", "Start a game of HigherLower", ""], ["guestbook", "Adds your name to the guest book", "<name>"], ["guestbook", "Displays all names in the guest book", ""], ["echo", "Display given input", ""], ["calc", "Opens the calculator", ""], ["mail", "Opens the contact form", ""], ["radio", 'Listen to ILoveRadio.de', "<volume|pause>"], ["fact", "Displays a random fact", ""]],
     "layout": [["style", "Change the look of the console", ""], ["background", "Choose a different background image", ""]],
     "filesystem": [["tree", "Prints directory structure in the form of a tree", ""], ["pwd", "Print name of current directory", ""], ["ls", "List contents of the current directory", ""], ["cd", "Change the current directory", "<directory>"], ["mkdir", "Create a new directory", "<directory-name>"], ["create", "Create a file with custom content", "<file-name> <content>"], ["touch", "Create an empty file", "<file-name>"], ["cat", "Print contents of a file", "<file>"], ["rm", "Remove a file or directory", "<name>"]]
   };
@@ -331,7 +331,9 @@ $(document).ready(function (e) {
         x.onreadystatechange = function () {
           if (x.readyState == XMLHttpRequest.DONE) {
             var wiki_search_info = JSON.parse(x.responseText);
-            var req = new XMLHttpRequest();
+
+            var _req = new XMLHttpRequest();
+
             var wiki_page = wiki_search_info[1][0];
 
             if (wiki_page == undefined) {
@@ -341,11 +343,11 @@ $(document).ready(function (e) {
               return;
             }
 
-            var url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext&format=json&titles=" + wiki_page + "&redirects&origin=*";
+            var _url = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext&format=json&titles=" + wiki_page + "&redirects&origin=*";
 
-            req.onreadystatechange = function () {
-              if (req.readyState == XMLHttpRequest.DONE) {
-                var wiki_info = JSON.parse(req.responseText);
+            _req.onreadystatechange = function () {
+              if (_req.readyState == XMLHttpRequest.DONE) {
+                var wiki_info = JSON.parse(_req.responseText);
                 var extract = wiki_info.query.pages[Object.keys(wiki_info.query.pages)[0]].extract;
                 var pageid = wiki_info.query.pages[Object.keys(wiki_info.query.pages)[0]].pageid;
                 extract = extract.replace(/ \(listen\)/g, "");
@@ -370,8 +372,9 @@ $(document).ready(function (e) {
               }
             };
 
-            req.open("GET", url);
-            req.send();
+            _req.open("GET", _url);
+
+            _req.send();
           }
         };
 
@@ -443,6 +446,50 @@ $(document).ready(function (e) {
       case "email":
       case "contact":
         $(".open-mail").click();
+        break;
+
+      case "guestbook":
+        var url = "https://script.google.com/macros/s/AKfycbygfOwFB8CXAFusWQtOJwTalzNX22AD_MQrB7epbm4wP8i_7pMHabygQQ2ApoSziTtP/exec";
+        var req = new XMLHttpRequest();
+
+        if (args.length == 0) {
+          req.open("GET", url, true);
+
+          req.onreadystatechange = function () {
+            if (req.readyState == XMLHttpRequest.DONE) {
+              if (req.status == 200) {
+                console.log(req.response);
+                printLine("These people have registered in the guest book:");
+                printLine(req.responseText);
+              }
+            }
+          };
+
+          req.send();
+        } else {
+          var name = args.join(" ");
+
+          if (!name.match(/^[\w\d]{3,10}( [\w\d]{3,10})?$/g)) {
+            printLine("This name is invalid, your name can consist of up to two words, each word has to be between 3 and 10 letters / digits long.");
+            break;
+          }
+
+          req.open("POST", url);
+          req.setRequestHeader("Content-Type", "text/plain");
+
+          req.onreadystatechange = function () {
+            if (req.readyState == XMLHttpRequest.DONE) {
+              if (req.status == 200) {
+                console.log(req.responseText);
+                if (req.responseText == "DONE") printLine("Your name was added to the guest book!");
+                if (req.responseText == "NAME ALREADY USED") printLine("This name is already registered in the guest book!");
+              }
+            }
+          };
+
+          req.send(name);
+        }
+
         break;
 
       case "wallpaper":

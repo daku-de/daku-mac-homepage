@@ -30,7 +30,7 @@ function sendMail() {
    req.setRequestHeader("Content-Type", "text/plain");
 
    req.onreadystatechange = function() {
-      if (req.readyState == 4) {
+      if (req.readyState == XMLHttpRequest.DONE) {
          if (req.status == 200) {
 
             document.getElementById("mail-subject").value = "";
@@ -102,6 +102,8 @@ $(document).ready(function(e) {
          ["hangman", "Start a game of hangman", ""],
          ["wiki", "Get information about a specific topic", "<topic>"],
          ["hlgame", "Start a game of HigherLower", ""],
+         ["guestbook", "Adds your name to the guest book", "<name>"],
+         ["guestbook", "Displays all names in the guest book", ""],
          ["echo", "Display given input", ""],
          ["calc", "Opens the calculator", ""],
          ["mail", "Opens the contact form", ""],
@@ -481,6 +483,45 @@ $(document).ready(function(e) {
          case "email":
          case "contact":
             $(".open-mail").click();
+            break;
+
+         case "guestbook":
+            let url = "https://script.google.com/macros/s/AKfycbygfOwFB8CXAFusWQtOJwTalzNX22AD_MQrB7epbm4wP8i_7pMHabygQQ2ApoSziTtP/exec";
+            let req = new XMLHttpRequest();
+            if (args.length == 0) {
+
+               req.open("GET", url, true);
+               req.onreadystatechange = function() {
+                  if (req.readyState == XMLHttpRequest.DONE) {
+                     if (req.status == 200) {
+                        console.log(req.response);
+                        printLine("These people have registered in the guest book:");
+                        printLine(req.responseText);
+                     }
+                  }
+               };
+               req.send();
+
+            } else {
+               let name = args.join(" ");
+               if (!name.match(/^[\w\d]{3,10}( [\w\d]{3,10})?$/g)) {
+                  printLine("This name is invalid, your name can consist of up to two words, each word has to be between 3 and 10 letters / digits long.");
+                  break;
+               }
+               req.open("POST", url);
+               req.setRequestHeader("Content-Type", "text/plain");
+
+               req.onreadystatechange = function() {
+                  if (req.readyState == XMLHttpRequest.DONE) {
+                     if (req.status == 200) {
+                        console.log(req.responseText);
+                        if (req.responseText == "DONE") printLine("Your name was added to the guest book!");
+                        if (req.responseText == "NAME ALREADY USED") printLine("This name is already registered in the guest book!");
+                     }
+                  }
+               };
+               req.send(name);
+            }
             break;
 
          case "wallpaper":

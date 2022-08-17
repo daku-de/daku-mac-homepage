@@ -65,7 +65,7 @@
             $("#audiobutton").click(() => {
                 if (!audioplaying) {
                     document.getElementById("audio").play();
-                    document.getElementById("audio").volume = 0.01;
+                    document.getElementById("audio").volume = 0.1;
                     document.getElementById("audiobutton").innerHTML = '<i class="fas fa-volume-up"></i>';
                     document.getElementById("catjam").style.setProperty("display", "block");
                     audioplaying = true;

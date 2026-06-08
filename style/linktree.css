@@ -44,8 +44,6 @@ a, a:hover, a:focus, a:active {
 #wrapper {
   text-align: center;
   align-items: center;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   height: 100%;
   width: 100%;
@@ -58,12 +56,11 @@ a, a:hover, a:focus, a:active {
   overflow-y: auto;
   box-sizing: border-box;
   padding-top: 36px;
-  background: #ff770c;
-  background: linear-gradient(122deg, #ff770c 0%, #dc4e5a 46%, #ff4043 100%);
+  background: rgb(255, 119, 12);
+  background: linear-gradient(122deg, rgb(255, 119, 12) 0%, rgb(220, 78, 90) 46%, rgb(255, 64, 67) 100%);
 }
 
 .shaking {
-  -webkit-animation: shake 3s linear infinite;
   animation: shake 3s linear infinite;
 }
 
@@ -96,7 +93,7 @@ a .button-container {
   padding-right: 66px;
   border-radius: 30px;
   box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.16);
-  border: 2px solid white;
+  border: 2px solid rgb(255, 255, 255);
   line-height: 1.5em;
 }
 .button span {
@@ -114,58 +111,36 @@ a .button-container {
 
 @keyframes shake {
   0% {
-    -webkit-transform: translateX(3px) rotate(1deg);
-    -ms-transform: translateX(3px) rotate(1deg);
     transform: translateX(3px) rotate(1deg);
   }
   2.5% {
-    -webkit-transform: translateX(-3px) rotate(-1deg);
-    -ms-transform: translateX(-3px) rotate(-1deg);
     transform: translateX(-3px) rotate(-1deg);
   }
   5% {
-    -webkit-transform: translateX(3px) rotate(1deg);
-    -ms-transform: translateX(3px) rotate(1deg);
     transform: translateX(3px) rotate(1deg);
   }
   7.5% {
-    -webkit-transform: translateX(-3px) rotate(-1deg);
-    -ms-transform: translateX(-3px) rotate(-1deg);
     transform: translateX(-3px) rotate(-1deg);
   }
   10% {
-    -webkit-transform: translateX(2px) rotate(1deg);
-    -ms-transform: translateX(2px) rotate(1deg);
     transform: translateX(2px) rotate(1deg);
   }
   12.5% {
-    -webkit-transform: translateX(-2px) rotate(-1deg);
-    -ms-transform: translateX(-2px) rotate(-1deg);
     transform: translateX(-2px) rotate(-1deg);
   }
   15% {
-    -webkit-transform: translateX(2px) rotate(1deg);
-    -ms-transform: translateX(2px) rotate(1deg);
     transform: translateX(2px) rotate(1deg);
   }
   17.5% {
-    -webkit-transform: translateX(-2px) rotate(-1deg);
-    -ms-transform: translateX(-2px) rotate(-1deg);
     transform: translateX(-2px) rotate(-1deg);
   }
   20% {
-    -webkit-transform: translateX(1px) rotate(1deg);
-    -ms-transform: translateX(1px) rotate(1deg);
     transform: translateX(1px) rotate(1deg);
   }
   22.5% {
-    -webkit-transform: translateX(-1px) rotate(-1deg);
-    -ms-transform: translateX(-1px) rotate(-1deg);
     transform: translateX(-1px) rotate(-1deg);
   }
   25% {
-    -webkit-transform: translateX(0px) rotate(0);
-    -ms-transform: translateX(0px) rotate(0);
     transform: translateX(0px) rotate(0);
   }
-}
+}/*# sourceMappingURL=linktree.css.map */

@@ -1,15 +1,15 @@
 html {
-    background-image: url(https://i.imgur.com/Lqi0jN2.jpeg);
+    background-image: url(https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Mordekaiser_55.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    height: 100%;
-    overflow: auto;
+    background-attachment: fixed;
+    height: 100vh;
     min-width: 700px;
 }
 
 body {
-    font-family: 'Fira Mono', Monospace;
+    font-family: "Fira Mono", Monospace;
     display: flex;
     margin: 0;
     vertical-align: middle;
@@ -17,7 +17,7 @@ body {
     flex-flow: column;
     text-align: center;
     overflow-x: hidden;
-    height: 100%;
+    min-height: 100vh;
     background-color: rgba(32, 32, 32, 0.4);
     font-size: 18px;
     color: white;
@@ -26,11 +26,6 @@ body {
 ul {
     list-style: none;
     padding: 0;
-}
-
-#lol-logo {
-    width: 300px;
-    margin: 35px 0 40px;
 }
 
 #contact {
@@ -88,6 +83,21 @@ ul {
 .reasons {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    position: relative;
+    margin-top: 60px;
+}
+
+#lol-logo {
+    width: 300px;
+    position: absolute;
+
+    top: 100px;
+    left: 0px;
+    z-index: 20;
+
+    transform-origin: top left;
+
+    transform: scale(0.7) rotate(-25deg) translate(-20%, -130%);
 }
 
 .b {
@@ -109,4 +119,67 @@ div {
 h1 {
     margin: 0;
     margin-top: 0.5em;
+}
+
+.counter-section {
+    padding: 0;
+    z-index: 10;
+
+    div {
+        padding: 0 !important;
+    }
+}
+
+#worship-count {
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 1;
+    margin: 0;
+}
+
+.counter-section > div > div > div:last-child {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+#worship-btn {
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+    padding: 12px 18px;
+    margin-left: 12px;
+    cursor: pointer;
+    font-family: "Fira Mono", Monospace;
+
+    &:hover:not(:disabled) {
+        cursor: pointer;
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+}
+
+/* Korean mode font sizing */
+body.korean-mode {
+    font-size: 18px;
+
+    .question {
+        font-size: 32px;
+    }
+
+    #worship-count {
+        font-size: 30px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .counter-section > div > div > div:last-child {
+        font-size: 12px;
+    }
 }

@@ -76,22 +76,22 @@ html {
 .unselectable {
   -webkit-user-select: none;
   -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 }
 
 header {
   border-bottom: 1px solid darkgray;
-  background-color: #f4f4f4;
+  background-color: rgb(244, 244, 244);
   color: black;
   font-family: "Helvetica", sans-serif;
   display: block;
   font-size: 0.9em;
   height: 1.3em;
   min-width: 630px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
   z-index: 999;
-  -webkit-box-shadow: 0px 0px 17px 4px rgba(0, 0, 0, 0.72);
   box-shadow: 0px 0px 17px 4px rgba(0, 0, 0, 0.72);
 }
 header ul {
@@ -134,9 +134,9 @@ header a:hover {
 .nav-wrap ul {
   display: none;
   margin: 0;
-  color: #3d3d3d;
+  color: rgb(61, 61, 61);
   position: absolute;
-  background-color: #f4f4f4;
+  background-color: rgb(244, 244, 244);
   flex-flow: column;
   text-align: left;
   font-family: "Helvetica", sans-serif;
@@ -147,7 +147,7 @@ header a:hover {
   padding: 0px;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
-  border-top: 1px solid #e2e2e2;
+  border-top: 1px solid rgb(226, 226, 226);
 }
 .nav-wrap ul a {
   text-decoration: none;
@@ -170,13 +170,13 @@ header a:hover {
   color: white;
 }
 .nav-wrap ul li:hover {
-  background-color: #1253df;
+  background-color: rgb(18, 83, 223);
   color: white;
 }
 .nav-wrap ul hr {
   width: 100%;
   font-size: 0px;
-  border-top: 1px solid #e2e2e2;
+  border-top: 1px solid rgb(226, 226, 226);
   box-sizing: border-box;
   margin-top: 4px;
   margin-bottom: 4px;
@@ -199,7 +199,7 @@ header a:hover {
 }
 
 .unusable {
-  color: #d2d2d2;
+  color: rgb(210, 210, 210);
   cursor: default;
   pointer-events: none;
 }
@@ -242,7 +242,6 @@ body .window {
   border-bottom-right-radius: 5px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  -webkit-box-shadow: 0px 0px 17px 4px rgba(0, 0, 0, 0.4);
   box-shadow: 0px 0px 17px 4px rgba(0, 0, 0, 0.4);
 }
 body .window .terminal {
@@ -251,7 +250,7 @@ body .window .terminal {
 }
 body .window .window-content {
   background-color: var(--terminal-background);
-  border: 2px solid #f4f4f4;
+  border: 2px solid rgb(244, 244, 244);
   border-top: 0px;
   padding-top: 8px;
   border-bottom-left-radius: 5px;
@@ -262,11 +261,13 @@ body .window .window-content {
 body .handle {
   height: 22px;
   min-height: 22px;
-  background-color: #f4f4f4;
+  background-color: rgb(244, 244, 244);
   border-top: 1px solid white;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -281,15 +282,15 @@ body .handle .buttons {
   display: flex;
 }
 body .handle .buttons .first {
-  background-color: #ff6159;
+  background-color: rgb(255, 97, 89);
   margin-right: 5px;
 }
 body .handle .buttons .second {
-  background-color: #ffbf2f;
+  background-color: rgb(255, 191, 47);
   margin-right: 5px;
 }
 body .handle .buttons .third {
-  background-color: #25cc3e;
+  background-color: rgb(37, 204, 62);
   margin-right: 5px;
 }
 body .handle .popupbuttons {
@@ -364,17 +365,26 @@ body .inputline {
   background-color: var(--terminal-inputline);
   padding: 2px 4px 2px 4px;
   width: auto;
-  margin: 0;
-  margin-bottom: 8px;
 }
 body .inputline .inputbox {
   min-width: calc(100% - 200px);
   outline: none;
   overflow-wrap: break-word;
 }
+body .inputline {
+  margin: 0;
+  margin-bottom: 8px;
+}
 body .inputline .time {
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
   cursor: default;
+}
+
+::-moz-selection {
+  color: #FFFFAE;
+  background: #00adb5;
 }
 
 ::selection {
@@ -389,7 +399,7 @@ body .inputline .time {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #c8c8c8;
+  background-color: rgb(200, 200, 200);
 }
 
 ::-webkit-scrollbar-corner {
@@ -455,7 +465,7 @@ body .inputline .time {
   background-color: black;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
-  border: 2px solid #a3a3a3;
+  border: 2px solid rgb(163, 163, 163);
   border-top: 0px;
   position: relative;
 }
@@ -465,7 +475,8 @@ body .inputline .time {
 .video-popup-model .video-layer .model-wrapper .videomodel .videoscreen video,
 .video-popup-model .video-layer .model-wrapper .videomodel .videoscreen iframe {
   width: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
   height: auto;
   border: 0;
   outline: none;
@@ -487,7 +498,6 @@ body .inputline .time {
 
 #calc .window {
   width: auto;
-  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border-radius: 10px;
   background: none;
@@ -537,8 +547,12 @@ body .inputline .time {
   padding: 0.5em;
   box-sizing: border-box;
 }
+#calc .calculator .display ::-moz-selection {
+  background: rgba(0, 0, 255, 0.5568627451);
+  color: #ffffff;
+}
 #calc .calculator .display ::selection {
-  background: #0000ff8e;
+  background: rgba(0, 0, 255, 0.5568627451);
   color: #ffffff;
 }
 #calc .calculator .display .line {
@@ -555,7 +569,9 @@ body .inputline .time {
 #calc .calculator .display .input {
   display: block;
   overflow-x: auto;
-  user-select: text;
+  -webkit-user-select: text;
+     -moz-user-select: text;
+          user-select: text;
 }
 #calc .calculator button {
   border: 0;
@@ -720,8 +736,6 @@ textarea:focus {
 #mail-header {
   display: flex;
   flex-flow: column;
-  border-bottom: #000000 solid 2px;
-  padding-bottom: 4px;
 }
 #mail-header input {
   width: 100%;
@@ -732,6 +746,10 @@ textarea:focus {
 }
 #mail-header .row {
   margin-top: 4px;
+}
+#mail-header {
+  border-bottom: #000000 solid 2px;
+  padding-bottom: 4px;
 }
 
 #mail-body {
@@ -764,7 +782,7 @@ textarea:focus {
   border-radius: 4px;
   right: 0;
   bottom: 0;
-  background-color: #191919;
+  background-color: rgb(25, 25, 25);
 }
 
 #mail-window {
@@ -809,7 +827,7 @@ textarea:focus {
   font-style: normal;
   padding: 0.5em;
   background: transparent;
-  color: #a09ea4;
+  color: rgb(160, 158, 164);
   border: #000000 solid 2px;
   border-radius: 10px;
   animation-name: none;
@@ -869,7 +887,9 @@ footer {
   overflow: hidden;
   z-index: 3;
   pointer-events: none;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 footer li:focus {
   outline: none;
@@ -951,4 +971,4 @@ footer .footer-wrapper ul img {
   transform-origin: bottom center;
   transition: 0.2s;
   border-radius: 10px;
-}
+}/*# sourceMappingURL=style.css.map */

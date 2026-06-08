@@ -1,81 +1,258 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <meta name="description" content="A basic webpage containing information about DAKU - a well-known, intelligent and highly respected person.">
-      <title>You are very lucky! 🍀</title>
-      <link rel="stylesheet" href="style/lol.css">
-      <link rel="icon" type="image/vnd.microsoft.icon" href="lol.ico">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-      <script src="https://kit.fontawesome.com/b4b7a26c21.js" crossorigin="anonymous"></script>
-   </head>
-   <body>
-       <audio loop id="audio">
-            <source src="./files/king.mp3" type="audio/mp3">
-        </audio>
-        <script>
-            document.getElementById("audio").volume = 0.01;
-            var promise = document.getElementById("audio").play();
-        </script>
-       <img src="./files/lol-logo.png" alt="League of Legends" id="lol-logo"/>
-        <div class="reasons section">
-            <span class="question">Why should you be happy to play with me?</span>
-            <ul>
-                <li>You have a very well-known, intelligent, and highly respected person in your team! 👨‍⚖️</li>
-                <li>I'm a very skilled Mordekaiser player (also smurfing on other champs) 💯</li>
-                <li>I will never surrender 💪</li>
-                <li>I will always try my very best 😍</li>
-                <li>I usually win my lane (unless I get turbo camped) 😎</li>
-                <li>I have <u><b>400.000+ followers</b></u> on Twitter 🐦</li>
-            </ul>
-        </div>
-        <div class="guide section">
-            <span class="question">What you need to do, to make this the best experience:</span>
-            <ul>
-                <li>✅ Give me your role if I ask for it ✅</li>
-                <li>❌ Don't ban Mordekaiser! ❌</li>
-                <li>✅ Dodge if my champ is banned or picked ✅</li>
-                <li>❌ Don't flame or ping me ❌</li> 
-                <li>✅ Roam top a lot and play weakside bot ✅</li>
-                <li>❌ Don't feed intentionally ❌</li>
-                <li>✅ Gift me a skin if I carried UwU ✅</li>
-                <li>✅ Cheer for me ✅</li>
-                <li>✅ Write an apology via email if you fed ✅</li>
-            </ul>
-        </div>
-        <h1>Enjoy the free win!</h1>
-        <h1 class="b">Did you like having me on your team? You did for sure!</h1>
-        <div class="footer">You want to give me feedback or apologize for feeding? Feel free to <span id="contact">contact me</span></div>
-        <img src="./files/catjam.gif" alt="catJam" id="catjam"/>
-        <div id="audiobutton" title="ActiveUseroni feat. Pa$$ - King"><i class="fas fa-volume-mute"></i></div>
-         <script>
-            promise.then(() => {
-                audioplaying = true;
-                document.getElementById("audiobutton").innerHTML = '<i class="fas fa-volume-up"></i>';
-                document.getElementById("catjam").style.setProperty("display", "block");
-            }, null);
-            var audioplaying = false;
-            $("#contact").click(() => {
-                var user="daku.im";
-                var service="mail";
-                var tld="de";
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description"
+        content="A basic webpage containing information about DAKU - a well-known, intelligent and highly respected person.">
+    <title>You are very lucky! 🍀</title>
+    <link rel="stylesheet" href="style/lol.css">
+    <link rel="icon" type="image/vnd.microsoft.icon" href="lol.ico">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://kit.fontawesome.com/b4b7a26c21.js" crossorigin="anonymous"></script>
+</head>
+
+<body id="main-body">
+    <div id="lang-toggle" style="position: absolute; top: 20px; right: 20px; z-index: 100;">
+        <button id="lang-btn"
+            style="background-color: black; border: 2px solid white; color: white; padding: 8px 16px; cursor: pointer; font-family: 'Fira Mono', Monospace; font-size: 14px;">한국어</button>
+    </div>
+    <audio loop id="audio">
+        <source src="./files/king.mp3" type="audio/mp3">
+    </audio>
+    <script>
+        const translations = {
+            en: {
+                langBtn: '한국어',
+                why: 'Why should you be happy to play with me?',
+                reason1: 'You have a very well-known, intelligent, and highly respected person in your team! 👨‍⚖️',
+                reason2: 'I\'m a very skilled Mordekaiser player (also smurfing on other champs) 💯',
+                reason3: 'I will never surrender 💪',
+                reason4: 'I will always try my very best 😍',
+                reason5: 'I usually win my lane (unless I get turbo camped) 😎',
+                reason6: 'I have 600.000+ followers on Twitter 🐦',
+                what: 'What you need to do, to make this the best experience:',
+                guide1: 'Give me your role if I ask for it ✅',
+                guide2: 'Don\'t ban Mordekaiser! ❌',
+                guide3: 'Dodge if my champ is banned or picked ✅',
+                guide4: 'Don\'t flame or ping me ❌',
+                guide5: 'Roam top a lot and play weakside bot ✅',
+                guide6: 'Don\'t feed intentionally ❌',
+                guide7: 'Gift me a skin if I carried UwU ✅',
+                guide8: 'Cheer for me ✅',
+                guide9: 'Write an apology via email if you fed ✅',
+                enjoy: 'Enjoy the free win!',
+                liked: 'Did you like having me on your team? You did for sure!',
+                feedback: 'You want to give me feedback or apologize for feeding? Feel free to',
+                enjoyed: 'Enjoyed playing with me!',
+                players: 'players',
+                alreadyWorshiped: 'You can only bow down once per visit. Go queue up!'
+            },
+            ko: {
+                langBtn: 'ENGLISH',
+                why: '나와 함께 플레이할 수 있어서 행복해야 하는 이유는?',
+                reason1: '당신의 팀에 잘 알려진, 똑똑하고 존경받는 사람이 있습니다! 👨‍⚖️',
+                reason2: '저는 매우 숙련된 모데카이저 플레이어입니다 (다른 챔프도 스머핑 중) 💯',
+                reason3: '저는 절대 항복하지 않습니다 💪',
+                reason4: '저는 항상 최선을 다할 것입니다 😍',
+                reason5: '보통 라인전에서 이기곤 합니다 (엄청 진에당하지 않는 한) 😎',
+                reason6: '트위터에 팔로워 60만 명 이상입니다 🐦',
+                what: '최고의 경험을 하기 위해 당신이 해야 할 일:',
+                guide1: '내가 요청하면 당신의 역할을 알려주세요 ✅',
+                guide2: '모데카이저를 밴하지 마세요! ❌',
+                guide3: '내 챔프가 밴되거나 선택되면 게임을 피하세요 ✅',
+                guide4: '나를 욕하거나 핑하지 마세요 ❌',
+                guide5: '탑 로밍을 많이 하고 봇 위크사이드를 플레이하세요 ✅',
+                guide6: '의도적으로 피드하지 마세요 ❌',
+                guide7: '내가 캐리했으면 스킨을 선물해주세요 UwU ✅',
+                guide8: '나를 응원해주세요 ✅',
+                guide9: '피드했으면 이메일로 사과해주세요 ✅',
+                enjoy: '무료 승리를 즐기세요!',
+                liked: '나와 같은 팀에서 플레이해서 좋았나요? 물론이죠!',
+                feedback: '피드백을 주고 싶거나 피드에 대해 사과하고 싶으신가요? 편하게 연락주세요',
+                enjoyed: '나와 함께 플레이해줘서 감사합니다!',
+                players: '명',
+                alreadyWorshiped: '이미 한 번 경배했습니다. 다시 하려면 나가세요!'
+            }
+        };
+
+        let currentLang = 'en';
+        let counterValue = 0;
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+
+            document.getElementById('lang-btn').textContent = t.langBtn;
+            document.querySelector('.reasons .question').textContent = t.why;
+            document.querySelectorAll('.reasons li')[0].textContent = t.reason1;
+            document.querySelectorAll('.reasons li')[1].textContent = t.reason2;
+            document.querySelectorAll('.reasons li')[2].textContent = t.reason3;
+            document.querySelectorAll('.reasons li')[3].textContent = t.reason4;
+            document.querySelectorAll('.reasons li')[4].textContent = t.reason5;
+            document.querySelectorAll('.reasons li')[5].textContent = t.reason6;
+
+            document.querySelector('.guide .question').textContent = t.what;
+            document.querySelectorAll('.guide li')[0].textContent = t.guide1;
+            document.querySelectorAll('.guide li')[1].textContent = t.guide2;
+            document.querySelectorAll('.guide li')[2].textContent = t.guide3;
+            document.querySelectorAll('.guide li')[3].textContent = t.guide4;
+            document.querySelectorAll('.guide li')[4].textContent = t.guide5;
+            document.querySelectorAll('.guide li')[5].textContent = t.guide6;
+            document.querySelectorAll('.guide li')[6].textContent = t.guide7;
+            document.querySelectorAll('.guide li')[7].textContent = t.guide8;
+            document.querySelectorAll('.guide li')[8].textContent = t.guide9;
+
+            document.querySelectorAll('h1')[0].textContent = t.enjoy;
+            document.querySelectorAll('h1')[1].textContent = t.liked;
+
+            const footer = document.querySelector('.footer');
+            footer.innerHTML = t.feedback + ' <span id="contact" style="color: rgb(41, 163, 204); font-weight: bold; cursor: pointer;">contact me</span>';
+            document.getElementById('contact').addEventListener('click', () => {
+                var user = "daku.im";
+                var service = "mail";
+                var tld = "de";
                 window.location.href = service + "to:" + user + "@" + service + "." + tld;
             });
-            $("#audiobutton").click(() => {
-                if (!audioplaying) {
-                    document.getElementById("audio").play();
-                    document.getElementById("audio").volume = 0.1;
-                    document.getElementById("audiobutton").innerHTML = '<i class="fas fa-volume-up"></i>';
-                    document.getElementById("catjam").style.setProperty("display", "block");
-                    audioplaying = true;
-                } else {
-                    audioplaying = false;
-                    document.getElementById("audio").volume = 0;
-                    document.getElementById("audiobutton").innerHTML = '<i class="fas fa-volume-mute">';
-                    document.getElementById("catjam").style.setProperty("display", "none");
-                }
-            });
-      </script>
-   </body>
+
+            document.querySelector('.counter-section > div > div > div:last-child').textContent = t.enjoyed;
+
+            if (counterValue > 0) {
+                $("#worship-count").text(counterValue + " " + t.players);
+            }
+        }
+
+        document.getElementById('lang-btn').addEventListener('click', () => {
+            const newLang = currentLang === 'en' ? 'ko' : 'en';
+            updateLanguage(newLang);
+
+            if (newLang === 'ko') {
+                document.getElementById('main-body').classList.add('korean-mode');
+            } else {
+                document.getElementById('main-body').classList.remove('korean-mode');
+            }
+        });
+    </script>
+    <script>
+        document.getElementById("audio").volume = 0.01;
+        var promise = document.getElementById("audio").play();
+    </script>
+    <div class="reasons section">
+        <img src="./files/lol-logo.png" alt="League of Legends" id="lol-logo" />
+        <span class="question">Why should you be happy to play with me?</span>
+        <ul>
+            <li>You have a very well-known, intelligent, and highly respected person in your team! 👨‍⚖️</li>
+            <li>I'm a very skilled Mordekaiser player (also smurfing on other champs) 💯</li>
+            <li>I will never surrender 💪</li>
+            <li>I will always try my very best 😍</li>
+            <li>I usually win my lane (unless I get turbo camped) 😎</li>
+            <li>I have <u><b>600.000+ followers</b></u> on Twitter 🐦</li>
+        </ul>
+    </div>
+    <div class="guide section">
+        <span class="question">What you need to do, to make this the best experience:</span>
+        <ul>
+            <li>✅ Give me your role if I ask for it ✅</li>
+            <li>❌ Don't ban Mordekaiser! ❌</li>
+            <li>✅ Dodge if my champ is banned or picked ✅</li>
+            <li>❌ Don't flame or ping me ❌</li>
+            <li>✅ Roam top a lot and play weakside bot ✅</li>
+            <li>❌ Don't feed intentionally ❌</li>
+            <li>✅ Gift me a skin if I carried UwU ✅</li>
+            <li>✅ Cheer for me ✅</li>
+            <li>✅ Write an apology via email if you fed ✅</li>
+        </ul>
+    </div>
+    <h1>Enjoy the free win!</h1>
+    <h1 class="b">Did you like having me on your team? You did for sure!</h1>
+    <div class="footer">You want to give me feedback or apologize for feeding? Feel free to <span id="contact">contact
+            me</span></div>
+    <img src="./files/catjam.gif" alt="catJam" id="catjam" />
+    <div id="audiobutton" title="ActiveUseroni feat. Pa$$ - King"><i class="fas fa-volume-mute"></i></div>
+
+
+
+    <div class="counter-section" style="text-align: center; margin-top: 40px;">
+        <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 20px;">
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <div id="worship-count">...</div>
+                <div>Enjoyed playing with me!</div>
+            </div>
+            <button id="worship-btn">+1</button>
+        </div>
+
+    </div>
+    <script>
+        const counterNamespace = "daku-the-morde-god";
+        const counterKey = "worship-clicks";
+
+        const readUrl = `https://abacus.jasoncameron.dev/get/${counterNamespace}/${counterKey}`;
+        const hitUrl = `https://abacus.jasoncameron.dev/hit/${counterNamespace}/${counterKey}`;
+
+        $.ajax({
+            url: readUrl,
+            type: 'GET',
+            success: function (response) {
+                counterValue = response.value;
+                const t = translations[currentLang];
+                $("#worship-count").text(counterValue + " " + t.players || 0);
+            },
+            error: function () {
+                $("#worship-count").text("Countless");
+            }
+        });
+
+        $("#worship-btn").click(() => {
+            if (!sessionStorage.getItem('hasWorshiped')) {
+
+                $.ajax({
+                    url: hitUrl,
+                    type: 'GET',
+                    success: function (response) {
+                        counterValue = response.value;
+                        const t = translations[currentLang];
+                        $("#worship-count").text(counterValue + " " + t.players);
+
+                        sessionStorage.setItem('hasWorshiped', 'true');
+
+                        $("#worship-btn").prop('disabled', true);
+                    }
+                });
+            } else {
+                const t = translations[currentLang];
+                alert(t.alreadyWorshiped);
+            }
+        });
+
+
+        promise.then(() => {
+            audioplaying = true;
+            document.getElementById("audiobutton").innerHTML = '<i class="fas fa-volume-up"></i>';
+            document.getElementById("catjam").style.setProperty("display", "block");
+        }, null);
+        var audioplaying = false;
+        $("#contact").click(() => {
+            var user = "daku.im";
+            var service = "mail";
+            var tld = "de";
+            window.location.href = service + "to:" + user + "@" + service + "." + tld;
+        });
+        $("#audiobutton").click(() => {
+            if (!audioplaying) {
+                document.getElementById("audio").play();
+                document.getElementById("audio").volume = 0.1;
+                document.getElementById("audiobutton").innerHTML = '<i class="fas fa-volume-up"></i>';
+                document.getElementById("catjam").style.setProperty("display", "block");
+                audioplaying = true;
+            } else {
+                audioplaying = false;
+                document.getElementById("audio").volume = 0;
+                document.getElementById("audiobutton").innerHTML = '<i class="fas fa-volume-mute">';
+                document.getElementById("catjam").style.setProperty("display", "none");
+            }
+        });
+    </script>
+</body>
+
 </html>

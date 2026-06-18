@@ -19,6 +19,7 @@
    <script type="text/javascript" src="terminal.js"></script>
    <script type="text/javascript" src="calculator.js"></script>
    <script type="text/javascript" src="mail.js"></script>
+   <script type="text/javascript" src="tools.js"></script>
 
    <meta name="twitter:card" content="summary_large_image">
    <meta name="twitter:title" content="daku.cmd">
@@ -40,7 +41,7 @@
          <li class="apple">
             <i class="fa fa-apple"></i>
             <ul>
-               <li><a href="#">About this Mac</a></li>
+               <li><a href="https://github.com/daku-de/daku-mac-homepage" target="_blank">About this Mac</a></li>
                <hr>
                <li><a href="#">System Preferences... <i class="fas fa-caret-right"></i></a></li>
                <li><a href="#">App Store...</a></li>
@@ -62,13 +63,17 @@
 
             </ul>
          </li>
-         <li>Edit
-            <ul>
-
-            </ul>
-         </li>
          <li>View
             <ul>
+               <li><a href="#" id="menu-fullscreen">Enter Full Screen</a></li>
+               <hr>
+               <li><a>Windows <i class="fas fa-caret-right"></i></a>
+                  <ul>
+                     <li><a href="#" class="open-terminal">Terminal</a></li>
+                     <li><a href="#" class="open-calculator">Calculator</a></li>
+                     <li><a href="#" class="open-mail">Mail</a></li>
+                  </ul>
+               </li>
                <li><a href="#">Change wallpaper <i class="fas fa-caret-right"></i></a></li>
                <li><a href="#">Change style <i class="fas fa-caret-right"></i></a></li>
                <hr>
@@ -77,7 +82,10 @@
          </li>
          <li>Go
             <ul>
-
+               <li><a href="https://github.com/daku-de" target="_blank">GitHub</a></li>
+               <li><a href="https://www.linkedin.com/in/daniel-kurtz-1a8544197/" target="_blank">LinkedIn</a></li>
+               <hr>
+               <li><a href="https://www.instagram.com/dakumentary" target="_blank">Instagram</a></li>
             </ul>
          </li>
          <li>Projects
@@ -85,7 +93,7 @@
                <li class="unusable"><a href="#">Add new project...</a></li>
                <li class="unusable"><a href="#">Remove a project...</a></li>
                <hr>
-               <li><a href="#">MakeItAQuote <i class="fas fa-caret-right"></i></a>
+               <li><a>MakeItAQuote <i class="fas fa-caret-right"></i></a>
                   <ul>
                      <li><a href="https://makeitaquote.com/twitter">Twitter</a></li>
                      <li><a href="https://makeitaquote.com">Website</a></li>
@@ -106,38 +114,30 @@
                      <li><a href="#">Filesystem <i class="fas fa-caret-right"></i></a></li>
                   </ul>
                </li>
-               <li><a href="#">Windows <i class="fas fa-caret-right"></i></a></li>
-               <hr>
-               <li><a href="#">Sleep</a></li>
-               <li><a href="#">Restart...</a></li>
-               <li><a href="#">Shut Down...</a></li>
-               <hr>
-               <li><a href="#">Log Out...</a></li>
             </ul>
          </li>
       </ul>
 
       <ul class="right nav-wrap">
          <li>
-            <a href="#" target="_blank" tabindex="-1"><i class="fab fa-twitter"></i></a>
-         </li>
-         <li>
-            <a href="https://www.linkedin.com/" target="_blank" tabindex="-1"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.linkedin.com/in/daniel-kurtz-1a8544197/" target="_blank" tabindex="-1"><i
+                  class="fab fa-linkedin"></i></a>
          </li>
          <li class="wlan">
             <i class="fas fa-wifi"></i>
             <ul>
                <li><a href="#">Turn Wi-Fi Off</a></li>
                <hr>
-               <li><a href="#">ARPANet<i class="fas fa-wifi"></i><i class="fas fa-unlock"></i></a></li>
-               <li><a href="#">Panic at the Cisco<i class="fas fa-wifi"></i><i class="fas fa-lock"></i></a></li>
-               <li><a href="#">Get off my LAN<i class="fas fa-wifi"></i><i class="fas fa-lock"></i></a></li>
+               <li><a href="#">eduroam<i class="fas fa-wifi"></i><i class="fas fa-unlock"></i></a></li>
+               <li><a href="#">FRITZ!Box 0301<i class="fas fa-wifi"></i><i class="fas fa-lock"></i></a></li>
+               <li><a href="#">NETGEAR-5G<i class="fas fa-wifi"></i><i class="fas fa-lock"></i></a></li>
                <hr>
                <li><a href="#">Join Other Network...</a></li>
                <li><a href="#">Create Network...</a></li>
                <li><a href="#">Open Network Preferences...</a></li>
             </ul>
          </li>
+         <li><i class="fas fa-volume-up"></i></li>
          <li>
             <i class="fas fa-battery-full"></i>
          </li>
@@ -264,13 +264,14 @@
    <div class="footer-wrapper">
       <ul>
          <div class="footer-bar"></div>
-         <li><a href="https://github.com/daku-de" tabindex="-1"><img src="files/github-logo.png"></a><span>GitHub</span>
+         <li><a href="https://github.com/daku-de" target="_blank" tabindex="-1"><img
+                  src="files/github-logo.png"></a><span>GitHub</span>
          </li>
-         <li><a href="https://www.instagram.com/dakumentary" tabindex="-1"><img
-                  src="files/insta-logo.png"></a><span>Instagram</span></li>
-         <li><a href="https://www.linkedin.com/in/daniel-kurtz-1a8544197/" tabindex="-1"><img
+         <li><a href="https://www.linkedin.com/in/daniel-kurtz-1a8544197/" target="_blank" tabindex="-1"><img
                   src="files/linkedin-logo.png"></a><span>LinkedIn</span></li>
-         <li><a href="http://twitter.com/makeitaquote" tabindex="-1"><img
+         <li><a href="https://www.instagram.com/dakumentary" target="_blank" tabindex="-1"><img
+                  src="files/insta-logo.png"></a><span>Instagram</span></li>
+         <li><a href="http://twitter.com/makeitaquote" target="_blank" tabindex="-1"><img
                   src="files/makeitaquote.png"></a><span>MakeItAQuote</span></li>
          <li class="open-calculator" tabindex="-1"><img src="files/calc-logo.png"><span>Calculator</span></li>
          <li class="open-mail" tabindex="-1"><img src="files/mail-logo.png"><span>Send Mail</span></li>

@@ -58,6 +58,66 @@ function playVideo(yt_id, windowtitle) {
     });
 }
 
+var backgrounds = [
+    //format [bg-url, bg-name, bg-night-url]
+    [
+        "https://i.imgur.com/eEZ2YgX.jpg",
+        "Mojave",
+        "https://i.imgur.com/9G8q5cM.jpg",
+    ],
+    [
+        "https://i.imgur.com/U95zyMS.jpg",
+        "Catalina",
+        "https://i.imgur.com/47xbeoM.jpg",
+    ],
+    ["https://i.imgur.com/VCmkUHl.jpg", "Mars"],
+    ["https://picsum.photos/1920/1080?t=0", "Random"],
+];
+
+function showBackgrounds() {
+    var stream = $(".stream");
+    $(".backgrounds").remove();
+    $(".backgroundinfo").remove();
+    backgrounds[backgrounds.length - 1][0] += "0";
+    stream.append(
+        '<div class="line backgroundinfo">' +
+            '<p class="information">Click an image to change your background.</p>' +
+            "</div>",
+    );
+    stream.append('<div class="backgrounds">');
+    for (var i = 0; i < backgrounds.length; i++) {
+        let cycle = "";
+        if (backgrounds[i].length == 3) cycle = " (Dynamic)";
+        $(".backgrounds").append(
+            '<div class="bg-wrapper" id="bg-' +
+                i +
+                '"><img src="' +
+                backgrounds[i][0] +
+                '"><span>' +
+                backgrounds[i][1] +
+                cycle +
+                "</span></div>",
+        );
+        $("#bg-" + i).on("click", i, function (e) {
+            var i = e.data;
+            setBackground(i);
+        });
+    }
+}
+
+function setBackground(i) {
+    var root = document.documentElement;
+    var url = "url(" + backgrounds[i][0] + ")";
+    root.style.setProperty("--background-image", url);
+    if (backgrounds[i].length == 3) {
+        var night_url = "url(" + backgrounds[i][2] + ")";
+        root.style.setProperty("--background-night-image", night_url);
+    } else {
+        root.style.setProperty("--background-night-image", "url()");
+    }
+    setCookie("background", i);
+}
+
 $(document).ready(function (e) {
     var stream = $(".stream");
     var inputbox = $("#terminalinput");
@@ -67,23 +127,6 @@ $(document).ready(function (e) {
     let radio = document.getElementById("radio");
     radio.volume = 0.03;
 
-    var backgrounds = [
-        //format [bg-url, bg-name, bg-night-url]
-        [
-            "https://i.imgur.com/eEZ2YgX.jpg",
-            "Mojave",
-            "https://i.imgur.com/9G8q5cM.jpg",
-        ],
-        ["https://i.imgur.com/ZMGL5nP.jpg", "Abstract"],
-        ["https://i.imgur.com/psAgyeh.jpg", "Mountain"],
-        [
-            "https://i.imgur.com/U95zyMS.jpg",
-            "Catalina",
-            "https://i.imgur.com/47xbeoM.jpg",
-        ],
-        ["https://i.imgur.com/VCmkUHl.jpg", "Mars"],
-        ["https://picsum.photos/1920/1080?t=0", "Random"],
-    ];
     var previouscommands = [];
     var currentcommand = 0;
 
@@ -182,48 +225,6 @@ $(document).ready(function (e) {
         }
     }
 
-    function setBackground(i) {
-        var url = "url(" + backgrounds[i][0] + ")";
-        root.style.setProperty("--background-image", url);
-        if (backgrounds[i].length == 3) {
-            var night_url = "url(" + backgrounds[i][2] + ")";
-            root.style.setProperty("--background-night-image", night_url);
-        } else {
-            root.style.setProperty("--background-night-image", "url()");
-        }
-        setCookie("background", i);
-    }
-
-    function showBackgrounds() {
-        $(".backgrounds").remove();
-        $(".backgroundinfo").remove();
-        backgrounds[backgrounds.length - 1][0] += "0";
-        stream.append(
-            '<div class="line backgroundinfo">' +
-                '<p class="information">Click an image to change your background.</p>' +
-                "</div>",
-        );
-        stream.append('<div class="backgrounds">');
-        for (var i = 0; i < backgrounds.length; i++) {
-            let cycle = "";
-            if (backgrounds[i].length == 3) cycle = " (Dynamic)";
-            $(".backgrounds").append(
-                '<div class="bg-wrapper" id="bg-' +
-                    i +
-                    '"><img src="' +
-                    backgrounds[i][0] +
-                    '"><span>' +
-                    backgrounds[i][1] +
-                    cycle +
-                    "</span></div>",
-            );
-            $("#bg-" + i).on("click", i, function (e) {
-                var i = e.data;
-                setBackground(i);
-            });
-        }
-    }
-
     function setStyle(style) {
         if (Object.keys(terminalstyles).indexOf(style) <= -1) {
             printLine("Style '" + style + "' not known");
@@ -309,32 +310,6 @@ $(document).ready(function (e) {
     };
     init();
 
-    function getCookie(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(";");
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == " ") {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                let val = c.substring(name.length, c.length);
-                console.log("Cookie read. " + name + "=" + val);
-                return val;
-            }
-        }
-        return "";
-    }
-
-    function setCookie(key, value) {
-        var exp_date = new Date();
-        exp_date.setTime(exp_date.getTime() + 10 * 365 * 24 * 60 * 1000);
-        document.cookie =
-            key + "=" + value + ";expires=" + exp_date.toUTCString();
-        console.log("Cookie set. " + key + "=" + value);
-    }
-
     function initWindows() {
         $(function () {
             $(".window").draggable({
@@ -349,4 +324,27 @@ $(document).ready(function (e) {
             windowOnTop($(this)[0]);
         });
     }
+
+    const fullscreenBtn = document.getElementById("menu-fullscreen");
+
+    fullscreenBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch((err) => {
+                console.warn("Fullscreen request failed:", err);
+            });
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    });
+
+    document.addEventListener("fullscreenchange", () => {
+        if (document.fullscreenElement) {
+            fullscreenBtn.innerHTML = "Exit Full Screen";
+        } else {
+            fullscreenBtn.innerHTML = "Enter Full Screen";
+        }
+    });
 });

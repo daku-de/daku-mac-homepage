@@ -7,6 +7,14 @@ class Terminal {
         this.currentCommandIndex = 0;
         this.readFacts = [];
         this.radioPlaying = false;
+        this.stations = {
+            iloveradio: "https://streams.ilovemusic.de/iloveradio1.mp3",
+            lofi: "https://streams.fluxfm.de/Chillhop/mp3-320/streams.fluxfm.de/",
+            pop: "https://listen.181fm.com/181-power_128k.mp3",
+            synth: "https://radio.plaza.one/mp3",
+        };
+        this.currentStation = "lofi";
+
         this.radio = document.getElementById("radio");
         if (this.radio) this.radio.volume = 0.03;
 
@@ -33,7 +41,11 @@ class Terminal {
                 ["echo", "Display given input", ""],
                 ["calc", "Opens the calculator", ""],
                 ["mail", "Opens the contact form", ""],
-                ["radio", "Listen to ILoveRadio.de", "<volume|pause>"],
+                [
+                    "radio",
+                    "Listen to a radio channel",
+                    "<station|volume|pause>",
+                ],
                 ["fact", "Displays a random fact", ""],
             ],
             layout: [
@@ -655,40 +667,52 @@ class Terminal {
 
         if (args.length > 1) {
             return this.printLine(
-                `Usage: radio &lt;volume&gt;. The value has to be between 0 and 100. Current volume is ${this.radio.volume * 1000}.`,
+                `Usage: radio &lt;station|volume|pause&gt;. Valid stations: ${Object.keys(this.stations).join(", ")}. Current volume: ${this.radio.volume * 1000}.`,
             );
         }
 
         if (args.length === 1) {
-            if (args[0] === "pause") {
+            let arg = args[0].toLowerCase();
+
+            if (arg === "pause") {
                 this.radio.pause();
                 this.radioPlaying = false;
+                this.printLine("Radio paused.");
                 return;
             }
-            let v = args[0];
-            if (!/^\d+$/.test(v) || v > 100 || v < 0) {
-                return this.printLine(
-                    `Usage: radio &lt;volume&gt;. The value has to be between 0 and 100. Current volume is ${this.radio.volume * 1000}.`,
-                );
+
+            if (/^\d+$/.test(arg)) {
+                let v = parseInt(arg, 10);
+                if (v > 100 || v < 0) {
+                    return this.printLine(
+                        `Volume must be between 0 and 100. Current volume is ${this.radio.volume * 1000}.`,
+                    );
+                }
+                this.radio.volume = v / 1000;
+                this.printLine(`Changed the volume to ${v}.`);
+
+                if (!this.radioPlaying) {
+                    this.radio.play();
+                    this.radioPlaying = true;
+                    this.printLine(`Resumed playing ${this.currentStation}.`);
+                }
+                return;
             }
 
-            this.radio.volume = v / 1000;
-            this.radio.play();
-
-            if (!this.radioPlaying) {
+            if (this.stations[arg]) {
+                this.currentStation = arg;
+                this.radio.src = this.stations[arg];
+                this.radio.play();
+                this.radioPlaying = true;
                 this.printLine(
-                    "Now listening to [^https://www.ilovemusic.de/](ILoveRadio.de). To pause the radio use 'radio pause' or just 'radio'.",
+                    `Switched station to <b>${arg}</b>. Now playing!`,
                 );
-                this.printLine(
-                    `To change the volume use 'radio &lt;volume&gt;'. The value has to be between 0 and 100. Current volume is ${this.radio.volume * 1000}.`,
-                );
-            } else {
-                this.printLine(
-                    `Changed the volume to ${this.radio.volume * 1000}.`,
-                );
+                return;
             }
-            this.radioPlaying = true;
-            return;
+
+            return this.printLine(
+                `Unrecognized station or command. Valid stations: <b>${Object.keys(this.stations).join(", ")}</b>`,
+            );
         }
 
         if (this.radioPlaying) {
@@ -699,10 +723,10 @@ class Terminal {
             this.radio.play();
             this.radioPlaying = true;
             this.printLine(
-                "Now listening to [^https://www.ilovemusic.de/](ILoveRadio.de). To pause the radio use 'radio pause' or just 'radio'.",
+                `Now listening to <b>${this.currentStation}</b>. To pause use 'radio pause' or just 'radio'.`,
             );
             this.printLine(
-                `To change the volume use 'radio &lt;volume&gt;'. The value has to be between 0 and 100. Current volume is ${this.radio.volume * 1000}.`,
+                `To change the station use 'radio &lt;station&gt;'. Valid stations: ${Object.keys(this.stations).join(", ")}.`,
             );
         }
     }

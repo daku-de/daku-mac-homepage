@@ -79,24 +79,35 @@ class Calculator {
 document.addEventListener("DOMContentLoaded", () => {
     const myCalculator = new Calculator();
 
-    $("#calc .window-content").height("auto");
+    const calcWindow = document.querySelector("#calc .window");
 
-    $("#calc .window").click(() => {
-        return false;
+    document.querySelector("#calc .window-content").style.height = "auto";
+
+    calcWindow.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
     });
 
-    $(".open-calculator").click(() => {
-        var calcZ = $("#calc .window").css("z-index");
-        if (calcZ == String(openedwindows.length) && calcZ != "0") {
-            $(".close-calculator").click();
-        } else {
-            windowOnTop($("#calc .window")[0]);
-        }
+    document.querySelectorAll(".open-calculator").forEach((button) => {
+        button.addEventListener("click", () => {
+            let calcZ = calcWindow.style.zIndex;
+
+            if (!calcZ) {
+                calcZ = window.getComputedStyle(calcWindow).zIndex;
+            }
+
+            if (calcZ == String(openedwindows.length) && calcZ != "0") {
+                document.querySelector(".close-calculator").click();
+            } else {
+                windowOnTop(calcWindow);
+            }
+        });
     });
 
-    $(".close-calculator").click(() => {
-        closeWindow($("#calc .window")[0]);
-
-        myCalculator.clearAll();
+    document.querySelectorAll(".close-calculator").forEach((button) => {
+        button.addEventListener("click", () => {
+            closeWindow(calcWindow);
+            myCalculator.clearAll();
+        });
     });
 });

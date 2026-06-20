@@ -70,6 +70,15 @@ class Terminal {
             "The first hard disk drive, the IBM Model 350, stored 3.75 MB of data",
         ];
 
+        this.terminalstyles = {
+            //Custom Terminal Styles ([TerminalBackground, TerminalText, InputlineBackground, Logo, Important])
+            default: ["#313F46", "#ffffff", "#23292C", "#60AA67", "#B9585D"],
+            hackerman: ["#000000", "#0ed400", "#000000", "#ff0fff", "#E3A786"],
+            white: ["#ffffff", "#000000", "#ffffff", "#ff8205", "#c40000"],
+            pink: ["#ffcbe4", "#df0069", "#ffa4cf", "#6a0067", "#3f3fff"],
+            twitter: ["#162D40", "#FFFFFF", "#15202B", "#1A91DA", "#B9585D"],
+        };
+
         this.commands = {
             help: (args) => this.help(args[0]),
             commands: () => this.help("commands"),
@@ -101,12 +110,20 @@ class Terminal {
             background: () => showBackgrounds(),
             socials: () => this.printSocials(),
             style: (args) => {
-                if (args.length === 1 && setStyle(args[0].toLowerCase())) {
-                    this.printLine(
-                        `Successfully changed style to: '<b>${args[0]}</b>'`,
-                    );
+                if (args.length === 1 && this.setStyle(args[0].toLowerCase())) {
+                    if (this.setStyle(args[0].toLowerCase()))
+                        this.printLine(
+                            "Successfully changed style to: " +
+                                "'<b>" +
+                                args[0].toLowerCase() +
+                                "</b>'",
+                        );
                 } else {
                     this.printLine("Usage: style &lt;style&gt;");
+                    this.printLine("Available styles:");
+                    Object.keys(this.terminalstyles).forEach((style) => {
+                        this.printLine(style);
+                    });
                 }
             },
             pwd: () => this.printLine(dir.getDirectory()),
@@ -140,17 +157,19 @@ class Terminal {
                 closeWindow(document.getElementById("terminal"));
             });
 
-        document
-            .querySelector(".open-terminal")
-            ?.addEventListener("click", () => {
-                var zindex = document.getElementById("terminal").style.zIndex;
+        document.querySelectorAll(".open-terminal").forEach((button) => {
+            button.addEventListener("click", () => {
+                var terminal = document.getElementById("terminal");
+                var zindex = terminal.style.zIndex;
+
                 if (zindex != String(openedwindows.length) || zindex == "0") {
-                    windowOnTop(document.getElementById("terminal"));
+                    windowOnTop(terminal);
                     this.inputbox.focus();
                 } else {
                     document.querySelector(".close-terminal").click();
                 }
             });
+        });
 
         let mousedownTime;
         document
@@ -381,6 +400,34 @@ class Terminal {
         this.printLine("A! - YouTube: ");
         this.printLine("A! - Twitch:  ");
         this.printLine();
+    }
+
+    setStyle(style) {
+        if (Object.keys(this.terminalstyles).indexOf(style) <= -1) {
+            printLine("Style '" + style + "' not known");
+            return false;
+        }
+        var root = document.documentElement;
+
+        setCookie("style", style);
+        root.style.setProperty(
+            "--terminal-background",
+            this.terminalstyles[style][0],
+        );
+        root.style.setProperty(
+            "--terminal-text",
+            this.terminalstyles[style][1],
+        );
+        root.style.setProperty(
+            "--terminal-inputline",
+            this.terminalstyles[style][2],
+        );
+        root.style.setProperty("--color-logo", this.terminalstyles[style][3]);
+        root.style.setProperty(
+            "--color-important",
+            this.terminalstyles[style][4],
+        );
+        return true;
     }
 
     help(topic) {
@@ -934,10 +981,116 @@ class Terminal {
     }
 }
 
+function populateStyleMenu() {
+    const styleList = document.getElementById("style-list");
+
+    if (!styleList) return;
+    styleList.innerHTML = "";
+
+    const styles = Object.keys(window.terminal.terminalstyles);
+
+    for (let i = 0; i < styles.length; i++) {
+        let styleName = styles[i];
+
+        let li = document.createElement("li");
+        let a = document.createElement("a");
+        a.style.cursor = "Pointer";
+
+        a.innerText = styleName.charAt(0).toUpperCase() + styleName.slice(1);
+
+        a.addEventListener("click", function (e) {
+            e.preventDefault();
+            window.terminal.setStyle(styleName);
+        });
+
+        li.appendChild(a);
+        styleList.appendChild(li);
+    }
+}
+
+function populateCommandsMenu() {
+    const commandsList = document.getElementById("commands-list");
+    if (!commandsList) return;
+
+    commandsList.innerHTML = "";
+
+    const topics = Object.keys(window.terminal.commandHelpData);
+
+    for (let i = 0; i < topics.length; i++) {
+        let topicName = topics[i];
+
+        let li = document.createElement("li");
+        let a = document.createElement("a");
+        a.innerHTML =
+            topicName.charAt(0).toUpperCase() +
+            topicName.slice(1) +
+            ' <i class="fas fa-caret-right"></i>';
+        li.appendChild(a);
+
+        let subUl = document.createElement("ul");
+
+        let helpLi = document.createElement("li");
+        let helpA = document.createElement("a");
+        helpA.style.cursor = "Pointer";
+        helpA.innerText =
+            "Help: " + topicName.charAt(0).toUpperCase() + topicName.slice(1);
+        helpA.addEventListener("click", function (e) {
+            e.preventDefault();
+            runInTerminal("help " + topicName);
+        });
+        helpLi.appendChild(helpA);
+        subUl.appendChild(helpLi);
+
+        subUl.appendChild(document.createElement("hr"));
+
+        let commands = window.terminal.commandHelpData[topicName];
+        for (let j = 0; j < commands.length; j++) {
+            let cmdName = commands[j][0];
+            let cmdLi = document.createElement("li");
+            let cmdA = document.createElement("a");
+            cmdA.style.cursor = "Pointer";
+            cmdA.innerText = cmdName;
+
+            cmdA.addEventListener("click", function (e) {
+                e.preventDefault();
+                runInTerminal(cmdName);
+            });
+
+            cmdLi.appendChild(cmdA);
+            subUl.appendChild(cmdLi);
+        }
+
+        li.appendChild(subUl);
+        commandsList.appendChild(li);
+    }
+}
+
+function runInTerminal(cmd) {
+    const terminalWindow = document.getElementById("terminal");
+
+    if (typeof windowOnTop === "function") {
+        windowOnTop(terminalWindow);
+    }
+
+    window.terminal.printLine(cmd, null, "User");
+
+    window.terminal.executeCommand(cmd);
+
+    document.getElementById("terminalinput").focus();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     window.terminal = new Terminal();
 
     windowOnTop(document.getElementById("terminal"));
 
     document.getElementById("terminalinput").focus();
+
+    populateStyleMenu();
+    populateCommandsMenu();
+
+    let style_cookie = getCookie("style");
+    if (style_cookie != "") {
+        window.terminal.setStyle(style_cookie);
+    }
 });

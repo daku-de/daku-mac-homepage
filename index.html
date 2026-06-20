@@ -65,17 +65,25 @@
          </li>
          <li>View
             <ul>
-               <li><a href="#" id="menu-fullscreen">Enter Full Screen</a></li>
+               <li><a id="menu-fullscreen" style="cursor: pointer;">Enter Full Screen</a></li>
                <hr>
                <li><a>Windows <i class="fas fa-caret-right"></i></a>
                   <ul>
-                     <li><a href="#" class="open-terminal">Terminal</a></li>
-                     <li><a href="#" class="open-calculator">Calculator</a></li>
-                     <li><a href="#" class="open-mail">Mail</a></li>
+                     <li><a class="open-terminal">Terminal</a></li>
+                     <li><a class="open-calculator">Calculator</a></li>
+                     <li><a class="open-mail">Mail</a></li>
                   </ul>
                </li>
-               <li><a href="#">Change wallpaper <i class="fas fa-caret-right"></i></a></li>
-               <li><a href="#">Change style <i class="fas fa-caret-right"></i></a></li>
+               <li id="menu-change-wallpaper">
+                  <a>Change wallpaper <i class="fas fa-caret-right"></i></a>
+                  <ul id="wallpaper-list">
+                  </ul>
+               </li>
+               <li id="menu-change-style">
+                  <a>Change terminal style <i class="fas fa-caret-right"></i></a>
+                  <ul id="style-list">
+                  </ul>
+               </li>
                <hr>
                <li class="unusable"><a href="#">Create a custom style...</a></li>
             </ul>
@@ -103,15 +111,10 @@
          </li>
          <li>Help
             <ul>
-               <li><a href="#">How to use a Unix shell...</a></li>
+               <li class="unusable"><a>How to use a Unix shell...</a></li>
                <hr>
-               <li><a href="#">Available Commands <i class="fas fa-caret-right"></i></a>
-                  <ul>
-                     <li><a href="#">About <i class="fas fa-caret-right"></i></a></li>
-                     <li><a href="#">Shell <i class="fas fa-caret-right"></i></a></li>
-                     <li><a href="#">Features <i class="fas fa-caret-right"></i></a></li>
-                     <li><a href="#">Layout <i class="fas fa-caret-right"></i></a></li>
-                     <li><a href="#">Filesystem <i class="fas fa-caret-right"></i></a></li>
+               <li><a>Available Commands <i class="fas fa-caret-right"></i></a>
+                  <ul id="commands-list">
                   </ul>
                </li>
             </ul>
@@ -132,9 +135,9 @@
                <li><a href="#">FRITZ!Box 0301<i class="fas fa-wifi"></i><i class="fas fa-lock"></i></a></li>
                <li><a href="#">NETGEAR-5G<i class="fas fa-wifi"></i><i class="fas fa-lock"></i></a></li>
                <hr>
-               <li><a href="#">Join Other Network...</a></li>
-               <li><a href="#">Create Network...</a></li>
-               <li><a href="#">Open Network Preferences...</a></li>
+               <li class="unusable"><a>Join Other Network...</a></li>
+               <li class="unusable"><a>Create Network...</a></li>
+               <li class="unusable"><a>Open Network Preferences...</a></li>
             </ul>
          </li>
          <li><i class="fas fa-volume-up"></i></li>

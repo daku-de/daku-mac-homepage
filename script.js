@@ -23,39 +23,51 @@ function playVideo(yt_id, windowtitle) {
         "allowfullscreen></iframe>" +
         "</div>";
     videoElement += "</div>" + "</div>" + "</div>" + "</div>" + "</div>";
-    $(".video").append(videoElement);
-    var videoWidth = $(".video-popup-model .videlement").width();
+
+    const videoContainer = document.querySelector(".video");
+    videoContainer.insertAdjacentHTML("beforeend", videoElement);
+
+    const vidElement = document.querySelector(".video-popup-model .videlement");
+    var videoWidth = vidElement.offsetWidth;
     var videHeight = (9 / 16) * videoWidth;
-    $(".video-popup-model .videlement").height(videHeight);
-    $(".video").find(".video-popup-model").addClass("smooth_show");
+    vidElement.style.height = videHeight + "px";
 
-    $(".video").on("click", ".video-model-close-layer", function (event) {
-        var model = $(this).parents(".video-popup-model");
-        model.removeClass("smooth_show");
-        setTimeout(function () {
-            model.remove();
-        }, 500);
-        $(".video").removeClass("no-reload");
-        inputbox.focus();
-    });
+    const popupModel = videoContainer.querySelector(".video-popup-model");
+    popupModel.classList.add("smooth_show");
 
-    $(".video").on("click", " .popupbuttons", function (event) {
-        $(".video-model-close-layer").click();
-    });
-
-    $(document).on("keydown", function (event) {
-        if (event.which == 27) {
-            $(".video-model-close-layer").click();
+    videoContainer.addEventListener("click", function (event) {
+        if (event.target.closest(".video-model-close-layer")) {
+            var model = event.target.closest(".video-popup-model");
+            model.classList.remove("smooth_show");
+            setTimeout(function () {
+                model.remove();
+            }, 500);
+            videoContainer.classList.remove("no-reload");
+            inputbox.focus();
         }
     });
 
-    $(function () {
+    videoContainer.addEventListener("click", function (event) {
+        if (event.target.closest(".popupbuttons")) {
+            const closeBtn = document.querySelector(".video-model-close-layer");
+            if (closeBtn) closeBtn.click();
+        }
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (event.which == 27 || event.key === "Escape") {
+            const closeBtn = document.querySelector(".video-model-close-layer");
+            if (closeBtn) closeBtn.click();
+        }
+    });
+
+    if (typeof jQuery !== "undefined" && typeof jQuery.ui !== "undefined") {
         $(".draggable").draggable({
             iframeFix: true,
             cursor: "grabbing",
             handle: ".handle",
         });
-    });
+    }
 }
 
 var backgrounds = [
@@ -75,20 +87,30 @@ var backgrounds = [
 ];
 
 function showBackgrounds() {
-    var stream = $(".stream");
-    $(".backgrounds").remove();
-    $(".backgroundinfo").remove();
+    var stream = document.querySelector(".stream");
+
+    document
+        .querySelectorAll(".backgrounds, .backgroundinfo")
+        .forEach((el) => el.remove());
+
     backgrounds[backgrounds.length - 1][0] += "0";
-    stream.append(
+
+    stream.insertAdjacentHTML(
+        "beforeend",
         '<div class="line backgroundinfo">' +
             '<p class="information">Click an image to change your background.</p>' +
             "</div>",
     );
-    stream.append('<div class="backgrounds">');
-    for (var i = 0; i < backgrounds.length; i++) {
+    stream.insertAdjacentHTML("beforeend", '<div class="backgrounds"></div>');
+
+    const backgroundsContainer = document.querySelector(".backgrounds");
+
+    for (let i = 0; i < backgrounds.length; i++) {
         let cycle = "";
         if (backgrounds[i].length == 3) cycle = " (Dynamic)";
-        $(".backgrounds").append(
+
+        backgroundsContainer.insertAdjacentHTML(
+            "beforeend",
             '<div class="bg-wrapper" id="bg-' +
                 i +
                 '"><img src="' +
@@ -98,10 +120,39 @@ function showBackgrounds() {
                 cycle +
                 "</span></div>",
         );
-        $("#bg-" + i).on("click", i, function (e) {
-            var i = e.data;
+
+        document
+            .getElementById("bg-" + i)
+            .addEventListener("click", function () {
+                setBackground(i);
+            });
+    }
+}
+
+function populateWallpaperMenu() {
+    const wallpaperList = document.getElementById("wallpaper-list");
+
+    wallpaperList.innerHTML = "";
+
+    for (let i = 0; i < backgrounds.length; i++) {
+        let bgName = backgrounds[i][1];
+
+        if (backgrounds[i].length === 3) {
+            bgName += " (Dynamic)";
+        }
+
+        let li = document.createElement("li");
+        let a = document.createElement("a");
+        a.innerText = bgName;
+        a.style.cursor = "Pointer";
+
+        a.addEventListener("click", function (e) {
+            e.preventDefault();
             setBackground(i);
         });
+
+        li.appendChild(a);
+        wallpaperList.appendChild(li);
     }
 }
 
@@ -118,9 +169,9 @@ function setBackground(i) {
     setCookie("background", i);
 }
 
-$(document).ready(function (e) {
-    var stream = $(".stream");
-    var inputbox = $("#terminalinput");
+document.addEventListener("DOMContentLoaded", function () {
+    var stream = document.querySelector(".stream");
+    var inputbox = document.getElementById("terminalinput");
     var root = document.documentElement;
 
     var radioPlaying = false;
@@ -132,12 +183,12 @@ $(document).ready(function (e) {
 
     /*
          Custom Text Styles
-            red
-            green
-            blue
-            logo
-            important
-            white
+           red
+           green
+           blue
+           logo
+           important
+           white
       */
 
     /*
@@ -153,12 +204,15 @@ $(document).ready(function (e) {
 
     function init() {
         initWindows();
-        setInterval(time);
+        time();
+        setInterval(time, 1000);
         bg_cycle();
         setInterval(bg_cycle, 1000);
         setCookie("lastlogin", new Date().toUTCString());
 
         inputbox.focus();
+
+        populateWallpaperMenu();
 
         let bg_cookie = getCookie("background");
         if (bg_cookie != "") {
@@ -166,11 +220,6 @@ $(document).ready(function (e) {
             setBackground(i);
         } else {
             setBackground(0);
-        }
-
-        let style_cookie = getCookie("style");
-        if (style_cookie != "") {
-            setStyle(style_cookie);
         }
     }
 
@@ -220,29 +269,14 @@ $(document).ready(function (e) {
         if (temptimestring != timestring) {
             timestring = temptimestring;
             datestring = tempdatestring;
-            $(".inputline .time").text(timestring);
-            $(".date").text(datestring);
-        }
-    }
 
-    function setStyle(style) {
-        if (Object.keys(terminalstyles).indexOf(style) <= -1) {
-            printLine("Style '" + style + "' not known");
-            return false;
+            document
+                .querySelectorAll(".inputline .time")
+                .forEach((el) => (el.innerText = timestring));
+            document
+                .querySelectorAll(".date")
+                .forEach((el) => (el.innerText = datestring));
         }
-        setCookie("style", style);
-        root.style.setProperty(
-            "--terminal-background",
-            terminalstyles[style][0],
-        );
-        root.style.setProperty("--terminal-text", terminalstyles[style][1]);
-        root.style.setProperty(
-            "--terminal-inputline",
-            terminalstyles[style][2],
-        );
-        root.style.setProperty("--color-logo", terminalstyles[style][3]);
-        root.style.setProperty("--color-important", terminalstyles[style][4]);
-        return true;
     }
 
     function lastlogin() {
@@ -311,7 +345,7 @@ $(document).ready(function (e) {
     init();
 
     function initWindows() {
-        $(function () {
+        if (typeof jQuery !== "undefined" && typeof jQuery.ui !== "undefined") {
             $(".window").draggable({
                 containment: "parent",
                 handle: ".handle",
@@ -319,9 +353,12 @@ $(document).ready(function (e) {
                 cancel: ".terminal",
                 iframeFix: true,
             });
-        });
-        $(".window").mousedown(function () {
-            windowOnTop($(this)[0]);
+        }
+
+        document.querySelectorAll(".window").forEach((win) => {
+            win.addEventListener("mousedown", function () {
+                windowOnTop(this);
+            });
         });
     }
 

@@ -135,17 +135,27 @@ class MailClient {
 document.addEventListener("DOMContentLoaded", () => {
     const myMailClient = new MailClient();
 
-    $(".open-mail").click(() => {
-        var zindex = $("#mail-window").css("z-index");
-        if (zindex != String(openedwindows.length) || zindex == "0") {
-            windowOnTop(document.getElementById("mail-window"));
-            document.getElementById("terminalinput").focus();
-        } else {
-            $(".close-mail").click();
-        }
+    const mailWindow = document.getElementById("mail-window");
+
+    document.querySelectorAll(".open-mail").forEach((button) => {
+        button.addEventListener("click", () => {
+            let zindex = mailWindow.style.zIndex;
+            if (!zindex) {
+                zindex = window.getComputedStyle(mailWindow).zIndex;
+            }
+
+            if (zindex != String(openedwindows.length) || zindex == "0") {
+                windowOnTop(mailWindow);
+                document.getElementById("terminalinput").focus();
+            } else {
+                document.querySelector(".close-mail").click();
+            }
+        });
     });
 
-    $(".close-mail").on("click", function (e) {
-        closeWindow(document.getElementById("mail-window"));
+    document.querySelectorAll(".close-mail").forEach((button) => {
+        button.addEventListener("click", (e) => {
+            closeWindow(mailWindow);
+        });
     });
 });

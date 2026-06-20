@@ -1,14 +1,14 @@
 :root {
-  --terminal-background: #313F46;
+  --terminal-background: #313f46;
   --terminal-text: #ffffff;
-  --terminal-inputline: #23292C;
-  --style-highlighttext:0;
-  --stlye-highlightbackground:#00adb5;
+  --terminal-inputline: #23292c;
+  --style-highlighttext: 0;
+  --stlye-highlightbackground: #00adb5;
   --color-pink: #d787af;
   --color-cream: #ffd7af;
   --color-lightblue: #75d1d1;
   --color-purple: #6441a5;
-  --color-blue: #1DA1F2;
+  --color-blue: #1da1f2;
   --color-darkblue: #005f87;
   --color-gold: #ffe419;
   --color-orange: #dd6f48;
@@ -19,8 +19,8 @@
   --color-green: #86d400;
   --color-cyan: #00ffff;
   --color-red: #c40000;
-  --color-important: #B9585D;
-  --color-logo: #60AA67;
+  --color-important: #b9585d;
+  --color-logo: #60aa67;
   --background-image: url();
   --background-night-image: url();
 }
@@ -35,7 +35,8 @@ html {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 100%;
+  height: 100.05vh;
+  overflow: hidden;
 }
 
 #night-bg {
@@ -205,8 +206,8 @@ header a:hover {
 }
 
 body {
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   color: var(--terminal-text);
   font-family: "Fira Mono", Monospace;
   margin: 0;
@@ -383,12 +384,12 @@ body .inputline .time {
 }
 
 ::-moz-selection {
-  color: #FFFFAE;
+  color: #ffffae;
   background: #00adb5;
 }
 
 ::selection {
-  color: #FFFFAE;
+  color: #ffffae;
   background: #00adb5;
 }
 
@@ -833,7 +834,8 @@ textarea:focus {
   animation-name: none;
   animation-duration: 2s;
 }
-#mail-window button:hover, #mail-window button:focus {
+#mail-window button:hover,
+#mail-window button:focus {
   background-color: #ffffff;
   color: black;
   border: #ffffff solid 2px;
@@ -855,13 +857,13 @@ textarea:focus {
 }
 @keyframes send-mail-failure {
   30% {
-    background: #FF2C2C;
-    border-color: #FF2C2C;
+    background: #ff2c2c;
+    border-color: #ff2c2c;
     color: white;
   }
   90% {
-    background: #FF2C2C;
-    border-color: #FF2C2C;
+    background: #ff2c2c;
+    border-color: #ff2c2c;
     color: white;
   }
 }
